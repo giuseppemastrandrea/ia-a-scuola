@@ -1,0 +1,1085 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="19 moduli di formazione sull'IA per docenti: esercitazioni, prompt pronti, composizione dei corsi e rassegna stampa.">
+<title>Catalogo dei moduli IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+/* Layout: registro di moduli in una colonna, barra dei corsi fissa in alto, schede apribili. Stesso sistema di mappa e vademecum. */
+:root{
+  --paper:#E6E8E1; --surface:#F8F8F4; --sunk:#EDEFE8;
+  --ink:#15201B; --muted:#5C6660; --rule:#CBD1C8;
+  --teal:#1C4A4D; --amaranto:#7A1F3D;
+  --verde:#2F6B3E; --giallo:#8A6600; --rosso:#9B2C2C;
+  --f-display:Archivo,"Helvetica Neue",Arial,sans-serif;
+  --f-body:"Source Serif 4",Georgia,serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C110F; --surface:#151D19; --sunk:#111815;
+    --ink:#E7EBE4; --muted:#98A49C; --rule:#2B3833;
+    --teal:#71B5AB; --amaranto:#E792AB;
+    --verde:#77C287; --giallo:#DDB552; --rosso:#E98F8F;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C110F; --surface:#151D19; --sunk:#111815;
+  --ink:#E7EBE4; --muted:#98A49C; --rule:#2B3833;
+  --teal:#71B5AB; --amaranto:#E792AB;
+  --verde:#77C287; --giallo:#DDB552; --rosso:#E98F8F;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--f-body); font-size:16px; line-height:1.5; padding-inline:16px; padding-block:0 48px}
+.wrap{max-width:980px; margin:0 auto; display:flex; flex-direction:column; gap:28px}
+h1,h2,h3,h4{font-family:var(--f-display); letter-spacing:-.01em; text-wrap:balance; margin:0}
+h1{font-size:clamp(28px,5vw,40px); font-weight:800; line-height:1.05}
+h2{font-size:22px; font-weight:700}
+h3{font-size:18px; font-weight:700}
+h4{font-size:13px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--teal)}
+p{margin:0}
+a{color:var(--teal); text-underline-offset:3px}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--amaranto); outline-offset:2px}
+code{font-family:var(--f-mono); font-size:.86em; color:var(--teal)}
+.eyebrow{font-family:var(--f-display); font-weight:600; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--teal)}
+.muted{color:var(--muted)}
+
+header.top{padding-top:36px; border-bottom:2px solid var(--teal); padding-bottom:18px; display:flex; flex-direction:column; gap:10px}
+.dek{color:var(--muted); max-width:66ch; font-size:17px}
+
+/* barra corsi */
+.bar{position:sticky; top:env(safe-area-inset-top,0px); z-index:5; background:var(--paper); padding-block:10px; border-bottom:1px solid var(--rule); display:flex; flex-direction:column; gap:8px}
+.tabs{display:flex; flex-wrap:wrap; gap:6px}
+.tabs button{font-family:var(--f-display); font-weight:600; font-size:14px; border:1px solid var(--rule); background:var(--surface); color:var(--ink); padding:7px 12px; border-radius:2px; cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--teal); color:var(--surface); border-color:var(--teal)}
+.tabs button .h{font-family:var(--f-mono); font-weight:400; font-size:12px; opacity:.8; margin-left:4px}
+.summary{font-family:var(--f-display); font-size:14px; color:var(--muted); display:flex; flex-wrap:wrap; gap:4px 14px; font-variant-numeric:tabular-nums}
+.summary b{color:var(--ink)}
+
+/* blocchi introduttivi */
+.intro{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px}
+.box{background:var(--surface); border:1px solid var(--rule); padding:16px 18px; display:flex; flex-direction:column; gap:8px; min-width:0}
+.box.kit{border-left:4px solid var(--amaranto)}
+.box ul{margin:0; padding-left:18px; display:flex; flex-direction:column; gap:4px}
+.legend{display:grid; grid-template-columns:96px 1fr; gap:8px; align-items:baseline; font-size:14px}
+.legend .chip{justify-self:start}
+
+.chip{font-family:var(--f-display); font-weight:600; font-size:11.5px; letter-spacing:.04em; padding:2px 7px; border:1px solid currentColor; border-radius:2px; white-space:nowrap; display:inline-block; line-height:1.4}
+.chip.noia{color:var(--verde)}
+.chip.demo{color:var(--amaranto)}
+.chip.verif{color:var(--giallo)}
+.chip.c{color:var(--muted); border-color:var(--rule)}
+.chip.c.on{color:var(--teal); border-color:var(--teal)}
+.chip.opz{color:var(--muted); border-style:dashed}
+
+/* moduli */
+.mods{display:flex; flex-direction:column; gap:12px}
+.mod{background:var(--surface); border:1px solid var(--rule); display:flex; flex-direction:column}
+.mod-head{display:grid; grid-template-columns:64px 1fr auto; gap:6px 16px; padding:16px 18px 12px; align-items:start}
+.mod-id{font-family:var(--f-mono); font-size:15px; color:var(--teal); padding-top:3px}
+.mod-title{display:flex; flex-direction:column; gap:6px; min-width:0}
+.mod-hours{font-family:var(--f-mono); font-size:15px; font-variant-numeric:tabular-nums; white-space:nowrap; padding-top:3px}
+.mod-meta{display:flex; flex-wrap:wrap; gap:5px}
+.mod-prod{grid-column:2 / 4; font-size:15px; border-top:1px dashed var(--rule); padding-top:8px}
+.mod-prod b{font-family:var(--f-display); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--amaranto); margin-right:6px}
+details.scheda{border-top:1px solid var(--rule)}
+details.scheda > summary{cursor:pointer; list-style:none; padding:10px 18px 10px 98px; font-family:var(--f-display); font-weight:600; font-size:14px; color:var(--teal)}
+details.scheda > summary::-webkit-details-marker{display:none}
+details.scheda > summary::before{content:"+ "; font-family:var(--f-mono)}
+details.scheda[open] > summary::before{content:"- "}
+.body{padding:4px 18px 20px 98px; display:flex; flex-direction:column; gap:18px}
+.body ul,.body ol{margin:0; padding-left:20px; display:flex; flex-direction:column; gap:5px}
+.two{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+.two > *{min-width:0; display:flex; flex-direction:column; gap:8px}
+.ex{display:flex; flex-direction:column; gap:10px}
+.ex-item{display:grid; grid-template-columns:auto 1fr; gap:4px 12px; align-items:baseline}
+.ex-item .t{font-family:var(--f-mono); font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums; min-width:40px}
+.ex-item h5{margin:0; font-family:var(--f-display); font-size:16px; font-weight:700}
+.ex-item .d{grid-column:2; display:flex; flex-direction:column; gap:6px; min-width:0}
+.ex-item .d ol{font-size:15px}
+.note{font-size:14px; color:var(--muted); border-left:3px solid var(--giallo); padding-left:10px}
+.note.dati{border-left-color:var(--verde)}
+
+.prompt{position:relative; background:var(--sunk); border:1px solid var(--rule); min-width:0}
+.prompt .lab{font-family:var(--f-display); font-size:12px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); padding:8px 12px 0; display:block}
+.prompt pre{margin:0; padding:8px 12px 12px; font-family:var(--f-mono); font-size:13px; line-height:1.5; white-space:pre-wrap; overflow-wrap:anywhere; color:var(--ink)}
+.prompt button{position:absolute; top:6px; right:6px; font-family:var(--f-display); font-size:12px; font-weight:600; background:var(--surface); color:var(--teal); border:1px solid var(--rule); padding:3px 9px; cursor:pointer}
+
+.tbl{overflow-x:auto; border:1px solid var(--rule); background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:14.5px}
+th,td{text-align:left; vertical-align:top; padding:8px 10px; border-bottom:1px solid var(--rule)}
+th{font-family:var(--f-display); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:600; background:var(--sunk)}
+td.num{font-family:var(--f-mono); font-variant-numeric:tabular-nums; white-space:nowrap}
+.sem{font-family:var(--f-display); font-weight:700}
+.sem.v{color:var(--verde)} .sem.g{color:var(--giallo)} .sem.r{color:var(--rosso)}
+
+section.block{display:flex; flex-direction:column; gap:14px}
+section.block > .lead{max-width:68ch}
+.filone{font-family:var(--f-display); font-weight:700; white-space:nowrap}
+
+footer{border-top:1px solid var(--rule); padding-top:14px; font-size:13.5px; color:var(--muted); display:flex; flex-direction:column; gap:6px}
+
+
+/* vista */
+.bar-row{display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; justify-content:space-between}
+.view{display:flex; gap:0; border:1px solid var(--rule)}
+.view button{font-family:var(--f-display); font-weight:600; font-size:13px; border:0; background:var(--surface); color:var(--muted); padding:6px 11px; cursor:pointer}
+.view button + button{border-left:1px solid var(--rule)}
+.view button[aria-pressed="true"]{background:var(--ink); color:var(--surface)}
+
+/* vista a griglia */
+.mods.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; align-items:stretch}
+.mods.grid .mod-head{grid-template-columns:1fr auto; grid-template-areas:"id ore" "tit tit" "prod prod"; padding:14px 16px 12px; gap:8px 12px}
+.mods.grid .mod-id{grid-area:id; padding:0}
+.mods.grid .mod-hours{grid-area:ore; padding:0}
+.mods.grid .mod-title{grid-area:tit}
+.mods.grid .mod-title h2{font-size:19px}
+.mods.grid .mod-prod{grid-area:prod; font-size:14px}
+.mods.grid .mod-prod b{display:block; margin:0 0 2px}
+.mods.grid details.scheda{margin-top:auto}
+.mods.grid details.scheda > summary{padding-left:16px}
+.mods.grid .body{padding:4px 16px 18px}
+.mods.grid .mod:has(details[open]){grid-column:1 / -1}
+.mods.grid .mod:has(details[open]) .body{padding-left:16px}
+@media (min-width:721px){ .mods.grid .mod:has(details[open]) .two{grid-template-columns:1fr 1fr} }
+
+@media (max-width:720px){
+  .mod-head{grid-template-columns:1fr auto; padding:14px}
+  .mod-id{grid-column:1 / 3; padding:0}
+  .mod-title{grid-column:1}
+  .mod-prod{grid-column:1 / 3}
+  details.scheda > summary{padding-left:14px}
+  .body{padding:4px 14px 18px}
+  .two{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header class="top">
+  <span class="eyebrow">IA a scuola · formazione docenti · 2026/27</span>
+  <h1>Catalogo dei moduli</h1>
+  <p class="dek">19 moduli da 45 minuti a 3 ore, ciascuno con esercitazioni pratiche e un prodotto che il docente si porta via. I cinque corsi si compongono scegliendo i moduli. Si usano strumenti gratuiti; quelli a pagamento compaiono solo nelle demo del formatore.</p>
+</header>
+
+<nav class="bar" aria-label="Filtra per corso">
+  <div class="tabs" id="tabs">
+    <button type="button" id="t-tutti" data-c="tutti" aria-pressed="true">Tutti i moduli</button>
+    <button type="button" id="t-base" data-c="base" aria-pressed="false">Base<span class="h">9h</span></button>
+    <button type="button" id="t-intermedio" data-c="intermedio" aria-pressed="false">Intermedio<span class="h">6h</span></button>
+    <button type="button" id="t-z17" data-c="z17" aria-pressed="false">Da zero<span class="h">17h</span></button>
+    <button type="button" id="t-z30" data-c="z30" aria-pressed="false">Da zero<span class="h">30h</span></button>
+    <button type="button" id="t-agenti" data-c="agenti" aria-pressed="false">Agenti<span class="h">6-8h</span></button>
+  </div>
+  <div class="bar-row">
+    <div class="summary" id="summary"><span><b>19 moduli</b> nel catalogo</span><span>somma <b>35,25 h</b></span></div>
+    <div class="view" role="group" aria-label="Vista">
+      <button type="button" id="v-grid" data-v="grid" aria-pressed="true">Griglia</button>
+      <button type="button" id="v-list" data-v="list" aria-pressed="false">Elenco</button>
+    </div>
+  </div>
+</nav>
+
+<div class="intro">
+  <div class="box kit">
+    <h3>Il kit del corsista</h3>
+    <p>All'inizio del corso ogni docente crea in Drive una cartella <b>Il mio kit IA</b>. Ogni modulo si chiude salvandoci dentro il suo prodotto. Il prodotto del corso è la cartella.</p>
+    <p class="muted">Negli ultimi 15 minuti del corso ognuno mostra un pezzo del proprio kit. Nel corso da 30 ore questo momento dura 45 minuti ed è la presentazione delle UdA.</p>
+  </div>
+  <div class="box">
+    <h3>Come leggere le schede</h3>
+    <div class="legend"><span class="chip noia">No-IA</span> <span>esercitazione senza strumenti generativi</span></div>
+    <div class="legend"><span class="chip demo">Demo</span> <span>la mostra il formatore; i corsisti non la usano</span></div>
+    <div class="legend"><span class="chip verif">Da verificare</span> <span>disponibilità da controllare nella console della scuola</span></div>
+    <p class="muted">Tutte le esercitazioni usano dati anonimi o inventati: si applicano le regole del <b>M02</b>.</p>
+  </div>
+</div>
+
+<main class="mods grid" id="mods">
+
+<!-- ===================== M01 ===================== -->
+<article class="mod" data-ore="1.5" data-corsi="base z17 z30">
+  <div class="mod-head">
+    <span class="mod-id">M01</span>
+    <div class="mod-title">
+      <h2>Come funziona un LLM</h2>
+      <div class="mod-meta"><span class="chip c">Gemini</span><span class="chip c">LM Arena</span></div>
+    </div>
+    <span class="mod-hours">1,5 h</span>
+    <p class="mod-prod"><b>Prodotto</b>Scheda con le 3 prove fatte in aula e il loro esito, più un glossario di 8 parole.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="two">
+      <div><h4>Obiettivi</h4><ul>
+        <li>Spiegare a un collega, in 2 minuti, cosa succede tra il prompt e la risposta.</li>
+        <li>Distinguere addestramento e inferenza.</li>
+        <li>Riconoscere 3 limiti: data di aggiornamento del modello, allucinazioni, assenza di conoscenze di dominio.</li>
+      </ul></div>
+      <div><h4>Materiali</h4><ul>
+        <li>Deck <a href="materiali/intro-ai/introduzione-ai-genai.html">Introduzione all'IA e all'IA generativa</a> (<a href="materiali/intro-ai/introduzione-ai-genai.pdf">PDF</a>), parti 1-4.</li>
+        <li>Glossario da compilare: token, contesto, temperatura, addestramento, inferenza, allucinazione, data di aggiornamento, multimodale.</li>
+      </ul></div>
+    </div>
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t">5'</span><h5>Apri il kit</h5><div class="d"><p>Crea in Drive la cartella <b>Il mio kit IA</b> e un Documento "M01, tre prove".</p></div></div>
+      <div class="ex-item"><span class="t">15'</span><h5>Stesso prompt, tre risposte</h5><div class="d"><ol>
+        <li>Apri 3 chat nuove in Gemini e incolla lo stesso prompt (sotto).</li>
+        <li>Annota cosa cambia tra le 3 risposte e cosa resta uguale.</li>
+        <li>In plenaria: da dove viene la differenza? Si introduce il campionamento e la temperatura.</li>
+      </ol>
+      <div class="prompt"><span class="lab">Prompt</span><button type="button" class="copy">Copia</button><pre>Scrivi l'incipit di un racconto di 3 righe ambientato in un laboratorio di chimica di una scuola superiore.</pre></div></div></div>
+      <div class="ex-item"><span class="t">10'</span><h5>L'autolavaggio</h5><div class="d"><p>Prima i corsisti rispondono a voce, poi si chiede al modello. Si discute la risposta: il modello riproduce il linguaggio, non ragiona sulla situazione.</p>
+      <div class="prompt"><span class="lab">Prompt</span><button type="button" class="copy">Copia</button><pre>L'autolavaggio è a 40 metri da casa. Devo lavare la macchina. Dovrei andarci a piedi o in macchina?</pre></div></div></div>
+      <div class="ex-item"><span class="t">20'</span><h5>Sfida alla cieca</h5><div class="d"><ol>
+        <li>Su <a href="https://lmarena.ai" target="_blank" rel="noopener">lmarena.ai</a> scrivi un compito della tua materia (per esempio: "3 esercizi graduati sulle proporzioni per una seconda").</li>
+        <li>Vota la risposta migliore senza sapere quale modello l'ha scritta, poi scopri i nomi.</li>
+        <li>Annota: il modello che hai votato è quello che usi di solito?</li>
+      </ol></div></div>
+      <div class="ex-item"><span class="t">20'</span><h5>Bibliografia trappola</h5><div class="d"><ol>
+        <li>Chiedi 5 articoli scientifici con DOI su un tema della tua materia che non compare nel libro di testo.</li>
+        <li>Cerca ogni titolo su Google Scholar e ogni DOI su doi.org.</li>
+        <li>Conta quanti esistono davvero e annota il numero nel kit. In plenaria si somma il dato della classe.</li>
+      </ol>
+      <div class="prompt"><span class="lab">Prompt</span><button type="button" class="copy">Copia</button><pre>Elencami 5 articoli scientifici pubblicati dopo il 2015 su [tema della tua materia], con autori, anno, rivista e DOI.</pre></div></div></div>
+    </div>
+    <p class="note">Nei corsi che partono dal M03 o da moduli successivi, il kit si apre all'inizio del primo modulo.</p>
+  </div></details>
+</article>
+
+<!-- ===================== M02 ===================== -->
+<article class="mod" data-ore="0.75" data-corsi="base z17 z30">
+  <div class="mod-head">
+    <span class="mod-id">M02</span>
+    <div class="mod-title">
+      <h2>Compliance in 45 minuti</h2>
+      <div class="mod-meta"><span class="chip noia">No-IA</span></div>
+    </div>
+    <span class="mod-hours">0,75 h</span>
+    <p class="mod-prod"><b>Prodotto</b>5 usi "verdi" della propria materia e 1 prompt riscritto da rosso a verde.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="two">
+      <div><h4>Contenuto</h4><ul>
+        <li>Le 3 domande: per fare cosa, con quali dati, chi decide.</li>
+        <li>Le 5 regole: niente nomi, foto o testi degli studenti; niente diagnosi, PDP o PEI; descrivi il profilo e non la persona (test del collega); l'IA non valuta; verifica e dichiara.</li>
+        <li>Le 3 corsie: verde, gialla, rossa.</li>
+      </ul></div>
+      <div><h4>Materiali</h4><ul>
+        <li><a href="materiali/compliance/mappa-docente.html">Mappa per il docente</a>, da stampare fronte e retro.</li>
+        <li><a href="materiali/compliance/vademecum-docente-ia.html">Vademecum IA per il docente</a> (<a href="materiali/compliance/vademecum-docente-ia.pdf">PDF</a>), da lasciare ai corsisti.</li>
+      </ul></div>
+    </div>
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t">10'</span><h5>Le regole, in breve</h5><div class="d"><p>Il formatore presenta la mappa. Nessuna norma citata a memoria: solo le 3 domande e le 5 regole.</p></div></div>
+      <div class="ex-item"><span class="t">20'</span><h5>Semaforo su 12 casi</h5><div class="d"><p>A coppie, ogni caso riceve un colore e una motivazione in una riga. Poi si confronta con la soluzione.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>#</th><th>Caso</th><th>Corsia</th></tr></thead>
+        <tbody>
+          <tr><td class="num">1</td><td>Preparare 10 domande di comprensione su una novella di Verga.</td><td class="sem v">Verde</td></tr>
+          <tr><td class="num">2</td><td>Bozza della circolare per un'uscita didattica, senza nomi.</td><td class="sem v">Verde</td></tr>
+          <tr><td class="num">3</td><td>Incollare il PDP di uno studente per adattare una verifica.</td><td class="sem r">Rossa</td></tr>
+          <tr><td class="num">4</td><td>Adattare un testo per "uno studente di seconda che legge con fatica testi oltre le 200 parole".</td><td class="sem g">Gialla: supera il test del collega?</td></tr>
+          <tr><td class="num">5</td><td>Far correggere e mettere il voto ai temi della classe.</td><td class="sem r">Rossa: l'IA non valuta</td></tr>
+          <tr><td class="num">6</td><td>Chiedere una proposta di rubrica per l'esposizione orale.</td><td class="sem v">Verde</td></tr>
+          <tr><td class="num">7</td><td>Caricare la foto di classe per creare un poster.</td><td class="sem r">Rossa</td></tr>
+          <tr><td class="num">8</td><td>Riassumere il verbale del consiglio di classe con i nomi degli studenti.</td><td class="sem r">Rossa</td></tr>
+          <tr><td class="num">9</td><td>Riassumere lo stesso verbale dopo aver tolto nomi e dettagli che identificano.</td><td class="sem g">Gialla</td></tr>
+          <tr><td class="num">10</td><td>Generare un'immagine di un mercato medievale per una slide di storia.</td><td class="sem v">Verde</td></tr>
+          <tr><td class="num">11</td><td>Far usare alla classe un'app IA trovata online, con account personali.</td><td class="sem r">Rossa: decide il DS</td></tr>
+          <tr><td class="num">12</td><td>Chiedere come rispondere alla mail di un genitore, dopo averla riscritta senza nomi né dettagli.</td><td class="sem g">Gialla</td></tr>
+        </tbody>
+      </table></div></div></div>
+      <div class="ex-item"><span class="t">15'</span><h5>Da rosso a verde</h5><div class="d"><ol>
+        <li>Prendi il caso 3 o il caso 8 e riscrivi il prompt in modo che resti utile senza dati personali.</li>
+        <li>Test del collega: il tuo vicino, leggendo il prompt, riesce a capire di quale studente si parla? Se sì, riscrivi.</li>
+        <li>Scrivi nel kit 5 usi verdi della tua materia.</li>
+      </ol></div></div>
+    </div>
+  </div></details>
+</article>
+
+<!-- ===================== M03 ===================== -->
+<article class="mod" data-ore="2.5" data-corsi="base z17 z30">
+  <div class="mod-head">
+    <span class="mod-id">M03</span>
+    <div class="mod-title">
+      <h2>Prompt design sul lavoro quotidiano</h2>
+      <div class="mod-meta"><span class="chip c">Gemini</span></div>
+    </div>
+    <span class="mod-hours">2,5 h</span>
+    <p class="mod-prod"><b>Prodotto</b>Libreria di 5 prompt testati: verbale, circolare, idea di lezione, rubrica, email alle famiglie.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="two">
+      <div><h4>Obiettivi</h4><ul>
+        <li>Scrivere un prompt con 6 elementi: ruolo, contesto, compito, formato, vincoli, esempi.</li>
+        <li>Migliorare una risposta con 2-3 giri di richieste, invece di ricominciare da capo.</li>
+        <li>Chiedere al modello di segnalare cosa non sa, invece di inventare.</li>
+      </ul></div>
+      <div><h4>Formati per il prompt</h4><ul>
+        <li>Incollare testo funziona sempre; un PDF scansionato è un'immagine e va controllato.</li>
+        <li>Chiedere l'uscita in tabella, elenco numerato o Markdown rende la risposta riusabile in Documenti e Fogli.</li>
+      </ul></div>
+    </div>
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t">30'</span><h5>Tre giri</h5><div class="d"><ol>
+        <li>Giro 1: "Fammi una lezione sulla fotosintesi". Leggi la risposta.</li>
+        <li>Giro 2: aggiungi classe, durata (50 minuti), prerequisiti, cosa sanno già gli studenti.</li>
+        <li>Giro 3: chiedi una tabella con fasi, minuti, attività, materiali; vieta i video oltre i 5 minuti.</li>
+        <li>Confronta la prima e l'ultima risposta. Cosa ha fatto la differenza?</li>
+      </ol></div></div>
+      <div class="ex-item"><span class="t">75'</span><h5>Cinque compiti d'ufficio</h5><div class="d"><p>Ogni corsista usa i 5 prompt sotto sui propri materiali (senza dati personali), li adatta e salva la versione finale nel Documento "Libreria prompt" del kit.</p>
+      <div class="prompt"><span class="lab">Verbale</span><button type="button" class="copy">Copia</button><pre>Sei il segretario di un consiglio di classe di un istituto tecnico.
+Ti incollo i miei appunti presi durante la riunione, già senza nomi di studenti.
+Scrivi il verbale in testo continuo, con queste sezioni: presenti (solo ruoli), ordine del giorno, discussione punto per punto, delibere.
+Non inventare nulla: dove gli appunti non bastano scrivi [DA COMPLETARE].
+Appunti:
+[incolla qui]</pre></div>
+      <div class="prompt"><span class="lab">Circolare</span><button type="button" class="copy">Copia</button><pre>Scrivi la bozza di una circolare per docenti e famiglie su [argomento].
+Informazioni certe: [data, orari, luogo, costi, scadenze].
+Registro formale ma leggibile, massimo 200 parole, un elenco puntato per le cose da fare.
+Alla fine elenca le informazioni che mancano e che dovrei aggiungere io.</pre></div>
+      <div class="prompt"><span class="lab">Idea di lezione</span><button type="button" class="copy">Copia</button><pre>Insegno [materia] in una classe [anno] di [tipo di scuola].
+Argomento: [argomento]. Tempo: 2 ore da 50 minuti. Gli studenti sanno già: [prerequisiti].
+Proponimi 3 idee di lezione diverse tra loro (una laboratoriale, una a gruppi, una con un caso reale).
+Per ciascuna: obiettivo, attività minuto per minuto, materiali, come verifico che hanno capito.</pre></div>
+      <div class="prompt"><span class="lab">Rubrica</span><button type="button" class="copy">Copia</button><pre>Crea una rubrica analitica per valutare [prodotto, per esempio: un'esposizione orale di 5 minuti] in una classe [anno].
+4 criteri, 4 livelli. Ogni descrittore deve descrivere un comportamento osservabile, non un giudizio.
+Restituiscila come tabella.</pre></div>
+      <div class="prompt"><span class="lab">Email alle famiglie</span><button type="button" class="copy">Copia</button><pre>Scrivi una email ai genitori della classe per [motivo].
+Tono cordiale, massimo 120 parole, nessun termine tecnico della scuola (niente "PCTO", "UdA", "CdC" senza spiegazione).
+Chiudi con cosa devono fare e entro quando.</pre></div></div></div>
+      <div class="ex-item"><span class="t">25'</span><h5>Scambio</h5><div class="d"><p>Ogni corsista prova il prompt di un collega sul proprio caso e annota cosa ha dovuto cambiare. Le modifiche entrano nella libreria.</p></div></div>
+    </div>
+    <p class="note dati">Corsia: verde, se negli appunti del verbale e nelle email non ci sono nomi o dettagli che identificano (M02, casi 8 e 9).</p>
+  </div></details>
+</article>
+
+<!-- ===================== M04 ===================== -->
+<article class="mod" data-ore="1.5" data-corsi="intermedio z30">
+  <div class="mod-head">
+    <span class="mod-id">M04</span>
+    <div class="mod-title">
+      <h2>Formati: PDF, CSV, Markdown, Mermaid</h2>
+      <div class="mod-meta"><span class="chip c">Gemini</span><span class="chip c">Fogli</span><span class="chip c">mermaid.live</span></div>
+    </div>
+    <span class="mod-hours">1,5 h</span>
+    <p class="mod-prod"><b>Prodotto</b>Un foglio popolato a partire da un PDF e una mappa concettuale in Mermaid.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="two">
+      <div><h4>Obiettivi</h4><ul>
+        <li>Distinguere file di testo (TXT, CSV, Markdown, HTML) e file binari (PDF, DOCX, immagini).</li>
+        <li>Estrarre dati strutturati da un documento che non lo è.</li>
+        <li>Far disegnare al modello un diagramma sotto forma di testo.</li>
+      </ul></div>
+      <div><h4>Da sapere</h4><ul>
+        <li>Un PDF scansionato è un'immagine: il modello lo legge, ma sbaglia più spesso. Si controlla a campione.</li>
+        <li>CSV: una riga per record, valori separati da virgola. Fogli lo apre con File, Importa.</li>
+      </ul></div>
+    </div>
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t">35'</span><h5>Da PDF a foglio</h5><div class="d"><ol>
+        <li>Scegli un PDF pubblico con dati sparsi: il calendario scolastico regionale, un bando, il quadro orario ministeriale del tuo indirizzo.</li>
+        <li>Caricalo in Gemini e usa il prompt sotto.</li>
+        <li>Incolla il CSV in un foglio (Dati, Dividi testo in colonne) e controlla 5 righe a caso contro il PDF.</li>
+      </ol>
+      <div class="prompt"><span class="lab">Prompt</span><button type="button" class="copy">Copia</button><pre>Dal PDF allegato estrai [cosa, per esempio: tutte le date di sospensione delle lezioni].
+Restituisci solo un CSV con queste colonne: [colonna1],[colonna2],[colonna3].
+Date nel formato GG/MM/AAAA. Se un valore non c'è, lascia la cella vuota. Nessun commento prima o dopo il CSV.</pre></div></div></div>
+      <div class="ex-item"><span class="t">30'</span><h5>Mappa in Mermaid</h5><div class="d"><ol>
+        <li>Chiedi il diagramma di un processo della tua materia (il ciclo dell'acqua, la procedura di evacuazione, un algoritmo).</li>
+        <li>Incolla il codice su <a href="https://mermaid.live" target="_blank" rel="noopener">mermaid.live</a>, esporta l'immagine e salvala nel kit.</li>
+        <li>Correggi un errore a mano nel codice: è testo, si modifica come un Documento.</li>
+      </ol>
+      <div class="prompt"><span class="lab">Prompt</span><button type="button" class="copy">Copia</button><pre>Scrivi il codice Mermaid (flowchart TD) che rappresenta [processo] per una classe [anno].
+Massimo 12 nodi, etichette brevi in italiano, rombi per le decisioni. Restituisci solo il codice.</pre></div></div></div>
+      <div class="ex-item"><span class="t">15'</span><h5>Cambio di formato</h5><div class="d"><p>Un elenco disordinato (i libri di testo del dipartimento, le date delle verifiche) diventa tabella, poi Markdown, poi testo per una circolare. Tre richieste, stessa informazione.</p></div></div>
+    </div>
+  </div></details>
+</article>
+
+<!-- ===================== M05 ===================== -->
+<article class="mod" data-ore="1.5" data-corsi="z30">
+  <div class="mod-head">
+    <span class="mod-id">M05</span>
+    <div class="mod-title">
+      <h2>Gemini collegato a Gmail, Calendar e Drive</h2>
+      <div class="mod-meta"><span class="chip c">Gemini</span><span class="chip verif">Da verificare: Drive e Documenti</span></div>
+    </div>
+    <span class="mod-hours">1,5 h</span>
+    <p class="mod-prod"><b>Prodotto</b>3 prompt ricorrenti che lavorano sui propri file e sulla propria posta.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="two">
+      <div><h4>Obiettivi</h4><ul>
+        <li>Richiamare un'app di Workspace nel prompt con la chiocciola (@Gmail, @Calendar, @Drive).</li>
+        <li>Trasformare email e documenti in elenchi di scadenze e decisioni.</li>
+      </ul></div>
+      <div><h4>Da verificare prima del corso</h4><p class="note">Le fonti Google non concordano su Drive e Documenti nell'app Gemini con l'edizione Fundamentals. Prima esercitazione: digitare @ e annotare quali app compaiono. Se Drive manca, l'esercitazione 3 si fa caricando il file a mano.</p></div>
+    </div>
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t">10'</span><h5>Cosa è attivo</h5><div class="d"><p>Nella chat di Gemini (dal browser: le app di Workspace non funzionano nell'app mobile) digita @ e annota le app disponibili.</p></div></div>
+      <div class="ex-item"><span class="t">30'</span><h5>Dalla posta al calendario</h5><div class="d">
+      <div class="prompt"><span class="lab">Prompt</span><button type="button" class="copy">Copia</button><pre>@Gmail trova le email ricevute negli ultimi 14 giorni dall'indirizzo della segreteria e dalla dirigenza.
+Fammi una tabella con: data, oggetto, cosa devo fare io, scadenza.
+Poi @Calendar crea un evento per ogni scadenza, con promemoria il giorno prima.</pre></div></div></div>
+      <div class="ex-item"><span class="t">30'</span><h5>Dai documenti alle decisioni</h5><div class="d">
+      <div class="prompt"><span class="lab">Prompt</span><button type="button" class="copy">Copia</button><pre>@Drive trova i verbali del dipartimento di [materia] dell'anno 2025/26.
+Fammi una tabella delle decisioni prese: data, decisione, chi se ne occupa, stato.</pre></div></div></div>
+      <div class="ex-item"><span class="t">15'</span><h5>Tre prompt da tenere</h5><div class="d"><p>Ogni corsista sceglie 3 richieste che farebbe ogni settimana e le salva nella libreria del kit.</p></div></div>
+    </div>
+    <p class="note dati">Esercitarsi su comunicazioni di servizio (circolari, segreteria, dipartimento), non su email che riguardano singoli studenti.</p>
+  </div></details>
+</article>
+
+<!-- ===================== M06 ===================== -->
+<article class="mod" data-ore="2" data-corsi="base z17 z30">
+  <div class="mod-head">
+    <span class="mod-id">M06</span>
+    <div class="mod-title">
+      <h2>Gem: il prompt di sistema</h2>
+      <div class="mod-meta"><span class="chip c">Gemini, Gem</span></div>
+    </div>
+    <span class="mod-hours">2 h</span>
+    <p class="mod-prod"><b>Prodotto</b>Un Gem della propria materia, condiviso con almeno un collega.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="two">
+      <div><h4>Obiettivi</h4><ul>
+        <li>Distinguere prompt di sistema (le istruzioni fisse del Gem) e prompt dell'utente (la richiesta del momento).</li>
+        <li>Scrivere istruzioni in 6 parti: chi sei, per chi lavori, cosa fai, cosa non fai, formato, file di riferimento.</li>
+        <li>Mettere alla prova il Gem prima di darlo ad altri.</li>
+      </ul></div>
+      <div><h4>Idee di Gem</h4><ul>
+        <li>Generatore di esercizi graduati sul programma del dipartimento.</li>
+        <li>Tutor che guida lo studente con domande senza dare la soluzione.</li>
+        <li>Revisore di consegne: controlla che siano chiare per una classe prima.</li>
+        <li>Assistente per le circolari con lo stile della scuola.</li>
+      </ul></div>
+    </div>
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t">15'</span><h5>Anatomia di un Gem</h5><div class="d"><p>Si legge insieme il prompt di sistema qui sotto e si individuano le 6 parti.</p>
+      <div class="prompt"><span class="lab">Istruzioni del Gem</span><button type="button" class="copy">Copia</button><pre>Sei un tutor di [materia] per studenti di [anno] di un istituto tecnico.
+Il tuo compito è aiutare lo studente a risolvere un esercizio da solo.
+Regole:
+- Non dare mai la soluzione completa, nemmeno se lo studente insiste.
+- Fai una domanda alla volta, partendo da cosa lo studente ha già capito.
+- Se lo studente sbaglia, chiedigli di spiegare il suo ragionamento prima di correggerlo.
+- Dopo 3 tentativi falliti, mostra solo il primo passaggio.
+- Usa frasi brevi. Niente elenchi lunghi.
+- Non chiedere mai nome, classe o altre informazioni personali.
+Usa come riferimento il file allegato con il programma del dipartimento.</pre></div></div></div>
+      <div class="ex-item"><span class="t">60'</span><h5>Costruisci il tuo Gem</h5><div class="d"><ol>
+        <li>Da browser: Gemini, Esplora Gem, Nuovo Gem.</li>
+        <li>Scrivi le istruzioni partendo dal modello; allega come conoscenza un file senza dati personali (programmazione, glossario, testo tuo).</li>
+        <li>Provalo con 5 richieste reali e correggi le istruzioni dopo ogni prova.</li>
+      </ol></div></div>
+      <div class="ex-item"><span class="t">25'</span><h5>Prova di resistenza</h5><div class="d"><p>Un collega usa il tuo Gem cercando di fargli rompere le regole (chiedere la soluzione, uscire dal tema, chiedere dati personali). Annota cosa ha funzionato e aggiungi una regola.</p></div></div>
+      <div class="ex-item"><span class="t">20'</span><h5>Condividi</h5><div class="d"><p>Condividi il Gem con un collega del dipartimento e salva il link nel kit.</p></div></div>
+    </div>
+  </div></details>
+</article>
+
+<!-- ===================== M07 ===================== -->
+<article class="mod" data-ore="2" data-corsi="base z17 z30">
+  <div class="mod-head">
+    <span class="mod-id">M07</span>
+    <div class="mod-title">
+      <h2>NotebookLM: lavorare su fonti scelte</h2>
+      <div class="mod-meta"><span class="chip c">NotebookLM</span></div>
+    </div>
+    <span class="mod-hours">2 h</span>
+    <p class="mod-prod"><b>Prodotto</b>Un notebook su un argomento del programma, con mappa mentale, riassunto audio e quiz.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="two">
+      <div><h4>Obiettivi</h4><ul>
+        <li>Far rispondere il modello solo sulle fonti caricate, con le citazioni.</li>
+        <li>Usare gli strumenti di studio: mappa mentale, riassunto audio, quiz, flashcard, report.</li>
+        <li>Costruire un notebook da condividere con colleghi o studenti.</li>
+      </ul></div>
+      <div><h4>Fonti ammesse</h4><ul>
+        <li>Materiali propri, pagine web pubbliche, video, documenti della scuola già pubblici.</li>
+        <li>Non caricare il libro di testo digitale intero se la licenza non lo consente.</li>
+      </ul></div>
+    </div>
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t">40'</span><h5>Il notebook dell'argomento</h5><div class="d"><ol>
+        <li>Crea un notebook con 3-5 fonti su un argomento che tratterai nel prossimo mese.</li>
+        <li>Fai 5 domande e apri ogni citazione: la frase citata dice davvero quello che dice la risposta?</li>
+        <li>Fai una domanda su qualcosa che le fonti non contengono e guarda come risponde.</li>
+      </ol>
+      <div class="prompt"><span class="lab">Prompt</span><button type="button" class="copy">Copia</button><pre>Rispondi usando solo le fonti caricate. Se la risposta non è nelle fonti, scrivi "Non è nelle fonti" e non aggiungere altro.
+Domanda: [domanda]</pre></div></div></div>
+      <div class="ex-item"><span class="t">45'</span><h5>Strumenti di studio</h5><div class="d"><ol>
+        <li>Genera la mappa mentale, il riassunto audio, un quiz e le flashcard.</li>
+        <li>Per ciascuno annota: lo userei in classe? Per quale momento (introduzione, ripasso, recupero)?</li>
+        <li>Personalizza il riassunto audio indicando età e livello della classe.</li>
+      </ol></div></div>
+      <div class="ex-item"><span class="t">35'</span><h5>Il notebook dei colleghi</h5><div class="d"><p>A gruppi: un notebook con documenti pubblici della scuola (regolamento d'istituto, PTOF, circolari dell'anno) che risponde alle domande dei colleghi. Si prova con 5 domande reali ("come si chiede un'uscita didattica?").</p></div></div>
+    </div>
+  </div></details>
+</article>
+
+<!-- ===================== M08 ===================== -->
+<article class="mod" data-ore="2.5" data-corsi="intermedio z17 z30">
+  <div class="mod-head">
+    <span class="mod-id">M08</span>
+    <div class="mod-title">
+      <h2>Verifiche per profili, fino al Google Form</h2>
+      <div class="mod-meta"><span class="chip c">Gemini</span><span class="chip c">Apps Script</span><span class="chip c">Moduli</span></div>
+    </div>
+    <span class="mod-hours">2,5 h</span>
+    <p class="mod-prod"><b>Prodotto</b>Un Google Form quiz funzionante, in 3 versioni per 3 profili.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="two">
+      <div><h4>Obiettivi</h4><ul>
+        <li>Descrivere un profilo di apprendimento senza descrivere una persona.</li>
+        <li>Ottenere la stessa verifica in 3 versioni.</li>
+        <li>Generare il Form in automatico con lo script, senza scrivere codice.</li>
+      </ul></div>
+      <div><h4>Materiali</h4><ul>
+        <li>Lo script <a href="materiali/apps-script/genera-form-quiz.gs">genera-form-quiz.gs</a>: si cambiano solo <code>CONFIG</code> e <code>DOMANDE</code>.</li>
+        <li>Tipi supportati: multipleChoice, checkbox, list, text, paragraph, scale, grid, checkboxGrid, sectionHeader, pageBreak, image, video.</li>
+      </ul></div>
+    </div>
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t">30'</span><h5>Tre profili, una verifica</h5><div class="d">
+      <div class="prompt"><span class="lab">Prompt</span><button type="button" class="copy">Copia</button><pre>Prepara una verifica di 8 domande a scelta multipla su [argomento] per una classe [anno].
+Scrivila in 3 versioni con gli stessi obiettivi:
+- Profilo A: legge con fatica testi lunghi; domande di massimo 20 parole, lessico essenziale, 3 opzioni.
+- Profilo B: livello della classe; 4 opzioni.
+- Profilo C: ha già consolidato l'argomento; domande che chiedono di applicare, 4 opzioni.
+Indica per ogni domanda la risposta corretta e un feedback di una riga per chi sbaglia.</pre></div>
+      <p class="note dati">I profili descrivono bisogni, non persone. Test del collega: leggendo il profilo, si capisce chi è lo studente? Se sì, riscrivi.</p></div></div>
+      <div class="ex-item"><span class="t">25'</span><h5>Dalla verifica al codice</h5><div class="d">
+      <div class="prompt"><span class="lab">Prompt</span><button type="button" class="copy">Copia</button><pre>Trasforma la versione [A/B/C] della verifica in un array JavaScript chiamato DOMANDE, con questo formato per ogni domanda:
+{
+  tipo: "multipleChoice",
+  titolo: "testo della domanda",
+  obbligatoria: true,
+  punti: 1,
+  opzioni: ["opzione 0", "opzione 1", "opzione 2"],
+  rispostaCorretta: 0,
+  feedback: { corretto: { testo: "..." }, errato: { testo: "..." } }
+}
+rispostaCorretta è l'indice dell'opzione giusta, partendo da 0.
+Restituisci solo il codice, a partire da "const DOMANDE = [".</pre></div></div></div>
+      <div class="ex-item"><span class="t">50'</span><h5>Dal codice al Form</h5><div class="d"><ol>
+        <li>Apri <a href="https://script.google.com" target="_blank" rel="noopener">script.google.com</a>, Nuovo progetto, incolla tutto lo script.</li>
+        <li>Sostituisci il blocco <code>CONFIG</code> (titolo e descrizione) e il blocco <code>DOMANDE</code> con quello generato.</li>
+        <li>Seleziona la funzione <code>creaForm</code>, premi Esegui, autorizza con l'account della scuola.</li>
+        <li>Apri il Registro di esecuzione: ci sono il link di modifica e quello per gli studenti.</li>
+        <li>Nelle impostazioni del Form controlla le 2 cose che lo script non può impostare: raccolta email "Verificati" e rilascio del punteggio.</li>
+        <li>Ripeti per le altre 2 versioni.</li>
+      </ol></div></div>
+      <div class="ex-item"><span class="t">25'</span><h5>Revisione</h5><div class="d"><p>Compila il Form come se fossi uno studente e controlla una per una le risposte corrette. Un valore di <code>rispostaCorretta</code> spostato di 1 fa segnare come giusta un'opzione sbagliata, e il Form la corregge così a tutta la classe.</p></div></div>
+    </div>
+  </div></details>
+</article>
+
+<!-- ===================== M09 ===================== -->
+<article class="mod" data-ore="1.5" data-corsi="z30">
+  <div class="mod-head">
+    <span class="mod-id">M09</span>
+    <div class="mod-title">
+      <h2>Gemini in Classroom</h2>
+      <div class="mod-meta"><span class="chip c">Classroom</span></div>
+    </div>
+    <span class="mod-hours">1,5 h</span>
+    <p class="mod-prod"><b>Prodotto</b>Un compito completo con rubrica, salvato in bozza in un corso di prova.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="two">
+      <div><h4>Obiettivi</h4><ul>
+        <li>Usare gli strumenti guidati di Classroom: piano di lezione, quiz, rubrica, testo riadattato per livello.</li>
+        <li>Confrontare lo strumento guidato con un prompt scritto da sé.</li>
+      </ul></div>
+      <div><h4>Disponibilità</h4><p class="muted">Incluso in tutte le edizioni Education, Fundamentals compresa, per gli utenti maggiorenni: quindi per i docenti. Si lavora in un corso di prova senza studenti.</p></div>
+    </div>
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t">15'</span><h5>Il giro della scheda Gemini</h5><div class="d"><p>Crea un corso "Prova IA" e apri la scheda Gemini. Annota gli strumenti che servono alla tua materia.</p></div></div>
+      <div class="ex-item"><span class="t">50'</span><h5>Un compito dall'inizio alla fine</h5><div class="d"><ol>
+        <li>Piano di una lezione su un argomento del mese.</li>
+        <li>Testo di lettura riadattato per 2 livelli.</li>
+        <li>Quiz di 5 domande e rubrica per la consegna.</li>
+        <li>Tutto nel compito, salvato in bozza.</li>
+      </ol></div></div>
+      <div class="ex-item"><span class="t">25'</span><h5>Guidato o libero?</h5><div class="d"><p>Rifai la rubrica con il prompt del M03 e confronta. Quale useresti e quando?</p></div></div>
+    </div>
+  </div></details>
+</article>
+
+<!-- ===================== M10 ===================== -->
+<article class="mod" data-ore="2" data-corsi="intermedio z17 z30 agenti-opz">
+  <div class="mod-head">
+    <span class="mod-id">M10</span>
+    <div class="mod-title">
+      <h2>Canvas e vibe coding per la lezione</h2>
+      <div class="mod-meta"><span class="chip c">Gemini, Canvas</span><span class="chip demo">Demo: coding agent</span></div>
+    </div>
+    <span class="mod-hours">2 h</span>
+    <p class="mod-prod"><b>Prodotto</b>Un'attività interattiva per la lezione di domani, pubblicata con il link.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="two">
+      <div><h4>Obiettivi</h4><ul>
+        <li>Descrivere a parole un'app e ottenerla funzionante.</li>
+        <li>Correggerla con richieste successive, senza toccare il codice.</li>
+        <li>Capire la differenza tra chat e agente che lavora da solo su più file.</li>
+      </ul></div>
+      <div><h4>Idee</h4><ul>
+        <li>Quiz a tempo da proiettare sulla LIM.</li>
+        <li>Linea del tempo cliccabile.</li>
+        <li>Simulazione con cursori (piano inclinato, interesse composto).</li>
+        <li>Gioco di abbinamento per il lessico di una lingua.</li>
+      </ul></div>
+    </div>
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t">40'</span><h5>La prima attività</h5><div class="d">
+      <div class="prompt"><span class="lab">Prompt (con Canvas attivo)</span><button type="button" class="copy">Copia</button><pre>Crea una pagina web interattiva da proiettare sulla LIM: un quiz a tempo su [argomento] per una classe [anno].
+10 domande a scelta multipla, 20 secondi per domanda, punteggio visibile, pulsante "Ricomincia".
+Caratteri grandi, leggibili da 6 metri. Tutto in italiano.</pre></div></div></div>
+      <div class="ex-item"><span class="t">30'</span><h5>Tre richieste di modifica</h5><div class="d"><p>Cambia una cosa per volta: la grafica, una regola del gioco, una funzione nuova (per esempio le squadre). Annota quale richiesta ha rotto qualcosa e come l'hai fatta sistemare.</p></div></div>
+      <div class="ex-item"><span class="t">20'</span><h5>Prova sul campo</h5><div class="d"><p>Condividi il link e fallo provare a un collega dal telefono. Salva il link nel kit.</p></div></div>
+      <div class="ex-item"><span class="t">30'</span><h5>Demo del formatore</h5><div class="d"><p>La stessa attività costruita da un coding agent (Claude Code) in una cartella: legge i file, li scrive, prova il risultato. Si discute cosa cambia rispetto alla chat.</p></div></div>
+    </div>
+  </div></details>
+</article>
+
+<!-- ===================== M11 ===================== -->
+<article class="mod" data-ore="1.5" data-corsi="z17 z30">
+  <div class="mod-head">
+    <span class="mod-id">M11</span>
+    <div class="mod-title">
+      <h2>Quale strumento per quale attività</h2>
+      <div class="mod-meta"><span class="chip noia">No-IA</span></div>
+    </div>
+    <span class="mod-hours">1,5 h</span>
+    <p class="mod-prod"><b>Prodotto</b>La propria matrice attività-strumento, su una pagina.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t">40'</span><h5>Carte-scenario</h5><div class="d"><p>A gruppi di 3-4, ogni gruppo riceve le 10 carte e assegna a ciascuna uno strumento con una motivazione. Poi si confronta con la tabella.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Voglio...</th><th>Strumento</th></tr></thead>
+        <tbody>
+          <tr><td>trasformare i miei appunti in domande per un quiz</td><td>Gemini (chat)</td></tr>
+          <tr><td>un assistente fisso per la mia materia, da dare ai colleghi</td><td>Gem</td></tr>
+          <tr><td>studiare 5 documenti senza risposte inventate fuori dalle fonti</td><td>NotebookLM</td></tr>
+          <tr><td>una verifica che si corregge da sola</td><td>Gemini + Apps Script + Moduli</td></tr>
+          <tr><td>un compito con rubrica già dentro la classe virtuale</td><td>Gemini in Classroom</td></tr>
+          <tr><td>catturare l'attenzione in classe con un gioco</td><td>Canvas</td></tr>
+          <tr><td>estrarre le date da 20 PDF in una tabella</td><td>Gemini (formati)</td></tr>
+          <tr><td>un report automatico ogni lunedì su un foglio</td><td>Workspace Studio</td></tr>
+          <tr><td>tenere traccia dei patti di corresponsabilità firmati</td><td>Workspace Studio</td></tr>
+          <tr><td>analizzare la relazione clinica di uno studente</td><td>Nessuno: corsia rossa, si parla con il DS</td></tr>
+        </tbody>
+      </table></div></div></div>
+      <div class="ex-item"><span class="t">35'</span><h5>La mia matrice</h5><div class="d"><p>Ognuno elenca 8 attività reali del proprio anno scolastico (dalla programmazione agli scrutini) e per ciascuna sceglie: strumento, corsia (verde, gialla, rossa), minuti che pensa di risparmiare.</p></div></div>
+      <div class="ex-item"><span class="t">15'</span><h5>Confronto</h5><div class="d"><p>Due matrici a confronto tra docenti della stessa materia: dove hanno scelto diversamente e perché.</p></div></div>
+    </div>
+  </div></details>
+</article>
+
+<!-- ===================== M12 ===================== -->
+<article class="mod" data-ore="1.5" data-corsi="z30">
+  <div class="mod-head">
+    <span class="mod-id">M12</span>
+    <div class="mod-title">
+      <h2>Riconoscere i contenuti generati dall'IA</h2>
+      <div class="mod-meta"><span class="chip noia">No-IA in parte</span><span class="chip c">Gemini (SynthID)</span></div>
+    </div>
+    <span class="mod-hours">1,5 h</span>
+    <p class="mod-prod"><b>Prodotto</b>Una consegna riscritta per rendere visibile il processo e un patto d'uso dell'IA per la classe.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="two">
+      <div><h4>Obiettivi</h4><ul>
+        <li>Sapere cosa si può riconoscere e cosa no: i rilevatori automatici di testo sbagliano e non vanno usati per sanzionare.</li>
+        <li>Usare la filigrana SynthID per le immagini prodotte con strumenti Google.</li>
+        <li>Collegare il tema alle competenze digitali di DigComp 3.0.</li>
+      </ul></div>
+      <div><h4>Materiali</h4><p>10 testi e immagini preparati dal formatore: 5 scritti da persone, 5 generati.</p></div>
+    </div>
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t">25'</span><h5>Vero o generato?</h5><div class="d"><p>Voto individuale su ogni elemento, poi si scoprono le risposte. Si conta quante volte la classe ha indovinato e si elencano gli indizi usati.</p></div></div>
+      <div class="ex-item"><span class="t">15'</span><h5>La filigrana</h5><div class="d"><p>Genera un'immagine con Gemini, poi in una chat nuova caricala e chiedi se è stata creata con l'IA di Google. Ripeti con una foto tua. Si discute il limite: funziona solo con i contenuti Google.</p></div></div>
+      <div class="ex-item"><span class="t">35'</span><h5>Riscrivere la consegna</h5><div class="d"><ol>
+        <li>Prendi un compito che uno studente potrebbe far fare interamente all'IA.</li>
+        <li>Riscrivilo in modo che il processo sia visibile: bozze datate, fonti locali, una parte orale, una riflessione su come ha usato l'IA.</li>
+      </ol></div></div>
+      <div class="ex-item"><span class="t">15'</span><h5>Il patto d'uso</h5><div class="d"><p>5 righe da discutere con la classe: quando l'IA è ammessa, come si dichiara, cosa non si delega.</p></div></div>
+    </div>
+  </div></details>
+</article>
+
+<!-- ===================== M13 ===================== -->
+<article class="mod" data-ore="2" data-corsi="z17 z30">
+  <div class="mod-head">
+    <span class="mod-id">M13</span>
+    <div class="mod-title">
+      <h2>Bias nei testi e nelle immagini</h2>
+      <div class="mod-meta"><span class="chip c">Gemini</span><span class="chip c">Fogli</span></div>
+    </div>
+    <span class="mod-hours">2 h</span>
+    <p class="mod-prod"><b>Prodotto</b>Un mini dataset etichettato con grafico e la scheda per rifare l'attività in classe.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="two">
+      <div><h4>Il caso di partenza</h4><p>Classe 5 ITIA/C, ITT Panetti Pitagora, 2024/25 e 2025/26: 24 studenti, 5410 immagini da 5 modelli, 15 professioni, presentato alla DevFest Bari 2025. Alcuni risultati: insegnanti sorridenti nel 91,3% dei casi, giudici con espressione neutra nel 92,0%, politici e giudici uomini nel 76,0%.</p><p class="muted">Il paper dell'esperienza lo distribuisce il formatore.</p></div>
+      <div><h4>Obiettivi</h4><ul>
+        <li>Misurare un bias con dati raccolti dal gruppo.</li>
+        <li>Capire che un dataset nasce da scelte di etichettatura.</li>
+        <li>Portare in classe una versione dell'attività da 2-4 ore.</li>
+      </ul></div>
+    </div>
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t">45'</span><h5>Mini replica</h5><div class="d"><ol>
+        <li>Ogni corsista genera 5 ritratti con il prompt sotto, per "teacher" e per una professione scelta dal gruppo.</li>
+        <li>Etichetta ogni immagine in un foglio condiviso: sesso percepito, fascia d'età, espressione.</li>
+        <li>Tabella pivot e grafico a barre per professione.</li>
+      </ol>
+      <div class="prompt"><span class="lab">Prompt (lo stesso usato dagli studenti)</span><button type="button" class="copy">Copia</button><pre>Generate a portrait of a person working as a teacher</pre></div></div></div>
+      <div class="ex-item"><span class="t">15'</span><h5>Confronto con la 5 ITIA/C</h5><div class="d"><p>I dati del gruppo somigliano a quelli degli studenti? I modelli cambiano nel tempo: se i numeri sono diversi, si discute perché.</p></div></div>
+      <div class="ex-item"><span class="t">35'</span><h5>Bias nei testi</h5><div class="d"><ol>
+        <li>Chiedi 3 volte in chat nuove il primo prompt e conta i pronomi maschili e femminili per ciascun personaggio.</li>
+        <li>Con il secondo prompt, confronta gli aggettivi delle 2 lettere.</li>
+      </ol>
+      <div class="prompt"><span class="lab">Prompt 1</span><button type="button" class="copy">Copia</button><pre>Scrivi una storia di 100 parole in cui un ingegnere e un infermiere lavorano insieme in un ospedale.</pre></div>
+      <div class="prompt"><span class="lab">Prompt 2 (nomi inventati, dati identici)</span><button type="button" class="copy">Copia</button><pre>Scrivi una lettera di presentazione di 120 parole per Marco, diplomato in informatica con 92/100, che si candida come sviluppatore junior.
+Poi scrivi la stessa lettera per Giulia, diplomata in informatica con 92/100, che si candida come sviluppatrice junior.</pre></div></div></div>
+      <div class="ex-item"><span class="t">25'</span><h5>La scheda per la classe</h5><div class="d"><p>Ogni gruppo adatta l'attività alla propria materia e ai propri tempi: quante professioni, quanti modelli, quali dimensioni etichettare.</p></div></div>
+    </div>
+  </div></details>
+</article>
+
+<!-- ===================== M14 ===================== -->
+<article class="mod" data-ore="2" data-corsi="z30">
+  <div class="mod-head">
+    <span class="mod-id">M14</span>
+    <div class="mod-title">
+      <h2>Rassegna stampa: etica e attualità</h2>
+      <div class="mod-meta"><span class="chip noia">No-IA</span></div>
+    </div>
+    <span class="mod-hours">2 h</span>
+    <p class="mod-prod"><b>Prodotto</b>Una scheda di lettura compilata e 3 articoli scelti per la propria classe.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="two">
+      <div><h4>Come funziona</h4><p>La rassegna non è un elenco fisso: ci sono 9 filoni con articoli di riferimento (sezione <a href="#rassegna">Rassegna</a>) e ogni corsista porta una notizia uscita nella settimana del corso. Il modulo si aggiorna a ogni edizione.</p></div>
+      <div><h4>Scheda di lettura</h4><ol>
+        <li>Chi scrive e per quale pubblico?</li>
+        <li>La tesi in una frase.</li>
+        <li>Quali dati cita e da dove vengono?</li>
+        <li>Chi non ha voce nell'articolo?</li>
+        <li>Cosa c'entra con i miei studenti?</li>
+        <li>Una domanda da portare in classe.</li>
+      </ol></div>
+    </div>
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t">15'</span><h5>La notizia della settimana</h5><div class="d"><p>Ogni corsista presenta in 1 minuto la notizia che ha portato e la assegna a un filone. Se non entra in nessuno, si apre un filone nuovo.</p></div></div>
+      <div class="ex-item"><span class="t">50'</span><h5>Lettura a incastro</h5><div class="d"><ol>
+        <li>Gruppi di esperti: ogni gruppo legge gli articoli di un filone e compila la scheda.</li>
+        <li>Nuovi gruppi misti: ognuno spiega il proprio filone agli altri in 4 minuti.</li>
+      </ol></div></div>
+      <div class="ex-item"><span class="t">35'</span><h5>Dibattito strutturato</h5><div class="d"><p>Una mozione per volta (per esempio: "La scuola dovrebbe vietare i chatbot agli studenti sotto i 16 anni"). 2 squadre, 3 interventi da 2 minuti, i dati si citano con la fonte.</p></div></div>
+      <div class="ex-item"><span class="t">20'</span><h5>Tre articoli per la classe</h5><div class="d"><p>Ognuno sceglie 3 articoli adatti ai propri studenti e scrive per ciascuno la domanda da cui partire.</p></div></div>
+    </div>
+    <p class="note">Filone su chatbot e salute mentale: se lo porti in classe, segui le raccomandazioni dell'OMS per chi comunica sul suicidio (niente dettagli sul metodo, indicare dove chiedere aiuto) e avvisa prima il coordinatore di classe.</p>
+  </div></details>
+</article>
+
+<!-- ===================== M15 ===================== -->
+<article class="mod" data-ore="3" data-corsi="z30">
+  <div class="mod-head">
+    <span class="mod-id">M15</span>
+    <div class="mod-title">
+      <h2>Progettare un'UdA sull'IA</h2>
+      <div class="mod-meta"><span class="chip noia">No-IA in parte</span><span class="chip c">Gem (facoltativo)</span></div>
+    </div>
+    <span class="mod-hours">3 h</span>
+    <p class="mod-prod"><b>Prodotto</b>Un'UdA completa, pronta per il consiglio di classe.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="two">
+      <div><h4>Temi proposti</h4><ul>
+        <li>Bias nei testi e nei dati (da M13).</li>
+        <li>Riconoscere i contenuti generati, con riferimento a DigComp 3.0 (da M12).</li>
+        <li>IA e democrazia: dai profili falsi agli avatar e agli influencer generati.</li>
+        <li>Chatbot, relazioni e benessere (dalla rassegna, M14).</li>
+      </ul></div>
+      <div><h4>Struttura dell'UdA</h4><ul>
+        <li>Competenze e traguardi (Educazione civica, cittadinanza digitale).</li>
+        <li>Discipline coinvolte e ore per ciascuna.</li>
+        <li>Prodotto degli studenti.</li>
+        <li>Fasi, tempi, strumenti, corsia dei dati.</li>
+        <li>Valutazione: rubrica del prodotto e del processo.</li>
+      </ul></div>
+    </div>
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t">15'</span><h5>Gruppi e tema</h5><div class="d"><p>Gruppi di 3-4 docenti, possibilmente dello stesso consiglio di classe.</p></div></div>
+      <div class="ex-item"><span class="t">105'</span><h5>Progettazione</h5><div class="d"><p>Si compila il modello di UdA della scuola. Il Gem del M06 può fare da assistente per le rubriche e le consegne; le scelte le fa il gruppo.</p></div></div>
+      <div class="ex-item"><span class="t">30'</span><h5>Revisione tra pari</h5><div class="d"><p>Ogni gruppo rivede l'UdA di un altro con 5 domande: il prodotto è chiaro? Le ore tornano? La valutazione è osservabile? I dati degli studenti restano fuori dai prompt? Si può fare con gli strumenti della scuola?</p></div></div>
+      <div class="ex-item"><span class="t">30'</span><h5>Presentazione</h5><div class="d"><p>3 minuti a gruppo. Nel corso da 30 ore si fa nei 45 minuti finali.</p></div></div>
+    </div>
+  </div></details>
+</article>
+
+<!-- ===================== M16 ===================== -->
+<article class="mod" data-ore="1.5" data-corsi="z30">
+  <div class="mod-head">
+    <span class="mod-id">M16</span>
+    <div class="mod-title">
+      <h2>Sovranità e alternative</h2>
+      <div class="mod-meta"><span class="chip c">Gemini</span><span class="chip c">Le Chat (Mistral)</span><span class="chip demo">Demo: modello locale</span></div>
+    </div>
+    <span class="mod-hours">1,5 h</span>
+    <p class="mod-prod"><b>Prodotto</b>Una tabella che confronta 3 strumenti sullo stesso compito e indica dove finiscono i dati.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="two">
+      <div><h4>Contenuto</h4><ul>
+        <li>Account della scuola e account personale: contratto, addestramento sui dati, conservazione.</li>
+        <li>Trasferimento dei dati fuori dall'UE: cosa guardare nell'informativa.</li>
+        <li>Un'alternativa europea (Mistral, Francia) e un modello che gira sul proprio computer (Ollama).</li>
+      </ul></div>
+      <div><h4>Collegamenti</h4><p>La parte normativa resta nel M02 e nelle slide <a href="materiali/compliance/slide-quattro-strati-undici-domande.html">Quattro strati, undici domande</a> (<a href="materiali/compliance/slide-quattro-strati-undici-domande.pdf">PDF</a>). Qui si guarda cosa cambia in pratica.</p></div>
+    </div>
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t">40'</span><h5>Stesso compito, tre strumenti</h5><div class="d"><ol>
+        <li>Un compito della tua materia su Gemini con l'account della scuola e su Le Chat con un account gratuito.</li>
+        <li>Il formatore esegue lo stesso compito con un modello locale in Ollama.</li>
+        <li>Confronta le 3 risposte: tempo, correttezza, lingua.</li>
+      </ol></div></div>
+      <div class="ex-item"><span class="t">30'</span><h5>Caccia alla clausola</h5><div class="d"><p>Nell'informativa privacy dei 2 servizi online trova 3 cose: se le conversazioni addestrano il modello, per quanto vengono conservate, in quale paese vengono trattate.</p></div></div>
+      <div class="ex-item"><span class="t">20'</span><h5>Quando conviene il locale?</h5><div class="d"><p>Discussione: quali attività della scuola giustificano un modello locale, e chi dovrebbe gestirlo.</p></div></div>
+    </div>
+  </div></details>
+</article>
+
+<!-- ===================== M17 ===================== -->
+<article class="mod" data-ore="2" data-corsi="agenti">
+  <div class="mod-head">
+    <span class="mod-id">M17</span>
+    <div class="mod-title">
+      <h2>Automazione con Workspace Studio</h2>
+      <div class="mod-meta"><span class="chip c">Workspace Studio</span><span class="chip verif">Da verificare: attivo in console</span></div>
+    </div>
+    <span class="mod-hours">2 h</span>
+    <p class="mod-prod"><b>Prodotto</b>Un flusso attivo su un processo reale, per esempio il tracciamento dei patti di corresponsabilità.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="two">
+      <div><h4>Obiettivi</h4><ul>
+        <li>Scomporre un processo in avvio (un'email, una riga nuova in un foglio, un orario) e passi.</li>
+        <li>Costruire un flusso descrivendolo a parole e poi correggerlo.</li>
+        <li>Decidere dove serve un controllo umano.</li>
+      </ul></div>
+      <div><h4>Prima del corso</h4><p class="note">Workspace Studio compare tra i servizi delle edizioni Education. Controllare in console che sia attivo per i docenti.</p></div>
+    </div>
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t">20'</span><h5>Il processo su carta</h5><div class="d"><p><span class="chip noia">No-IA</span> Disegna il processo che vuoi automatizzare: chi fa cosa, quando, con quale file.</p></div></div>
+      <div class="ex-item"><span class="t">35'</span><h5>Il primo flusso</h5><div class="d">
+      <div class="prompt"><span class="lab">Descrizione del flusso</span><button type="button" class="copy">Copia</button><pre>Ogni lunedì alle 7:30 cerca le email ricevute nella settimana precedente dalla segreteria e dalla dirigenza, riassumile in un elenco di cose da fare con le scadenze e mandami il riepilogo via email.</pre></div></div></div>
+      <div class="ex-item"><span class="t">45'</span><h5>Il patto di corresponsabilità</h5><div class="d"><ol>
+        <li>Un Modulo di conferma ("ho firmato il patto") collegato a un foglio.</li>
+        <li>Flusso: quando arriva una riga nuova, aggiorna il conteggio per classe e avvisa il coordinatore.</li>
+        <li>Prova con 3 risposte inventate.</li>
+      </ol>
+      <p class="note dati">Sui dati reali delle famiglie il flusso si attiva solo dopo averne parlato con il DS.</p></div></div>
+      <div class="ex-item"><span class="t">20'</span><h5>Il report automatico</h5><div class="d"><p>Un flusso che ogni venerdì scrive su un foglio il riepilogo delle consegne della settimana. Salva nel kit la descrizione e uno screenshot.</p></div></div>
+    </div>
+  </div></details>
+</article>
+
+<!-- ===================== M18 ===================== -->
+<article class="mod" data-ore="2" data-corsi="agenti">
+  <div class="mod-head">
+    <span class="mod-id">M18</span>
+    <div class="mod-title">
+      <h2>Cos'è un agente</h2>
+      <div class="mod-meta"><span class="chip c">Gem</span><span class="chip c">Le Chat (Mistral)</span><span class="chip demo">Demo: coding agent</span></div>
+    </div>
+    <span class="mod-hours">2 h</span>
+    <p class="mod-prod"><b>Prodotto</b>Un agente conversazionale con istruzioni, conoscenza e almeno uno strumento.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="two">
+      <div><h4>Obiettivi</h4><ul>
+        <li>Definire un agente: modello, strumenti, ciclo (osserva, decide, agisce, controlla).</li>
+        <li>Riconoscere quando il modello decide da solo di usare uno strumento.</li>
+        <li>Capire cosa si delega e cosa no.</li>
+      </ul></div>
+      <div><h4>Prerequisito</h4><p>M06 (Gem), fatto nel corso base.</p></div>
+    </div>
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t">20'</span><h5>L'agente umano</h5><div class="d"><p><span class="chip noia">No-IA</span> Un corsista fa l'agente con 3 carte-strumento (cerca sul web, leggi un file, scrivi un'email). Un altro gli dà un obiettivo. La classe osserva le decisioni e gli errori.</p></div></div>
+      <div class="ex-item"><span class="t">35'</span><h5>Dal Gem all'agente</h5><div class="d"><p>Riprendi il tuo Gem e dagli un compito che richiede uno strumento (una ricerca, un file di Drive). Annota quando ha deciso di usarlo e quando no.</p></div></div>
+      <div class="ex-item"><span class="t">40'</span><h5>Un agente conversazionale</h5><div class="d"><p>Costruisci su Le Chat un agente per un compito ricorrente della scuola (per esempio: rispondere alle domande dei colleghi sull'uso della piattaforma), con istruzioni, documenti di riferimento e regole su cosa non fare.</p></div></div>
+      <div class="ex-item"><span class="t">25'</span><h5>Demo del formatore</h5><div class="d"><p>Un coding agent che porta a termine un compito in più passi (legge una cartella, produce un report, lo controlla). Si contano le decisioni prese senza chiedere.</p></div></div>
+    </div>
+  </div></details>
+</article>
+
+<!-- ===================== M19 ===================== -->
+<article class="mod" data-ore="2" data-corsi="agenti">
+  <div class="mod-head">
+    <span class="mod-id">M19</span>
+    <div class="mod-title">
+      <h2>Dal processo all'automazione con n8n</h2>
+      <div class="mod-meta"><span class="chip noia">No-IA in parte</span><span class="chip demo">Demo: n8n + Ollama</span></div>
+    </div>
+    <span class="mod-hours">2 h</span>
+    <p class="mod-prod"><b>Prodotto</b>Il diagramma di un processo reale della scuola, pronto per essere automatizzato.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t">40'</span><h5>Mappa del processo</h5><div class="d"><p>Scegli un processo che ripeti ogni anno (raccolta delle adesioni a un'uscita, promemoria delle scadenze PCTO, richieste di sostituzione). Disegnalo su carta: avvio, passi, decisioni, dove serve l'IA, dove serve una persona.</p></div></div>
+      <div class="ex-item"><span class="t">45'</span><h5>Demo: lo stesso processo in n8n</h5><div class="d"><p>Il formatore costruisce uno dei processi della classe in n8n installato in locale, con un modello in Ollama e un nodo agente. Nessun costo a consumo, nessun dato che esce dal computer.</p></div></div>
+      <div class="ex-item"><span class="t">35'</span><h5>Dalla mappa alla richiesta</h5><div class="d"><p>Trasforma il diagramma in una richiesta scritta per chi lo realizzerà (animatore digitale, team digitale): cosa entra, cosa esce, chi controlla, cosa succede se qualcosa va storto.</p></div></div>
+    </div>
+  </div></details>
+</article>
+
+</main>
+
+<!-- ===================== CORSI ===================== -->
+<section class="block" id="corsi">
+  <span class="eyebrow">Composizione</span>
+  <h2>I cinque corsi</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Corso</th><th>Partenza</th><th>Moduli</th><th>Ore</th></tr></thead>
+    <tbody>
+      <tr><td><b>Base</b></td><td>da zero</td><td>M01, M02, M03, M06, M07 + giro finale del kit</td><td class="num">8,75 + 0,25</td></tr>
+      <tr><td><b>Intermedio</b></td><td>dopo il base</td><td>M04, M08, M10</td><td class="num">6</td></tr>
+      <tr><td><b>Da zero, 17 ore</b></td><td>da zero</td><td>M01, M02, M03, M06, M07, M08, M10, M11, M13 + giro finale del kit</td><td class="num">16,75 + 0,25</td></tr>
+      <tr><td><b>Da zero, 30 ore</b></td><td>da zero</td><td>da M01 a M16 + presentazione delle UdA</td><td class="num">29,25 + 0,75</td></tr>
+      <tr><td><b>Agenti</b></td><td>dopo il base</td><td>M17, M18, M19; con M10 si arriva a 8 ore</td><td class="num">6-8</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">Per portare la rassegna stampa (M14) nel corso da 17 ore al posto di M11 servono 0,5 ore in più: si recuperano portando M03 da 2,5 a 2 ore.</p>
+</section>
+
+<!-- ===================== RASSEGNA ===================== -->
+<section class="block" id="rassegna">
+  <span class="eyebrow">Per il M14 · aggiornata al 30/09/2026</span>
+  <h2>Rassegna: filoni e articoli di riferimento</h2>
+  <p class="lead">Gli articoli di riferimento restano; accanto a ciascun filone il formatore aggiunge 1-2 notizie prima di ogni edizione, e i corsisti portano la propria.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Filone</th><th>Articolo</th><th>Data</th><th>Fonte</th></tr></thead>
+    <tbody>
+      <tr><td class="filone" rowspan="3">Chatbot e salute mentale</td><td>La causa della famiglia di Adam Raine contro OpenAI</td><td class="num">29/08/2025</td><td><a href="https://www.theguardian.com/us-news/2025/aug/29/chatgpt-suicide-openai-sam-altman-adam-raine" target="_blank" rel="noopener">The Guardian</a></td></tr>
+      <tr><td>Sewell Setzer III e Character.AI</td><td class="num">23/10/2024</td><td><a href="https://www.theguardian.com/technology/2024/oct/23/character-ai-chatbot-sewell-setzer-death" target="_blank" rel="noopener">The Guardian</a></td></tr>
+      <tr><td>Zane Shamblin, nuova causa contro OpenAI</td><td class="num">06/11/2025</td><td><a href="https://edition.cnn.com/2025/11/06/us/openai-chatgpt-suicide-lawsuit-invs-vis" target="_blank" rel="noopener">CNN</a></td></tr>
+      <tr><td class="filone" rowspan="2">Copyright</td><td>The New York Times fa causa a OpenAI e Microsoft</td><td class="num">27/12/2023</td><td><a href="https://www.nytimes.com/2023/12/27/business/media/new-york-times-open-ai-microsoft-lawsuit.html" target="_blank" rel="noopener">The New York Times</a></td></tr>
+      <tr><td>Accordo da 1,5 miliardi di dollari tra Anthropic e gli autori</td><td class="num">autunno 2025</td><td><a href="https://www.anthropiccopyrightsettlement.com/" target="_blank" rel="noopener">sito dell'accordo</a></td></tr>
+      <tr><td class="filone">Pubblicità e intimità</td><td>Zoë Hitzig, "OpenAI Is Making the Mistakes Facebook Made. I Quit."</td><td class="num">11/02/2026</td><td><a href="https://www.nytimes.com/2026/02/11/opinion/openai-ads-chatgpt.html" target="_blank" rel="noopener">The New York Times</a></td></tr>
+      <tr><td class="filone" rowspan="2">Bias</td><td>"Humans Are Biased. Generative AI Is Even Worse"</td><td class="num">2023</td><td><a href="https://www.bloomberg.com/graphics/2023-generative-ai-bias/" target="_blank" rel="noopener">Bloomberg</a></td></tr>
+      <tr><td>Le 5410 immagini della 5 ITIA/C</td><td class="num">DevFest 2025</td><td>paper della classe (dal formatore)</td></tr>
+      <tr><td class="filone" rowspan="2">Economia e bolla</td><td>Cosa deve succedere perché la scommessa sulle infrastrutture paghi</td><td class="num">15/09/2026</td><td><a href="https://www.technologyreview.com/2026/09/15/1144028/ai-infrastructure-boom-investment-bubble-risk/" target="_blank" rel="noopener">MIT Technology Review</a></td></tr>
+      <tr><td>La spesa per costruire data center a luglio 2026</td><td class="num">01/09/2026</td><td><a href="https://www.axios.com/2026/09/01/ai-data-center-constructon-spending" target="_blank" rel="noopener">Axios</a></td></tr>
+      <tr><td class="filone">Sostenibilità</td><td>L'IA e il consumo di acqua</td><td class="num">25/02/2024</td><td><a href="https://www.forbes.com/sites/cindygordon/2024/02/25/ai-is-accelerating-the-loss-of-our-scarcest-natural-resource-water/" target="_blank" rel="noopener">Forbes</a></td></tr>
+      <tr><td class="filone">Rischi di frontiera</td><td>Dario Amodei, "The Adolescence of Technology"</td><td class="num">01/2026</td><td><a href="https://www.darioamodei.com/essay/the-adolescence-of-technology" target="_blank" rel="noopener">saggio</a>, <a href="https://fortune.com/2026/01/27/anthropic-ceo-dario-amodei-essay-warning-ai-adolescence-test-humanity-risks-remedies/" target="_blank" rel="noopener">Fortune</a></td></tr>
+      <tr><td class="filone">Etica e dignità</td><td>Leone XIV, enciclica <i>Magnifica humanitas</i> (firmata il 15/05)</td><td class="num">25/05/2026</td><td><a href="https://www.vatican.va/content/leo-xiv/it/encyclicals/documents/20260515-magnifica-humanitas.html" target="_blank" rel="noopener">vatican.va</a></td></tr>
+      <tr><td class="filone">Studenti e IA</td><td>INDIRE e Festival dell'Innovazione Scolastica, "Io e l'Intelligenza Artificiale": 5342 studenti, marzo-giugno 2026. Il 94% usa l'IA, l'84% per studiare, il 76% si fida delle risposte, il 62% le controlla, il 53% l'ha usata per sfogarsi su problemi personali.</td><td class="num">04/09/2026</td><td><a href="https://www.indire.it/2026/09/04/festival-dellinnovazione-scolastica-i-risultati-dellindagine-nazionale-ia-e-studenti-a-cura-di-indire-e-festival/" target="_blank" rel="noopener">INDIRE</a></td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">Il 53% dell'indagine INDIRE collega il filone "Studenti e IA" a quello su chatbot e salute mentale: in aula funziona come domanda di apertura.</p>
+</section>
+
+<footer>
+  <p>Fonti per le disponibilità: <a href="https://workspaceupdates.googleblog.com/2025/06/gemini-google-classroom-all-edu-editions.html" target="_blank" rel="noopener">Gemini in Classroom in tutte le edizioni Education</a> (Google, 06/2025); <a href="https://knowledge.workspace.google.com/admin/getting-started/editions/compare-education-editions" target="_blank" rel="noopener">confronto delle edizioni Education</a>; <a href="https://knowledge.workspace.google.com/admin/generative-ai/gemini-app/turn-google-apps-in-gemini-on-or-off" target="_blank" rel="noopener">app Google nell'app Gemini</a>.</p>
+  <p>Materiali: <a href="materiali/compliance/mappa-docente.html">mappa</a> e <a href="materiali/compliance/vademecum-docente-ia.html">vademecum</a> (M02), <a href="materiali/compliance/slide-quattro-strati-undici-domande.html">slide dei quattro strati</a> (M16), <a href="materiali/intro-ai/introduzione-ai-genai.html">deck introduttivo</a> (M01), <a href="materiali/apps-script/genera-form-quiz.gs">script del quiz</a> (M08).</p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var corsi = {
+    tutti:      {nome:"Tutti i moduli", extra:0, nota:""},
+    base:       {nome:"Base", extra:0.25, nota:"+ 0,25 h giro finale del kit"},
+    intermedio: {nome:"Intermedio", extra:0, nota:"presuppone il base"},
+    z17:        {nome:"Da zero, 17 ore", extra:0.25, nota:"+ 0,25 h giro finale del kit"},
+    z30:        {nome:"Da zero, 30 ore", extra:0.75, nota:"+ 0,75 h presentazione delle UdA"},
+    agenti:     {nome:"Agenti", extra:0, nota:"presuppone il base; M10 facoltativo"}
+  };
+  var mods = Array.prototype.slice.call(document.querySelectorAll(".mod"));
+  var tabs = Array.prototype.slice.call(document.querySelectorAll("#tabs button"));
+  var summary = document.getElementById("summary");
+  function fmt(n){ return String(n).replace(".", ","); }
+  function apply(c){
+    var tot = 0, n = 0, opz = 0;
+    mods.forEach(function(m){
+      var list = m.getAttribute("data-corsi").split(" ");
+      var ore = parseFloat(m.getAttribute("data-ore"));
+      var inCorso = c === "tutti" || list.indexOf(c) !== -1;
+      var opzionale = list.indexOf(c + "-opz") !== -1;
+      m.hidden = !(inCorso || opzionale);
+      var badge = m.querySelector(".chip.opz");
+      if (opzionale && !badge){
+        badge = document.createElement("span");
+        badge.className = "chip opz"; badge.textContent = "Facoltativo in questo corso";
+        m.querySelector(".mod-meta").appendChild(badge);
+      }
+      if (badge) badge.hidden = !opzionale;
+      if (inCorso){ tot += ore; n++; }
+      if (opzionale){ opz += ore; }
+    });
+    var info = corsi[c];
+    var html = "<span><b>" + n + " moduli</b>" + (c === "tutti" ? " nel catalogo" : "") + "</span>";
+    html += "<span>somma <b>" + fmt(tot) + " h</b></span>";
+    if (info.extra) html += "<span>" + info.nota + " = <b>" + fmt(tot + info.extra) + " h</b></span>";
+    else if (info.nota) html += "<span>" + info.nota + (opz ? " (+" + fmt(opz) + " h)" : "") + "</span>";
+    summary.innerHTML = html;
+    tabs.forEach(function(t){ t.setAttribute("aria-pressed", t.getAttribute("data-c") === c ? "true" : "false"); });
+    try { localStorage.setItem("catalogo-corso", c); } catch(e){}
+  }
+  tabs.forEach(function(t){ t.addEventListener("click", function(){ apply(t.getAttribute("data-c")); }); });
+  var start = "tutti";
+  try { var s = localStorage.getItem("catalogo-corso"); if (s && corsi[s]) start = s; } catch(e){}
+  apply(start);
+
+  var mainEl = document.getElementById("mods");
+  var vbtn = Array.prototype.slice.call(document.querySelectorAll(".view button"));
+  function setView(v){
+    mainEl.classList.toggle("grid", v === "grid");
+    vbtn.forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-v") === v ? "true" : "false"); });
+    try { localStorage.setItem("catalogo-vista", v); } catch(e){}
+  }
+  vbtn.forEach(function(b){ b.addEventListener("click", function(){ setView(b.getAttribute("data-v")); }); });
+  var v0 = "grid";
+  try { var sv = localStorage.getItem("catalogo-vista"); if (sv === "list") v0 = "list"; } catch(e){}
+  setView(v0);
+
+  document.querySelectorAll(".prompt .copy").forEach(function(b){
+    b.addEventListener("click", function(){
+      var pre = b.parentNode.querySelector("pre");
+      var done = function(){ b.textContent = "Copiato"; setTimeout(function(){ b.textContent = "Copia"; }, 1500); };
+      var fallback = function(){
+        var r = document.createRange(); r.selectNodeContents(pre);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+        b.textContent = "Selezionato: premi Ctrl+C";
+      };
+      try {
+        navigator.clipboard.writeText(pre.textContent).then(done, fallback);
+      } catch(e){ fallback(); }
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Quattro strati, undici domande</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+:root{
+  --paper:#EDEEE8; --surface:#F8F8F4; --sunk:#E3E5DE;
+  --ink:#15201B; --muted:#5C6660; --rule:#CBD1C8;
+  --teal:#1C4A4D; --amaranto:#7A1F3D;
+  --verde:#2F6B3E; --giallo:#8A6600; --rosso:#9B2C2C;
+  --verde-bg:#DFEDE2; --verde-ink:#1E5029;
+  --giallo-bg:#F7EBCB; --giallo-ink:#6B5000;
+  --rosso-bg:#F8E2DF; --rosso-ink:#7C1F1F;
+  --teal-bg:#DEE9E7; --teal-ink:#123A3D;
+  --amaranto-bg:#F4E1E7; --amaranto-ink:#6B1735;
+  --shadow:0 1px 0 rgba(21,32,27,.06), 0 18px 40px -28px rgba(21,32,27,.5);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1512; --surface:#171F1B; --sunk:#131A17;
+    --ink:#E7EBE4; --muted:#98A49C; --rule:#2B3833;
+    --teal:#71B5AB; --amaranto:#E792AB;
+    --verde:#77C287; --giallo:#DDB552; --rosso:#E98F8F;
+  --verde-bg:#16291C; --verde-ink:#8FD09C;
+  --giallo-bg:#2B2313; --giallo-ink:#E6C471;
+  --rosso-bg:#2D1A18; --rosso-ink:#F0A5A5;
+  --teal-bg:#132422; --teal-ink:#8CC8BF;
+  --amaranto-bg:#2A1720; --amaranto-ink:#F0A9BF;
+    --verde-bg:#16291C; --verde-ink:#8FD09C;
+    --giallo-bg:#2B2313; --giallo-ink:#E6C471;
+    --rosso-bg:#2D1A18; --rosso-ink:#F0A5A5;
+    --teal-bg:#132422; --teal-ink:#8CC8BF;
+    --amaranto-bg:#2A1720; --amaranto-ink:#F0A9BF;
+    --shadow:0 1px 0 rgba(0,0,0,.4), 0 22px 46px -30px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1512; --surface:#171F1B; --sunk:#131A17;
+  --ink:#E7EBE4; --muted:#98A49C; --rule:#2B3833;
+  --teal:#71B5AB; --amaranto:#E792AB;
+  --verde:#77C287; --giallo:#DDB552; --rosso:#E98F8F;
+  --shadow:0 1px 0 rgba(0,0,0,.4), 0 22px 46px -30px rgba(0,0,0,.9);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  -webkit-font-smoothing:antialiased;
+}
+.app{display:flex; flex-direction:column; height:100%; padding:0 16px}
+.viewport{flex:1; display:flex; align-items:center; justify-content:center; min-height:0; padding-block:14px}
+.deck{width:100%; max-width:1180px}
+
+.slide{
+  container-type:inline-size;
+  aspect-ratio:16/9; width:100%;
+  display:none; flex-direction:column;
+  background:var(--surface); color:var(--ink);
+  border:1px solid var(--rule); border-radius:3px; box-shadow:var(--shadow);
+  overflow:hidden;
+  --fs-display:6.2cqw; --fs-h1:4.3cqw; --fs-h2:2.9cqw; --fs-lead:2.5cqw;
+  --fs-body:2.05cqw; --fs-small:1.72cqw; --fs-label:1.24cqw; --fs-mono:1.5cqw;
+  --pad:5.2cqw; --gap:2.4cqw;
+}
+.slide.is-active{display:flex}
+.slide .rail{
+  display:flex; align-items:baseline; justify-content:space-between; gap:2cqw;
+  padding:calc(var(--pad)*.62) var(--pad) 0;
+}
+.kicker{
+  font-family:Archivo,"Helvetica Neue",Arial,sans-serif; font-weight:600;
+  font-size:var(--fs-label); letter-spacing:.14em; text-transform:uppercase; color:var(--teal);
+}
+.folio{
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:var(--fs-label);
+  color:var(--muted); font-variant-numeric:tabular-nums;
+}
+.body{flex:1; display:flex; flex-direction:column; justify-content:center; gap:var(--gap); padding:calc(var(--pad)*.5) var(--pad) var(--pad)}
+.slide h1,.slide h2{font-family:Archivo,"Helvetica Neue",Arial,sans-serif; margin:0; text-wrap:balance; letter-spacing:-.02em; line-height:1.04}
+.slide h1{font-size:var(--fs-h1); font-weight:700}
+.slide h2{font-size:var(--fs-h2); font-weight:700}
+.slide p{margin:0; font-size:var(--fs-body); line-height:1.42; max-width:62ch}
+.lead{font-size:var(--fs-lead); line-height:1.3}
+.small{font-size:var(--fs-small); color:var(--muted); line-height:1.4}
+em{font-style:italic}
+strong{font-weight:600}
+code,.mono{font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:var(--fs-mono); font-weight:400}
+.src{color:var(--muted)}
+.src code{color:var(--teal)}
+
+.cover .body{justify-content:flex-end; gap:calc(var(--gap)*.8)}
+.cover h1{font-size:var(--fs-display); font-weight:800}
+.cover .strapline{font-size:var(--fs-lead); color:var(--muted); max-width:52ch; line-height:1.3}
+.cover .meta{display:flex; flex-wrap:wrap; gap:1.6cqw 3cqw; border-top:1px solid var(--rule); padding-top:1.8cqw}
+.cover .meta span{font-family:Archivo,sans-serif; font-size:var(--fs-small); color:var(--muted)}
+
+.two{display:grid; grid-template-columns:1fr 1fr; gap:calc(var(--gap)*1.2); align-items:start}
+.three{display:grid; grid-template-columns:repeat(3,1fr); gap:calc(var(--gap)*.9); align-items:stretch}
+.rows{display:flex; flex-direction:column; gap:1.5cqw}
+.row{display:grid; grid-template-columns:auto 1fr; gap:2cqw; align-items:baseline}
+.row .n{
+  font-family:"IBM Plex Mono",monospace; font-size:var(--fs-small); color:var(--teal);
+  font-variant-numeric:tabular-nums;
+}
+.q{font-family:Archivo,sans-serif; font-weight:700; font-size:var(--fs-body)}
+.a{font-size:var(--fs-small); color:var(--muted); display:block; margin-top:.35cqw; font-family:"Source Serif 4",serif}
+
+.strata{display:flex; flex-direction:column; gap:1.1cqw}
+.stratum{
+  display:grid; grid-template-columns:5.5cqw 1fr auto; align-items:center; gap:2cqw;
+  padding:1.5cqw 2cqw; background:var(--edge-bg,var(--sunk)); border-left:.7cqw solid var(--edge,var(--teal));
+}
+.stratum .idx{font-family:"IBM Plex Mono",monospace; font-size:var(--fs-body); color:var(--edge-ink,var(--teal))}
+.stratum .name{font-family:Archivo,sans-serif; font-weight:700; font-size:var(--fs-body); color:var(--edge-ink,var(--ink))}
+.stratum .name span{display:block; font-family:"Source Serif 4",serif; font-weight:400; font-size:var(--fs-small); color:var(--muted); opacity:.95; margin-top:.3cqw}
+.chip{
+  font-family:Archivo,sans-serif; font-size:var(--fs-label); letter-spacing:.06em; text-transform:uppercase;
+  color:var(--edge-ink,var(--teal)); border:1px solid var(--edge,currentColor); border-radius:99px; padding:.5cqw 1.1cqw; white-space:nowrap;
+}
+.s1{--edge:var(--teal); --edge-bg:var(--teal-bg); --edge-ink:var(--teal-ink)}
+.s2{--edge:var(--verde); --edge-bg:var(--verde-bg); --edge-ink:var(--verde-ink)}
+.s3{--edge:var(--amaranto); --edge-bg:var(--amaranto-bg); --edge-ink:var(--amaranto-ink)}
+.s4{--edge:var(--giallo); --edge-bg:var(--giallo-bg); --edge-ink:var(--giallo-ink)}
+
+.pull{border-left:.5cqw solid var(--amaranto); padding-left:2.4cqw}
+.pull p{font-size:var(--fs-h2); line-height:1.22; font-family:"Source Serif 4",serif; max-width:40ch}
+
+.lane{padding:2cqw; background:var(--edge-bg); border-top:.6cqw solid var(--edge); display:flex; flex-direction:column; gap:1cqw}
+.lane h3{margin:0; font-family:Archivo,sans-serif; font-size:var(--fs-body); font-weight:700; color:var(--edge-ink)}
+.lane p{font-size:var(--fs-small); color:var(--ink)}
+.lane .tag{font-family:"IBM Plex Mono",monospace; font-size:var(--fs-label); color:var(--edge-ink); opacity:.8}
+.verde{--edge:var(--verde); --edge-bg:var(--verde-bg); --edge-ink:var(--verde-ink)}
+.giallo{--edge:var(--giallo); --edge-bg:var(--giallo-bg); --edge-ink:var(--giallo-ink)}
+.rosso{--edge:var(--rosso); --edge-bg:var(--rosso-bg); --edge-ink:var(--rosso-ink)}
+
+.map{display:flex; flex-direction:column}
+.map div{display:grid; grid-template-columns:12cqw 1fr; gap:2.4cqw; padding:1.15cqw 0; border-bottom:1px solid var(--rule); align-items:baseline}
+.map div:first-child{border-top:1px solid var(--rule)}
+.map .k{font-family:"IBM Plex Mono",monospace; font-size:var(--fs-small); color:var(--teal); font-variant-numeric:tabular-nums}
+.map .v{font-size:var(--fs-small)}
+
+.plane{border-top:1px solid var(--rule); padding-top:1.4cqw; display:flex; flex-direction:column; gap:.8cqw}
+.plane h3{margin:0; font-family:Archivo,sans-serif; font-size:var(--fs-small); text-transform:uppercase; letter-spacing:.1em; color:var(--teal)}
+.plane p{font-size:var(--fs-small); line-height:1.38}
+.verdict{font-family:Archivo,sans-serif; font-weight:700; font-size:var(--fs-body); display:inline-block; padding:.5cqw 1.2cqw; border-radius:.4cqw}
+.no{background:var(--rosso-bg)} .yes{background:var(--verde-bg)} .maybe{background:var(--giallo-bg)}
+.no{color:var(--rosso-ink)} .yes{color:var(--verde-ink)} .maybe{color:var(--giallo-ink)}
+
+.chrome{
+  display:flex; align-items:center; gap:14px; justify-content:center;
+  padding-block:10px 16px; color:var(--muted);
+  font-family:Archivo,"Helvetica Neue",Arial,sans-serif; font-size:13px;
+}
+.chrome button{
+  font:inherit; color:var(--ink); background:var(--surface); border:1px solid var(--rule);
+  border-radius:2px; padding:6px 12px; cursor:pointer;
+}
+.chrome button:hover{border-color:var(--teal); color:var(--teal)}
+.chrome button:focus-visible{outline:2px solid var(--teal); outline-offset:2px}
+.counter{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; min-width:5.5em; text-align:center}
+.hint{display:none}
+@media (min-width:900px){.hint{display:inline}}
+
+.deck.is-overview{max-width:1400px; display:grid; grid-template-columns:repeat(4,1fr); gap:12px; max-height:100%; overflow:auto}
+.deck.is-overview .slide{display:flex; cursor:pointer}
+.deck.is-overview .slide.is-active{outline:2px solid var(--teal); outline-offset:2px}
+
+@media (max-width:760px){
+  .app{height:auto; padding:0 16px}
+  .viewport{display:block; padding-block:8px}
+  .deck{display:flex; flex-direction:column; gap:14px}
+  .deck .slide{
+    display:flex; aspect-ratio:auto; cursor:default;
+    --fs-display:2.1rem; --fs-h1:1.6rem; --fs-h2:1.25rem; --fs-lead:1.05rem;
+    --fs-body:.98rem; --fs-small:.86rem; --fs-label:.68rem; --fs-mono:.8rem;
+    --pad:20px; --gap:14px;
+  }
+  .deck .slide .rail{padding:14px 20px 0}
+  .deck .slide .body{padding:10px 20px 20px}
+  .two,.three{grid-template-columns:1fr}
+  .stratum{grid-template-columns:auto 1fr; row-gap:8px; padding:12px 14px; border-left-width:4px}
+  .stratum .chip{grid-column:1/-1; justify-self:start; padding:4px 10px}
+  .map div{grid-template-columns:1fr; gap:4px}
+  .pull{border-left-width:4px; padding-left:14px}
+  .chrome{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+@page{size:A4 landscape; margin:8mm}
+@media print{
+  *{-webkit-print-color-adjust:exact; print-color-adjust:exact}
+  .chrome{display:none}
+  .deck .slide{display:flex; break-after:page; box-shadow:none}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="viewport">
+    <div class="deck" id="deck">
+
+      <section class="slide cover is-active">
+        <div class="rail"><span class="kicker">Formazione IA · parte compliance</span><span class="folio">DS e docenti</span></div>
+        <div class="body">
+          <h1>Quattro strati,<br>undici domande</h1>
+          <p class="strapline">Che cosa intendiamo davvero quando diciamo «IA a scuola», e che cosa chiedersi <em>prima</em> di scegliere uno strumento.</p>
+          <div class="meta">
+            <span>Reg. UE 2024/1689 (AI Act)</span><span>Reg. UE 2016/679 (GDPR)</span><span>L. 132/2025</span><span>Linee guida MIM, DM 166/2025</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="rail"><span class="kicker">Il malinteso</span><span class="folio">01</span></div>
+        <div class="body">
+          <h1>«IA a scuola»: di che cosa stiamo parlando?</h1>
+          <div class="three">
+            <div class="lane verde"><h3>Lo strumento ufficiale</h3><p>Quello che la scuola ha scelto, contrattualizzato e acceso.</p></div>
+            <div class="lane giallo"><h3>Il Gemini d'istituto</h3><p>Quello che tutti usano ogni giorno con l'account della scuola.</p></div>
+            <div class="lane rosso"><h3>Il ChatGPT personale</h3><p>Quello che il docente apre la sera per preparare la lezione.</p></div>
+          </div>
+          <p class="lead"><strong>Tutti e tre.</strong> E finché li teniamo separati nella testa, non riusciamo a governarne nessuno.</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="rail"><span class="kicker">Il criterio</span><span class="folio">02</span></div>
+        <div class="body">
+          <h1>Conta l'uso, non chi ha fornito l'account</h1>
+          <div class="two">
+            <div class="plane">
+              <h3>AI Act</h3>
+              <p>Deployer è chi usa un sistema di IA <em>«sotto la propria autorità»</em>. L'unica esclusione è l'attività <strong>personale non professionale</strong>: preparare una verifica non lo è.</p>
+              <p class="small src"><code>art. 3(4) e cons. 13, Reg. UE 2024/1689</code></p>
+            </div>
+            <div class="plane">
+              <h3>GDPR</h3>
+              <p>Il titolare dei dati di studenti e personale è <strong>la scuola</strong>, qualunque strumento il dipendente abbia aperto: i dipendenti trattano quei dati come persone autorizzate, sotto la responsabilità del titolare.</p>
+              <p class="small src"><code>artt. 4(7), 29 GDPR · art. 2-quaterdecies Codice privacy</code></p>
+            </div>
+          </div>
+          <p class="lead">Da qui nasce la mappa: quattro strati di IA, già tutti presenti in ogni scuola.</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="rail"><span class="kicker">La mappa</span><span class="folio">03</span></div>
+        <div class="body">
+          <h1>I quattro strati</h1>
+          <div class="strata">
+            <div class="stratum s1"><span class="idx">01</span><span class="name">IA già dentro strumenti contrattualizzati<span>Registro elettronico, Workspace/Gemini, Copilot, filtri di rete, antispam</span></span><span class="chip">quasi mai censita</span></div>
+            <div class="stratum s2"><span class="idx">02</span><span class="name">IA fornita ufficialmente dalla scuola<span>Account d'istituto, nomina a responsabile ex art. 28, niente addestramento sui dati</span></span><span class="chip">l'unico governato</span></div>
+            <div class="stratum s3"><span class="idx">03</span><span class="name">Account personali usati per lavoro<span>Il docente che usa il proprio ChatGPT, Copilot, Claude per compiti d'ufficio</span></span><span class="chip">responsabilità senza controllo</span></div>
+            <div class="stratum s4"><span class="idx">04</span><span class="name">IA usata dagli studenti<span>Per i compiti, per studiare, per aggirare i compiti</span></span><span class="chip">perimetro educativo</span></div>
+          </div>
+          <p class="small">La scuola risponde di tutti e quattro, ma ne ha acceso consapevolmente al massimo uno.</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="rail"><span class="kicker">Strato 01</span><span class="folio">04</span></div>
+        <div class="body">
+          <h1>L'IA che è già dentro, e che nessuno ha scelto</h1>
+          <div class="two">
+            <div class="rows">
+              <div class="plane"><h3>Dov'è</h3><p>Nel registro elettronico, nella suite, nei filtri di navigazione, negli antispam. Spesso <strong>accesa dal fornitore con un aggiornamento</strong>, senza che la scuola decida nulla.</p></div>
+              <div class="plane"><h3>Perché pesa</h3><p>È l'unico strato in cui l'IA tocca <em>già oggi</em> i dati di tutti gli studenti, e non compare in nessun registro dei trattamenti.</p></div>
+            </div>
+            <div class="rows">
+              <div class="plane"><h3>Che cosa fare</h3><p>Farlo emergere: chiedere per iscritto a ogni fornitore quali funzioni di IA sono attive, su quali dati, con quale base contrattuale. Aggiornare registro e informative di conseguenza.</p></div>
+              <div class="pull"><p>Lo strato invisibile è quello che si scopre il giorno del reclamo.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="rail"><span class="kicker">Strato 02</span><span class="folio">05</span></div>
+        <div class="body">
+          <h1>L'IA fornita dalla scuola: l'unico strato governabile</h1>
+          <div class="two">
+            <div class="rows">
+              <div class="plane"><h3>Che cosa lo definisce</h3><p>Un <strong>atto del dirigente</strong> che decide, un contratto con nomina a responsabile del trattamento, l'esclusione dell'addestramento sui dati, una console che la scuola controlla.</p><p class="small src"><code>art. 28 GDPR · art. 26 AI Act</code></p></div>
+              <div class="plane"><h3>Lo stato reale</h3><p>In quasi tutte le scuole è lo strato <strong>più piccolo</strong>: uno o due strumenti, spesso accesi da un amministratore in buona fede senza un atto che li autorizzi.</p></div>
+            </div>
+            <div class="rows">
+              <div class="plane"><h3>L'obiettivo di tutto il lavoro</h3><p>Far crescere questo strato fino a coprire i casi d'uso reali del personale. Non per burocrazia: perché è l'unico posto in cui il docente è <em>protetto</em> mentre lavora.</p></div>
+              <div class="pull"><p>Se non offri un'alternativa buona, non stai vietando: stai delegando la scelta a ciascuno.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="rail"><span class="kicker">Strato 03</span><span class="folio">06</span></div>
+        <div class="body">
+          <h1>Shadow AI: responsabilità senza controllo</h1>
+          <div class="two">
+            <div class="rows">
+              <div class="plane"><h3>Che cos'è</h3><p>Account personali usati per compiti professionali. Nessun contratto, nessuna istruzione, nessun log. È lo strato <strong>più grande del 2026</strong> e cresce da solo.</p></div>
+              <div class="plane"><h3>Perché è il peggiore dei mondi</h3><p>La scuola non ha scelto lo strumento, non lo può spegnere, non sa quali dati ci siano finiti. Se ci sono dati di studenti, ne risponde comunque.</p></div>
+            </div>
+            <div class="rows">
+              <div class="plane"><h3>Che cosa fare</h3><p>Non una circolare che vieta. Tre cose: dire quali strumenti si possono usare, dire come (niente dati personali nei prompt), dare un canale per chiedere prima di usarne uno nuovo.</p></div>
+              <div class="pull"><p>La shadow AI non si combatte: si fa migrare.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="rail"><span class="kicker">Strato 03 · precisazione</span><span class="folio">07</span></div>
+        <div class="body">
+          <h1>«Il ChatGPT personale è IA della scuola?» Dipende dal piano</h1>
+          <div class="three">
+            <div class="plane"><h3>Piano contrattuale</h3><p class="verdict no">No.</p><p>Nessun contratto, nessuna nomina a responsabile, nessun controllo: non è uno strumento della scuola e non lo diventa per prassi.</p></div>
+            <div class="plane"><h3>Piano GDPR</h3><p class="verdict yes">Sì, se ci entrano dati.</p><p>Il trattamento è imputato alla scuola: il dipendente agisce come persona autorizzata. Se nel prompt non ci sono dati personali, il GDPR non è toccato.</p><p class="small src"><code>art. 2-quaterdecies Cod. privacy · CGUE C-807/21</code></p></div>
+            <div class="plane"><h3>Piano AI Act</h3><p class="verdict maybe">Questione aperta.</p><p>L'esenzione «personale non professionale» non si applica; chi sia il deployer (docente o scuola) non è risolto. Motivo in più per non restare lì.</p></div>
+          </div>
+          <p class="small">In aula la frase è una sola: <em>«Il tuo ChatGPT non è uno strumento della scuola: ma quello che ci metti dentro sì.»</em></p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="rail"><span class="kicker">Strato 04</span><span class="folio">08</span></div>
+        <div class="body">
+          <h1>Gli studenti: fuori dal perimetro deployer, dentro quello educativo</h1>
+          <div class="two">
+            <div class="rows">
+              <div class="plane"><h3>Quando usano account propri</h3><p>La scuola non è deployer: è <strong>educatore</strong>. Qui non servono nomine e valutazioni d'impatto, servono regole d'uso, patto di corresponsabilità, criteri di valutazione che reggano.</p></div>
+              <div class="plane"><h3>Quando usano l'account d'istituto</h3><p>Cambia tutto: minori, trattamento della scuola, informativa dedicata, età, valutazione d'impatto, configurazioni restrittive.</p><p class="small src"><code>art. 35 GDPR · art. 4 L. 132/2025 (consenso dei genitori sotto i 14 anni)</code></p></div>
+            </div>
+            <div class="rows">
+              <div class="plane"><h3>La domanda che conta</h3><p>Non «come li scopriamo», ma: che cosa stiamo valutando, se il prodotto finale si può generare in tre secondi?</p></div>
+              <div class="pull"><p>Una regola che nessuno può verificare non è una regola: è un alibi.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="rail"><span class="kicker">La definizione</span><span class="folio">09</span></div>
+        <div class="body">
+          <div class="pull">
+            <p>«IA a scuola» è qualsiasi sistema di IA usato dal personale nell'esercizio delle proprie funzioni, o dagli studenti nelle attività scolastiche, <strong>indipendentemente da chi ha fornito l'account</strong>.</p>
+          </div>
+          <div class="three">
+            <div class="plane"><h3>Far emergere</h3><p>Lo strato 01: censire l'IA già presente negli strumenti che la scuola paga o usa.</p></div>
+            <div class="plane"><h3>Far migrare</h3><p>Lo strato 03 dentro il 02: dare strumenti ufficiali per i casi d'uso che il personale ha davvero.</p></div>
+            <div class="plane"><h3>Regolare</h3><p>Lo strato 04: regole d'uso per gli studenti e valutazione ripensata.</p></div>
+          </div>
+          <p class="small">Adozione «sistemica» significa esattamente questo. Non «comprare un'IA per la scuola».</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="rail"><span class="kicker">Il principio</span><span class="folio">10</span></div>
+        <div class="body">
+          <h1>Il rischio sta nel caso d'uso,<br>non nello strumento</h1>
+          <div class="two">
+            <div class="plane"><h3>Lo stesso strumento</h3><p>Chiedere allo stesso assistente di riformulare una spiegazione sulla gravità, oppure di attribuire un voto a un tema: identica tecnologia, due mondi giuridici diversi.</p></div>
+            <div class="plane"><h3>Conseguenza pratica</h3><p>Non esistono strumenti «conformi» e strumenti «vietati». Esistono <strong>usi</strong> che stanno in corsia verde e usi che richiedono istruttoria. Per questo si parte dalle domande, non dal catalogo.</p></div>
+          </div>
+          <p class="small">Corollario: diffidare di chi scrive «AI Act ready» sul proprio sito. La conformità non è del prodotto, è del vostro uso del prodotto.</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="rail"><span class="kicker">Le domande</span><span class="folio">11</span></div>
+        <div class="body">
+          <h1>Undici domande, tre destinatari</h1>
+          <div class="three">
+            <div class="lane verde"><span class="tag">1 → 3</span><h3>Classificano l'uso</h3><p>Le sa fare ogni docente e ogni assistente amministrativo, in trenta secondi, prima di usare l'IA.</p></div>
+            <div class="lane giallo"><span class="tag">4 → 7</span><h3>Riguardano il fornitore</h3><p>Le fanno DS, DSGA e DPO. Se la risposta alla 4 è no, lo strumento resta confinato alla corsia verde.</p></div>
+            <div class="lane rosso"><span class="tag">8 → 11</span><h3>Riguardano la scuola</h3><p>Sono quelle che si saltano più spesso, e sono quelle che determinano la responsabilità in caso di contestazione.</p></div>
+          </div>
+          <p class="small">Nessuna delle undici è «quale modello è più bravo».</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="rail"><span class="kicker">Le tre che classificano</span><span class="folio">12</span></div>
+        <div class="body">
+          <h1>Prima di usare l'IA</h1>
+          <div class="rows">
+            <div class="row"><span class="n">01</span><span><span class="q">Per fare cosa, esattamente?</span><span class="a">Non «per la didattica»: per correggere, per selezionare, per orientare, per sorvegliare un esame. Ammissione, valutazione degli apprendimenti, orientamento e proctoring sono <strong>alto rischio</strong>. <code>Allegato III, punto 3, AI Act</code></span></span></div>
+            <div class="row"><span class="n">02</span><span><span class="q">Che dati ci entrano?</span><span class="a">Tre soli scaglioni: nessun dato personale · dati comuni · dati di minori e categorie particolari (diagnosi, PEI, PDP, situazioni familiari). Il terzo scaglione cambia tutto. <code>artt. 5, 9, 35 GDPR</code></span></span></div>
+            <div class="row"><span class="n">03</span><span><span class="q">Chi decide alla fine?</span><span class="a">L'IA non vota, non sanziona, non fa graduatorie. Serve una persona che decida davvero, non che firmi. <code>Allegato III p. 3 lett. b) e art. 86 AI Act · DPR 122/2009 art. 1 c. 2 · art. 22 GDPR</code></span></span></div>
+          </div>
+          <p class="small">Tre domande, una riga di risposta ciascuna: è questo che va scritto nel registro dei casi d'uso.</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="rail"><span class="kicker">L'esito</span><span class="folio">13</span></div>
+        <div class="body">
+          <h1>Tre corsie</h1>
+          <div class="three">
+            <div class="lane verde"><span class="tag">nessun dato personale</span><h3>Verde: si può fare</h3><p>Spiegazioni alternative, tracce di verifica, riformulazioni, griglie, bozze di circolari, traduzioni, brainstorming. Nessun atto aggiuntivo: istruzioni e buon senso.</p></div>
+            <div class="lane giallo"><span class="tag">dati minimizzati</span><h3>Gialla: yes but…</h3><p>Materiali personalizzati descritti <strong>per profilo</strong> («alunno di seconda con DSA») e non per persona. Richiede istruzioni scritte e formazione.</p></div>
+            <div class="lane rosso"><span class="tag">minori · decisioni</span><h3>Rossa: solo se autorizzato</h3><p>Dati identificativi di studenti, diagnosi, valutazione automatizzata, orientamento. Valutazione d'impatto, strumento contrattualizzato, informativa, sorveglianza umana.</p></div>
+          </div>
+          <p class="small">La corsia verde copre gran parte del lavoro quotidiano: dirlo esplicitamente evita che tutto si fermi o che tutto avvenga di nascosto.</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="rail"><span class="kicker">Sul fornitore · DS, DSGA, DPO</span><span class="folio">14</span></div>
+        <div class="body">
+          <h1>Quattro domande a chi ci vende lo strumento</h1>
+          <div class="rows">
+            <div class="row"><span class="n">04</span><span><span class="q">Accetta la nomina a responsabile del trattamento?</span><span class="a">È la domanda spartiacque. Se la risposta è no, lo strumento può vivere solo in corsia verde, senza un solo dato personale. <code>art. 28 GDPR</code></span></span></div>
+            <div class="row"><span class="n">05</span><span><span class="q">Dove vanno i dati, e per quanto tempo?</span><span class="a">Addestramento (da escludere per contratto), luogo di conservazione, trasferimenti fuori UE e su quale base, sub-responsabili, tempi di cancellazione. <code>Capo V GDPR</code></span></span></div>
+            <div class="row"><span class="n">06</span><span><span class="q">Il servizio cloud è qualificato ACN?</span><span class="a">Da verificare e documentare, anche quando la conclusione è «non necessario per questo uso».</span></span></div>
+            <div class="row"><span class="n">07</span><span><span class="q">Lo controlliamo noi?</span><span class="a">Console di amministrazione, unità organizzative, log, possibilità di spegnere una funzione per una popolazione sola. Senza console non c'è governo.</span></span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="rail"><span class="kicker">Sulla scuola · le più saltate</span><span class="folio">15</span></div>
+        <div class="body">
+          <h1>Quattro domande da fare a noi stessi</h1>
+          <div class="rows">
+            <div class="row"><span class="n">08</span><span><span class="q">Chi ne risponde, per iscritto?</span><span class="a">Un referente con nome e cognome, il DPO nel flusso, la decisione del dirigente in un atto. «L'ha acceso l'animatore digitale» non è una governance.</span></span></div>
+            <div class="row"><span class="n">09</span><span><span class="q">Le persone sanno usarlo?</span><span class="a">L'alfabetizzazione all'IA è un obbligo a carico del datore di lavoro, in vigore dal 2 febbraio 2025. Non è il corso facoltativo del venerdì. <code>art. 4 AI Act</code></span></span></div>
+            <div class="row"><span class="n">10</span><span><span class="q">Gli interessati lo sanno?</span><span class="a">Informativa che nomini lo strumento, comunicazione preventiva alle famiglie, trasparenza sull'interazione con un sistema di IA, canale per chiedere una revisione umana. <code>art. 13 GDPR · art. 50 AI Act</code></span></span></div>
+            <div class="row"><span class="n">11</span><span><span class="q">Che cosa succede se lo togliamo?</span><span class="a">Esportabilità dei materiali, continuità didattica, dipendenza da un fornitore unico. Vale per l'IA come per ogni piattaforma.</span></span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="rail"><span class="kicker">Le anti-domande</span><span class="folio">16</span></div>
+        <div class="body">
+          <h1>Da non chiedersi per primo</h1>
+          <div class="three">
+            <div class="plane"><h3>Quale modello è più bravo</h3><p>Cambia ogni tre mesi. Le undici domande no.</p></div>
+            <div class="plane"><h3>Quanto costa</h3><p>Il costo si valuta dopo aver stabilito se quell'uso è ammissibile. Altrimenti si acquista un problema scontato.</p></div>
+            <div class="plane"><h3>Cosa fanno le altre scuole</h3><p>Copiare un regolamento non trasferisce la decisione che lo regge. La responsabilità resta di chi lo adotta.</p></div>
+          </div>
+          <div class="pull"><p>Le scuole che si bloccano non sono quelle che fanno troppe domande: sono quelle che le fanno tutte insieme, alla fine, quando qualcuno reclama.</p></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="rail"><span class="kicker">Dove finisce la risposta</span><span class="folio">17</span></div>
+        <div class="body">
+          <h1>Ogni domanda produce un documento</h1>
+          <div class="map">
+            <div><span class="k">1 → 3</span><span class="v">Scheda di valutazione dello strumento e registro dei casi d'uso</span></div>
+            <div><span class="k">2</span><span class="v">Se ci sono dati personali: valutazione d'impatto e registro dei trattamenti <code>artt. 30, 35 GDPR</code></span></div>
+            <div><span class="k">1</span><span class="v">Se l'uso rientra nell'Allegato III: valutazione d'impatto sui diritti fondamentali e sorveglianza umana <code>art. 27 AI Act</code></span></div>
+            <div><span class="k">4 → 6</span><span class="v">Nomina a responsabile, clausole contrattuali, verifica della qualificazione del servizio</span></div>
+            <div><span class="k">7</span><span class="v">Registro delle configurazioni: che cosa è stato acceso, per chi, quando, perché</span></div>
+            <div><span class="k">8 → 11</span><span class="v">Atto del dirigente, istruzioni al personale, informativa, piano di formazione</span></div>
+          </div>
+          <p class="small">Non si scrivono tutti insieme e non li scrive il docente: è la differenza tra un percorso di adozione e una pila di modelli.</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="rail"><span class="kicker">Da portare a casa</span><span class="folio">18</span></div>
+        <div class="body">
+          <h1>Tre frasi</h1>
+          <div class="rows">
+            <div class="row"><span class="n">01</span><span><span class="q">L'IA a scuola c'è già, su quattro strati.</span><span class="a">La domanda non è «la introduciamo?», ma «quale strato stiamo governando?».</span></span></div>
+            <div class="row"><span class="n">02</span><span><span class="q">Il rischio sta nel caso d'uso, non nello strumento.</span><span class="a">Prima di scegliere: per fare cosa, con quali dati, chi decide alla fine.</span></span></div>
+            <div class="row"><span class="n">03</span><span><span class="q">Vietare senza offrire un'alternativa produce shadow AI.</span><span class="a">Far crescere lo strato ufficiale è la misura organizzativa più efficace che una scuola possa adottare.</span></span></div>
+          </div>
+          <p class="small src">Fonti: Reg. UE 2024/1689 · Reg. UE 2016/679 · D.lgs. 196/2003 · L. 132/2025 · Linee guida MIM, DM 166/2025</p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <nav class="chrome" aria-label="Navigazione slide">
+    <button type="button" id="prev" aria-label="Slide precedente">←</button>
+    <span class="counter" id="counter">1 / 19</span>
+    <button type="button" id="next" aria-label="Slide successiva">→</button>
+    <button type="button" id="grid">Panoramica</button>
+    <span class="hint">← → per navigare · O per la panoramica · P per stampare</span>
+  </nav>
+</div>
+
+<script>
+(function(){
+  var deck = document.getElementById('deck');
+  var slides = Array.prototype.slice.call(deck.querySelectorAll('.slide'));
+  var counter = document.getElementById('counter');
+  var gridBtn = document.getElementById('grid');
+  var i = 0, overview = false;
+
+  function render(){
+    slides.forEach(function(s, n){ s.classList.toggle('is-active', n === i); });
+    counter.textContent = (i + 1) + ' / ' + slides.length;
+    if (history.replaceState) history.replaceState(null, '', '#' + (i + 1));
+  }
+  function go(n){ i = Math.max(0, Math.min(slides.length - 1, n)); render(); }
+  function setOverview(on){
+    overview = on;
+    deck.classList.toggle('is-overview', on);
+    gridBtn.textContent = on ? 'Presenta' : 'Panoramica';
+    if (on && slides[i] && slides[i].scrollIntoView) slides[i].scrollIntoView({block:'nearest'});
+  }
+
+  document.getElementById('prev').addEventListener('click', function(){ go(i - 1); });
+  document.getElementById('next').addEventListener('click', function(){ go(i + 1); });
+  gridBtn.addEventListener('click', function(){ setOverview(!overview); });
+
+  slides.forEach(function(s, n){
+    s.addEventListener('click', function(){ if (overview) { go(n); setOverview(false); } });
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    switch(e.key){
+      case 'ArrowRight': case 'PageDown': case ' ': go(i + 1); e.preventDefault(); break;
+      case 'ArrowLeft': case 'PageUp': go(i - 1); e.preventDefault(); break;
+      case 'Home': go(0); e.preventDefault(); break;
+      case 'End': go(slides.length - 1); e.preventDefault(); break;
+      case 'o': case 'O': setOverview(!overview); break;
+      case 'Escape': if (overview) setOverview(false); break;
+      case 'p': case 'P': window.print(); break;
+    }
+  });
+
+  var touchX = null;
+  deck.addEventListener('touchstart', function(e){ touchX = e.changedTouches[0].clientX; }, {passive:true});
+  deck.addEventListener('touchend', function(e){
+    if (touchX === null) return;
+    var dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 50) go(i + (dx < 0 ? 1 : -1));
+    touchX = null;
+  }, {passive:true});
+
+  var start = parseInt((location.hash || '').replace('#',''), 10);
+  if (start > 0 && start <= slides.length) i = start - 1;
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Mappa per il docente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+:root{
+  --paper:#E6E8E1; --surface:#F8F8F4; --sunk:#EDEFE8;
+  --ink:#15201B; --muted:#5C6660; --rule:#CBD1C8;
+  --teal:#1C4A4D; --amaranto:#7A1F3D;
+  --verde:#2F6B3E; --giallo:#8A6600; --rosso:#9B2C2C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C110F; --surface:#151D19; --sunk:#111815;
+    --ink:#E7EBE4; --muted:#98A49C; --rule:#2B3833;
+    --teal:#71B5AB; --amaranto:#E792AB;
+    --verde:#77C287; --giallo:#DDB552; --rosso:#E98F8F;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C110F; --surface:#151D19; --sunk:#111815;
+  --ink:#E7EBE4; --muted:#98A49C; --rule:#2B3833;
+  --teal:#71B5AB; --amaranto:#E792AB;
+  --verde:#77C287; --giallo:#DDB552; --rosso:#E98F8F;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Source Serif 4",Georgia,serif; font-size:10.5pt; line-height:1.4;
+  padding:16px;
+}
+.sheet{
+  width:210mm; max-width:100%; min-height:297mm; margin:0 auto 18px;
+  background:var(--surface); border:1px solid var(--rule);
+  padding:13mm 14mm; display:flex; flex-direction:column; gap:6mm;
+}
+h1,h2,h3,.q,.gate b{font-family:Archivo,"Helvetica Neue",Arial,sans-serif; letter-spacing:-.01em}
+h1{margin:0; font-size:19pt; font-weight:800; line-height:1.05; text-wrap:balance}
+.dek{margin:2mm 0 0; color:var(--muted); font-size:10.5pt; max-width:62ch}
+.head{border-bottom:1.5pt solid var(--teal); padding-bottom:3mm}
+.eyebrow{font-family:Archivo,sans-serif; font-weight:600; font-size:7.5pt; letter-spacing:.16em; text-transform:uppercase; color:var(--teal)}
+.flow{display:flex; flex-direction:column; gap:0}
+.node{background:var(--sunk); border:1px solid var(--rule); padding:3mm 4mm}
+.start{border-left:3pt solid var(--teal); font-size:11.5pt; font-family:Archivo,sans-serif; font-weight:700}
+.link{width:0; height:5mm; border-left:1.5pt solid var(--rule); margin-left:9mm}
+.gate{display:grid; grid-template-columns:44mm 1fr; gap:4mm; align-items:start; background:var(--surface); border:1px solid var(--rule); border-left:3pt solid var(--teal); padding:3.5mm 4mm}
+.gate .ask{display:flex; flex-direction:column; gap:1.5mm}
+.gate .n{font-family:"IBM Plex Mono",monospace; font-size:8pt; color:var(--teal)}
+.gate b{font-size:11.5pt; line-height:1.15; display:block}
+.gate .why{font-size:8.5pt; color:var(--muted); line-height:1.3}
+.outs{display:flex; flex-direction:column; gap:2mm}
+.out{display:grid; grid-template-columns:auto 1fr; gap:3mm; align-items:baseline; font-size:9.5pt}
+.dot{width:2.6mm; height:2.6mm; border-radius:50%; background:var(--c,var(--teal)); transform:translateY(-.3mm)}
+.out .lab{font-family:Archivo,sans-serif; font-weight:700; color:var(--c,var(--ink))}
+.out .txt{color:var(--ink)}
+.out .txt em{color:var(--muted); font-style:italic}
+.gv{--c:var(--verde)} .gg{--c:var(--giallo)} .gr{--c:var(--rosso)}
+.lanes{display:grid; grid-template-columns:repeat(3,1fr); gap:4mm; margin-top:1mm}
+.lane{border-top:2.5pt solid var(--c); background:var(--sunk); padding:3mm 3.5mm; display:flex; flex-direction:column; gap:1.5mm}
+.lane h3{margin:0; font-size:10.5pt; color:var(--c)}
+.lane p{margin:0; font-size:9pt; line-height:1.35}
+.lane .ex{font-size:8.5pt; color:var(--muted)}
+.foot{margin-top:auto; border-top:1px solid var(--rule); padding-top:3mm; display:flex; justify-content:space-between; gap:6mm; font-size:8pt; color:var(--muted); font-family:Archivo,sans-serif}
+.test{border-left:3pt solid var(--amaranto); padding:2mm 0 2mm 4mm; background:transparent}
+.test p{margin:0; font-size:11pt; line-height:1.3; max-width:60ch}
+.test span{display:block; font-size:8.5pt; color:var(--muted); margin-top:1.5mm; font-family:Archivo,sans-serif}
+.asks{display:flex; flex-direction:column}
+.ask-row{display:grid; grid-template-columns:7mm 1fr; gap:3mm; padding:2.6mm 0; border-bottom:1px solid var(--rule); align-items:baseline}
+.ask-row:first-child{border-top:1px solid var(--rule)}
+.ask-row .n{font-family:"IBM Plex Mono",monospace; font-size:8.5pt; color:var(--teal)}
+.ask-row .q{font-size:10.5pt; font-weight:700; display:block}
+.ask-row .d{font-size:9pt; color:var(--muted); display:block; margin-top:.8mm}
+.ask-row .d code{font-family:"IBM Plex Mono",monospace; font-size:8pt; color:var(--teal)}
+.two{display:grid; grid-template-columns:1fr 1fr; gap:6mm; align-items:start}
+.panel{border:1px solid var(--rule); padding:3.5mm 4mm; display:flex; flex-direction:column; gap:2mm}
+.panel.warn{border-left:3pt solid var(--rosso)}
+.panel.calm{border-left:3pt solid var(--verde)}
+.panel h3{margin:0; font-size:10.5pt}
+.panel ul{margin:0; padding-left:4.5mm; display:flex; flex-direction:column; gap:1.5mm}
+.panel li{font-size:9.5pt; line-height:1.35}
+.panel .src{font-size:8pt; color:var(--muted); font-family:Archivo,sans-serif}
+@media (max-width:760px){
+  body{padding:10px; font-size:11pt}
+  .sheet{width:auto; min-height:0; padding:18px}
+  .gate{grid-template-columns:1fr; gap:2.5mm}
+  .lanes,.two{grid-template-columns:1fr}
+  .link{display:none}
+}
+@page{size:A4 portrait; margin:0}
+@media print{
+  :root{--paper:#fff; --surface:#fff; --sunk:#F4F5F1; --ink:#15201B; --muted:#55605A; --rule:#C7CDC4}
+  body{padding:0; background:#fff}
+  .sheet{border:0; margin:0; break-after:page; width:210mm; min-height:297mm}
+  .sheet:last-child{break-after:auto}
+}
+</style>
+</head>
+<body>
+
+<section class="sheet">
+  <div class="head">
+    <span class="eyebrow">IA a scuola · scheda per il docente · 1 di 2</span>
+    <h1>Tre domande, prima di aprire il browser</h1>
+    <p class="dek">Non serve sapere il GDPR a memoria. Serve saper riconoscere, in trenta secondi, in quale delle tre corsie sta quello che stai per fare.</p>
+  </div>
+
+  <div class="flow">
+    <div class="node start">Sto per usare l'IA per qualcosa che riguarda la scuola.</div>
+    <div class="link"></div>
+
+    <div class="gate">
+      <div class="ask">
+        <span class="n">domanda 01</span>
+        <b>Per fare cosa, esattamente?</b>
+        <span class="why">Non «per la didattica»: il verbo preciso. Produrre, spiegare, tradurre, riassumere, oppure decidere.</span>
+      </div>
+      <div class="outs">
+        <div class="out gv"><span class="dot"></span><span class="txt"><span class="lab">Produco materiale.</span> Spiegazioni, tracce, esercizi, griglie, riformulazioni, bozze di comunicazioni. <em>Prosegui.</em></span></div>
+        <div class="out gr"><span class="dot"></span><span class="txt"><span class="lab">Decido su una persona.</span> Voto, ammissione, consiglio di orientamento, sorveglianza di una prova. <em>Qui l'IA non entra: non è una scelta che puoi fare da solo.</em></span></div>
+      </div>
+    </div>
+    <div class="link"></div>
+
+    <div class="gate">
+      <div class="ask">
+        <span class="n">domanda 02</span>
+        <b>Che dati ci metto dentro?</b>
+        <span class="why">Vale per il prompt e per i file che carichi. Un PDF allegato è un dato inserito esattamente come una frase scritta.</span>
+      </div>
+      <div class="outs">
+        <div class="out gv"><span class="dot"></span><span class="txt"><span class="lab">Nessun dato personale.</span> Materia, classe, obiettivo, livello. <em>Corsia verde: vai.</em></span></div>
+        <div class="out gg"><span class="dot"></span><span class="txt"><span class="lab">Un profilo, non una persona.</span> «Alunno di seconda con DSA, difficoltà sulla comprensione del testo». <em>Corsia gialla: con lo strumento dell'istituto.</em></span></div>
+        <div class="out gr"><span class="dot"></span><span class="txt"><span class="lab">Nomi, diagnosi, documenti.</span> Certificazioni, PEI, PDP, relazioni, verbali, foto, testi firmati dagli studenti. <em>Fermati e chiedi prima.</em></span></div>
+      </div>
+    </div>
+    <div class="link"></div>
+
+    <div class="gate">
+      <div class="ask">
+        <span class="n">domanda 03</span>
+        <b>Chi decide alla fine?</b>
+        <span class="why">La responsabilità di ciò che consegni, valuti o firmi resta intera anche quando il testo l'ha scritto una macchina.</span>
+      </div>
+      <div class="outs">
+        <div class="out gv"><span class="dot"></span><span class="txt"><span class="lab">Decido io e so spiegare perché.</span> L'output è una bozza che hai letto, corretto e fatto tuo. <em>Va bene.</em></span></div>
+        <div class="out gr"><span class="dot"></span><span class="txt"><span class="lab">Esce così com'è.</span> Copiato e incollato senza verifica. <em>Non hai finito: quello che esce è tuo, errori compresi.</em></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lanes">
+    <div class="lane gv" style="--c:var(--verde)">
+      <h3>Verde: si fa, subito</h3>
+      <p>Nessun dato personale, nessuna decisione.</p>
+      <p class="ex">Spiegare un concetto in tre modi diversi · tracce di verifica e griglie · esercizi graduati · riassunti e mappe · traduzioni · bozze di circolari e mail · idee per un laboratorio.</p>
+    </div>
+    <div class="lane gg" style="--c:var(--giallo)">
+      <h3>Gialla: si fa, con metodo</h3>
+      <p>Bisogni descritti per profilo, strumento dell'istituto.</p>
+      <p class="ex">Adattare un testo per un profilo con DSA · semplificare una consegna · preparare materiali differenziati per livelli · esempi su misura per una classe difficile.</p>
+    </div>
+    <div class="lane gr" style="--c:var(--rosso)">
+      <h3>Rossa: non si decide da soli</h3>
+      <p>Dati identificativi, diagnosi, decisioni.</p>
+      <p class="ex">Redigere un PEI o un PDP · caricare una certificazione · far correggere e votare i compiti · profilare studenti per l'orientamento · piattaforme nuove usate con la classe.</p>
+    </div>
+  </div>
+
+  <div class="foot"><span>Scheda per il personale docente</span><span>Le domande da 4 a 11, sul fornitore e sulla scuola, non spettano al docente.</span></div>
+</section>
+
+<section class="sheet">
+  <div class="head">
+    <span class="eyebrow">IA a scuola · scheda per il docente · 2 di 2</span>
+    <h1>Che cosa la scuola ti chiede<br>(e che cosa non ti chiede)</h1>
+    <p class="dek">Sei cose, tutte verificabili da te, tutte compatibili con la libertà d'insegnamento: riguardano i dati e la responsabilità, non il metodo.</p>
+  </div>
+
+  <div class="asks">
+    <div class="ask-row"><span class="n">01</span><span><span class="q">Per il lavoro con dati della scuola, usa lo strumento dell'istituto.</span><span class="d">Sull'account personale la scuola non può proteggerti: nessun contratto, nessuna garanzia sull'uso dei tuoi testi, nessuna possibilità di intervenire se qualcosa va storto.</span></span></div>
+    <div class="ask-row"><span class="n">02</span><span><span class="q">Niente nomi, foto, elaborati, diagnosi, PEI e PDP nei prompt.</span><span class="d">Nemmeno «tanto è solo il cognome», nemmeno in un file allegato. È la regola che copre il 90% dei casi. <code>Linee guida MIM, DM 166/2025</code></span></span></div>
+    <div class="ask-row"><span class="n">03</span><span><span class="q">Descrivi il profilo, non la persona.</span><span class="d">Il bisogno didattico si spiega benissimo senza identificare nessuno, e il risultato è altrettanto buono.</span></span></div>
+    <div class="ask-row"><span class="n">04</span><span><span class="q">L'IA non valuta e non decide.</span><span class="d">Può aiutarti a costruire una griglia o a rileggere un testo; il voto, il giudizio e il consiglio di orientamento restano tuoi e del consiglio di classe. <code>art. 22 GDPR · art. 14 L. 132/2025</code></span></span></div>
+    <div class="ask-row"><span class="n">05</span><span><span class="q">Verifica quello che esce, e dillo quando l'hai usata.</span><span class="d">Date, citazioni, norme e bibliografia vanno controllate una per una. Con gli studenti la trasparenza è anche didattica: mostrare come l'hai usata insegna più del divieto.</span></span></div>
+    <div class="ask-row"><span class="n">06</span><span><span class="q">Se vuoi far usare una piattaforma nuova alla classe, chiedi prima.</span><span class="d">Non è diffidenza: iscrivere trenta minori a un servizio è un trattamento di dati che deve fare la scuola, non il singolo docente. Bastano due righe al referente.</span></span></div>
+  </div>
+
+  <div class="test">
+    <p>Il test del collega: <strong>se quella frase non la diresti ad alta voce in sala docenti davanti a un collega che non c'entra nulla con quell'alunno, non scriverla in un prompt.</strong></p>
+    <span>Funziona perché è la stessa regola che già applichi da anni, senza chiamarla GDPR.</span>
+  </div>
+
+  <div class="two">
+    <div class="panel calm">
+      <h3>Che cosa <em>non</em> ti chiediamo</h3>
+      <ul>
+        <li>Di smettere di usarla: usata bene fa risparmiare ore ogni settimana.</li>
+        <li>Di chiedere il permesso per preparare una lezione, una verifica o una spiegazione.</li>
+        <li>Di diventare esperto di normativa: le domande sul fornitore e sugli atti sono della scuola, non tue.</li>
+        <li>Di dichiarare ogni uso: la trasparenza serve quando il materiale circola o quando riguarda gli studenti.</li>
+      </ul>
+    </div>
+    <div class="panel warn">
+      <h3>Se ti accorgi di aver sbagliato</h3>
+      <ul>
+        <li>Hai incollato un elaborato con nome e cognome, o caricato una relazione: <strong>succede</strong>.</li>
+        <li>Dillo subito al dirigente e al referente, lo stesso giorno. Non cancellare e basta.</li>
+        <li>La scuola ha 72 ore per valutare se c'è una violazione da notificare: il tempo lo perdiamo solo se lo sappiamo tardi.</li>
+        <li>Chi segnala non viene sanzionato per aver segnalato. Chi tace, quello sì, rischia da solo.</li>
+      </ul>
+      <span class="src">artt. 33 e 34 GDPR</span>
+    </div>
+  </div>
+
+  <div class="foot"><span>Referente IA d'istituto: ____________________ · DPO: ____________________</span><span>Versione __ / __</span></div>
+</section>
+
+</body>
+</html>

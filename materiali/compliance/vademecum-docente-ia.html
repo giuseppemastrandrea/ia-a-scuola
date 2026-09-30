@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Vademecum IA per il docente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+:root{
+  --paper:#E6E8E1; --surface:#F8F8F4; --sunk:#EDEFE8;
+  --ink:#15201B; --muted:#5C6660; --rule:#CBD1C8;
+  --teal:#1C4A4D; --amaranto:#7A1F3D;
+  --verde:#2F6B3E; --giallo:#8A6600; --rosso:#9B2C2C;
+  --verde-bg:#DFEDE2; --verde-ink:#1E5029;
+  --giallo-bg:#F7EBCB; --giallo-ink:#6B5000;
+  --rosso-bg:#F8E2DF; --rosso-ink:#7C1F1F;
+  --teal-bg:#DEE9E7; --amaranto-bg:#F4E1E7;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C110F; --surface:#151D19; --sunk:#111815;
+    --ink:#E7EBE4; --muted:#98A49C; --rule:#2B3833;
+    --teal:#71B5AB; --amaranto:#E792AB;
+    --verde:#77C287; --giallo:#DDB552; --rosso:#E98F8F;
+    --verde-bg:#16291C; --verde-ink:#8FD09C;
+    --giallo-bg:#2B2313; --giallo-ink:#E6C471;
+    --rosso-bg:#2D1A18; --rosso-ink:#F0A5A5;
+    --teal-bg:#152521; --amaranto-bg:#2A1720;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C110F; --surface:#151D19; --sunk:#111815;
+  --ink:#E7EBE4; --muted:#98A49C; --rule:#2B3833;
+  --teal:#71B5AB; --amaranto:#E792AB;
+  --verde:#77C287; --giallo:#DDB552; --rosso:#E98F8F;
+  --verde-bg:#16291C; --verde-ink:#8FD09C;
+  --giallo-bg:#2B2313; --giallo-ink:#E6C471;
+  --rosso-bg:#2D1A18; --rosso-ink:#F0A5A5;
+  --teal-bg:#152521; --amaranto-bg:#2A1720;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Source Serif 4",Georgia,serif; font-size:10.5pt; line-height:1.42;
+  padding:16px;
+}
+.sheet{
+  width:210mm; max-width:100%; min-height:297mm; margin:0 auto 18px;
+  background:var(--surface); border:1px solid var(--rule);
+  padding:11mm 13mm; display:flex; flex-direction:column; gap:3.8mm;
+}
+h1,h2,h3,h4,.q,.gate b,.lane h3{font-family:Archivo,"Helvetica Neue",Arial,sans-serif; letter-spacing:-.01em}
+h1{margin:0; font-size:19pt; font-weight:800; line-height:1.05; text-wrap:balance}
+h2{margin:0; font-size:13pt; font-weight:700}
+h3{margin:0; font-size:10.5pt; font-weight:700}
+p{margin:0}
+.dek{color:var(--muted); font-size:10pt; max-width:82ch; margin-top:1.6mm}
+.head{border-bottom:1.5pt solid var(--teal); padding-bottom:2.4mm}
+.eyebrow{font-family:Archivo,sans-serif; font-weight:600; font-size:7.5pt; letter-spacing:.16em; text-transform:uppercase; color:var(--teal)}
+.foot{margin-top:auto; border-top:1px solid var(--rule); padding-top:2.4mm; display:flex; justify-content:space-between; gap:6mm; font-size:8pt; color:var(--muted); font-family:Archivo,sans-serif}
+.small{font-size:9pt; color:var(--muted); line-height:1.35}
+code{font-family:"IBM Plex Mono",monospace; font-size:8.2pt; color:var(--teal)}
+em{font-style:italic} strong{font-weight:600}
+
+/* cover */
+.cover{justify-content:space-between}
+.cover .title{display:flex; flex-direction:column; gap:4mm; margin-top:14mm}
+.cover h1{font-size:30pt; max-width:20ch}
+.band{height:5mm; margin-top:1mm; background:linear-gradient(to right, var(--verde) 0 33.34%, var(--giallo) 33.34% 66.67%, var(--rosso) 66.67% 100%)}
+.sq{display:inline-block; width:2.6mm; height:2.6mm; margin-right:1.8mm; border-radius:.6mm}
+.cover .claim{font-size:13pt; color:var(--muted); max-width:46ch; line-height:1.28}
+.toc{display:flex; flex-direction:column}
+.toc a, .toc div{display:grid; grid-template-columns:8mm 1fr auto; gap:3mm; padding:2.4mm 0; border-bottom:1px solid var(--rule); align-items:baseline; color:inherit; text-decoration:none}
+.toc div:first-child{border-top:1px solid var(--rule)}
+.toc .n{font-family:"IBM Plex Mono",monospace; font-size:8.5pt; color:var(--teal)}
+.toc .t{display:block; font-family:Archivo,sans-serif; font-weight:700; font-size:10.5pt}
+.toc .s{display:block; font-size:9pt; color:var(--muted); margin-top:.6mm}
+
+/* flow */
+.flow{display:flex; flex-direction:column; gap:0}
+.node{background:var(--sunk); border:1px solid var(--rule); padding:2.6mm 3.5mm}
+.start{border-left:3pt solid var(--teal); font-size:11.5pt; font-family:Archivo,sans-serif; font-weight:700}
+.link{width:0; height:3.5mm; border-left:1.5pt solid var(--rule); margin-left:9mm}
+.gate{display:grid; grid-template-columns:44mm 1fr; gap:4mm; align-items:start; background:var(--surface); border:1px solid var(--rule); border-left:3pt solid var(--teal); padding:2.8mm 3.5mm}
+.gate .ask{display:flex; flex-direction:column; gap:1.5mm}
+.gate .n{font-family:"IBM Plex Mono",monospace; font-size:8pt; color:var(--teal)}
+.gate b{font-size:11.5pt; line-height:1.15; display:block}
+.gate .why{font-size:8.2pt; color:var(--muted); line-height:1.3}
+.outs{display:flex; flex-direction:column; gap:1.6mm}
+.out{display:grid; grid-template-columns:auto 1fr; gap:3mm; align-items:baseline; font-size:9.1pt;
+  background:var(--cbg,var(--sunk)); border-left:2.5pt solid var(--c,var(--teal)); padding:1.7mm 2.6mm}
+.dot{width:2.6mm; height:2.6mm; border-radius:50%; background:var(--c,var(--teal)); transform:translateY(-.3mm)}
+.out .lab{font-family:Archivo,sans-serif; font-weight:700; color:var(--cink,var(--ink))}
+.gv{--c:var(--verde); --cbg:var(--verde-bg); --cink:var(--verde-ink)}
+.gg{--c:var(--giallo); --cbg:var(--giallo-bg); --cink:var(--giallo-ink)}
+.gr{--c:var(--rosso); --cbg:var(--rosso-bg); --cink:var(--rosso-ink)}
+
+/* lanes */
+.strip{display:flex; flex-direction:column; gap:1.4mm}
+.strip div{padding:1.8mm 3mm; font-size:9pt; background:var(--cbg); border-left:4pt solid var(--c)}
+.strip b{font-family:Archivo,sans-serif; font-size:9.6pt; color:var(--cink); margin-right:2mm}
+.strip span{float:right; font-family:"IBM Plex Mono",monospace; font-size:8pt; color:var(--cink)}
+.sv{--c:var(--verde); --cbg:var(--verde-bg); --cink:var(--verde-ink)}
+.sg{--c:var(--giallo); --cbg:var(--giallo-bg); --cink:var(--giallo-ink)}
+.sr{--c:var(--rosso); --cbg:var(--rosso-bg); --cink:var(--rosso-ink)}
+.lanes{display:grid; grid-template-columns:repeat(3,1fr); gap:4mm}
+.lane{border-top:3.5pt solid var(--c); background:var(--cbg); padding:3mm 3.5mm; display:flex; flex-direction:column; gap:1.5mm}
+.lane h3{font-size:11pt; color:var(--cink)}
+.lane p{font-size:9pt; line-height:1.35}
+.lane .ex{font-size:8.5pt; color:var(--cink); opacity:.85}
+.banner{border-left:6pt solid var(--c); background:var(--cbg); padding:4mm 5mm; display:flex; flex-direction:column; gap:1.5mm}
+.head.banner{border-bottom:1.5pt solid var(--c)}
+.banner .eyebrow{color:var(--cink)}
+.banner h1{color:var(--cink)}
+.banner .meta{font-family:Archivo,sans-serif; font-size:9pt; color:var(--cink); opacity:.85}
+
+/* generic blocks */
+.cols{display:grid; grid-template-columns:1fr 1fr; gap:6mm; align-items:start}
+.block{display:flex; flex-direction:column; gap:2mm}
+.block h3{color:var(--teal); font-size:9pt; text-transform:uppercase; letter-spacing:.1em}
+.list{display:flex; flex-direction:column; gap:1.6mm; margin:0; padding-left:4.5mm}
+.list li{font-size:9.4pt; line-height:1.32}
+.prompt{background:var(--cbg,var(--sunk)); border-left:3pt solid var(--c,var(--teal)); padding:2.5mm 3mm; font-family:"IBM Plex Mono",monospace; font-size:8.6pt; line-height:1.45; color:var(--ink); white-space:pre-wrap}
+.label{font-family:Archivo,sans-serif; font-size:8pt; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+.rows{display:flex; flex-direction:column}
+.r{display:grid; grid-template-columns:7mm 1fr; gap:3mm; padding:2mm 0; border-bottom:1px solid var(--rule); align-items:baseline}
+.r:first-child{border-top:1px solid var(--rule)}
+.r .n{font-family:"IBM Plex Mono",monospace; font-size:8.5pt; color:var(--teal)}
+.r .q{font-size:10.5pt; font-weight:700; display:block}
+.r .d{font-size:9pt; color:var(--muted); display:block; margin-top:.8mm}
+.test{border-left:3pt solid var(--amaranto); padding:1.5mm 0 1.5mm 4mm}
+.test p{font-size:10.4pt; line-height:1.28; max-width:64ch}
+.test span{display:block; font-size:8.5pt; color:var(--muted); margin-top:1.5mm; font-family:Archivo,sans-serif}
+.panel{border:1px solid var(--rule); padding:3mm 3.5mm; display:flex; flex-direction:column; gap:1.6mm}
+.panel.warn{border:1px solid var(--rosso-bg); border-left:4pt solid var(--rosso); background:var(--rosso-bg)}
+.panel.warn h3{color:var(--rosso-ink)}
+.panel.calm{border:1px solid var(--verde-bg); border-left:4pt solid var(--verde); background:var(--verde-bg)}
+.panel.calm h3{color:var(--verde-ink)}
+.srcrow{display:grid; grid-template-columns:45mm 1fr; gap:3mm; padding:1.1mm 0; border-bottom:1px solid var(--rule); align-items:baseline}
+.srcrow:first-child{border-top:1px solid var(--rule)}
+.srcrow .f{font-family:Archivo,sans-serif; font-weight:700; font-size:8.4pt}
+.srcrow .f span{display:block; font-family:"IBM Plex Mono",monospace; font-weight:400; font-size:7.4pt; color:var(--teal)}
+.srcrow .v{font-size:8.3pt; line-height:1.28}
+.gl{display:flex; flex-direction:column}
+.gl div{display:grid; grid-template-columns:29mm 1fr; gap:2.5mm; padding:.85mm 0; border-bottom:1px solid var(--rule); align-items:baseline}
+.gl div:first-child{border-top:1px solid var(--rule)}
+.gl .t{font-family:Archivo,sans-serif; font-weight:700; font-size:8.5pt}
+.gl .d{font-size:8pt; line-height:1.26}
+.gl .d code{font-size:7.4pt}
+.faq{display:flex; flex-direction:column; gap:3.4mm}
+.faq div{display:flex; flex-direction:column; gap:1.2mm}
+.faq h3{font-size:10.5pt}
+.faq p{font-size:9.6pt; line-height:1.38}
+
+.cite{display:flex; flex-direction:column; gap:.8mm; padding:1.35mm 0; border-bottom:1px solid var(--rule)}
+.cite:first-child{border-top:1px solid var(--rule)}
+.cite .art{font-family:Archivo,sans-serif; font-weight:700; font-size:9pt; color:var(--teal)}
+.cite blockquote{margin:0; padding-left:3.5mm; border-left:2pt solid var(--rule); font-size:8.4pt; line-height:1.28}
+.cite .mean{font-size:8.1pt; color:var(--muted); font-family:Archivo,sans-serif; line-height:1.3}
+.cite .mean b{color:var(--ink); font-weight:700}
+.note{border-left:3pt solid var(--teal); padding:2mm 0 2mm 4mm}
+.note p{font-size:8.3pt; line-height:1.38; color:var(--muted)}
+
+@media (max-width:760px){
+  body{padding:10px; font-size:11pt}
+  .sheet{width:auto; min-height:0; padding:18px}
+  .gate{grid-template-columns:1fr; gap:2.5mm}
+  .lanes,.cols{grid-template-columns:1fr}
+  .link{display:none}
+  .cover .title{margin-top:6mm}
+  .cover h1{font-size:24pt}
+}
+@page{size:A4 portrait; margin:0}
+@media print{
+  *{-webkit-print-color-adjust:exact; print-color-adjust:exact}
+  :root{--paper:#fff; --surface:#fff; --sunk:#F4F5F1; --ink:#15201B; --muted:#55605A; --rule:#C7CDC4}
+  body{padding:0; background:#fff}
+  .sheet{border:0; margin:0; break-after:page; width:210mm; height:auto; min-height:262mm; padding:11mm 13mm}
+  .sheet:last-child{break-after:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- 1 copertina -->
+<section class="sheet cover">
+  <div class="head"><span class="eyebrow">vademecum · personale docente</span></div>
+  <div class="title">
+    <h1>Usare l'IA senza mettersi nei guai</h1>
+    <div class="band"></div>
+    <p class="claim">Tre domande da farsi prima di usare l'IA, tre corsie di rischio, sei regole. Contratti, atti e valutazioni d'impatto restano compito della scuola.</p>
+  </div>
+  <div class="toc">
+    <div><span class="n">01</span><span><span class="t">La mappa: tre domande prima di usare l'IA</span><span class="s">Il percorso che porta a una delle tre corsie.</span></span><span class="n">p. 2</span></div>
+    <div><span class="n">02</span><span><span class="t"><span class="sq" style="background:var(--verde)"></span>Corsia verde: si può fare</span><span class="s">Che cosa rientra, come si scrive il prompt, che cosa resta tuo.</span></span><span class="n">p. 3</span></div>
+    <div><span class="n">03</span><span><span class="t"><span class="sq" style="background:var(--giallo)"></span>Corsia gialla: yes but…</span><span class="s">Descrivere il profilo e non la persona, con un caso deciso dal Garante.</span></span><span class="n">p. 4</span></div>
+    <div><span class="n">04</span><span><span class="t"><span class="sq" style="background:var(--rosso)"></span>Corsia rossa: solo se autorizzato</span><span class="s">Che cosa passa dalla scuola, e che cosa si fa al suo posto.</span></span><span class="n">p. 5</span></div>
+    <div><span class="n">05</span><span><span class="t">Sei regole sui dati e sulla responsabilità</span><span class="s">Quello che la scuola ti chiede, con il test del collega.</span></span><span class="n">p. 6</span></div>
+    <div><span class="n">06</span><span><span class="t">FAQ</span><span class="s">Le otto domande che arrivano sempre.</span></span><span class="n">p. 7</span></div>
+    <div><span class="n">A</span><span><span class="t">Le fonti che contano per la scuola, e il glossario</span><span class="s">Otto fonti in ordine di forza vincolante, quattordici termini spiegati in una riga.</span></span><span class="n">p. 8</span></div>
+    <div><span class="n">B</span><span><span class="t">GDPR e AI Act, alla lettera</span><span class="s">Le disposizioni citate nel vademecum, nel testo ufficiale.</span></span><span class="n">p. 9</span></div>
+  </div>
+</section>
+
+<!-- 2 mappa -->
+<section class="sheet">
+  <div class="head">
+    <span class="eyebrow">01 · la mappa</span>
+    <h1>Tre domande, prima di usare l'IA</h1>
+    <p class="dek">Le tre domande servono a collocare quello che stai per fare in una delle tre corsie. Richiedono meno di un minuto e non richiedono di conoscere il GDPR.</p>
+  </div>
+
+  <div class="flow">
+    <div class="node start">Sto per usare l'IA per qualcosa che riguarda la scuola.</div>
+    <div class="link"></div>
+
+    <div class="gate">
+      <div class="ask">
+        <b>1. Per fare cosa, esattamente?</b>
+        <span class="why">Serve il verbo preciso: produrre, spiegare, tradurre, riassumere, oppure decidere.</span>
+      </div>
+      <div class="outs">
+        <div class="out gv"><span class="dot"></span><span><span class="lab">Produco materiale.</span> Spiegazioni, tracce, esercizi, griglie, riformulazioni, bozze di comunicazioni. Prosegui.</span></div>
+        <div class="out gr"><span class="dot"></span><span><span class="lab">Decido su una persona.</span> Voto, ammissione, consiglio di orientamento, sorveglianza di una prova. Sono decisioni che non spettano a te da solo: vai a p. 5.</span></div>
+      </div>
+    </div>
+    <div class="link"></div>
+
+    <div class="gate">
+      <div class="ask">
+        <b>2. Che dati ci metto dentro?</b>
+        <span class="why">Vale per il prompt e per i file che carichi: un PDF allegato è un dato inserito come una frase scritta.</span>
+      </div>
+      <div class="outs">
+        <div class="out gv"><span class="dot"></span><span><span class="lab">Nessun dato personale.</span> Materia, classe, obiettivo, livello. Corsia verde.</span></div>
+        <div class="out gg"><span class="dot"></span><span><span class="lab">Un profilo, non una persona.</span> «Alunno di seconda con DSA, difficoltà sulla comprensione del testo». Corsia gialla, con lo strumento dell'istituto.</span></div>
+        <div class="out gr"><span class="dot"></span><span><span class="lab">Nomi, iniziali, diagnosi, documenti.</span> Certificazioni, PEI, PDP, relazioni, verbali, foto, elaborati firmati. Corsia rossa: fermati e chiedi.</span></div>
+      </div>
+    </div>
+    <div class="link"></div>
+
+    <div class="gate">
+      <div class="ask">
+        <b>3. Chi decide alla fine?</b>
+        <span class="why">La responsabilità di ciò che consegni, valuti o firmi resta tua anche quando il testo l'ha scritto una macchina.</span>
+      </div>
+      <div class="outs">
+        <div class="out gv"><span class="dot"></span><span><span class="lab">Decido io e so spiegare perché.</span> L'output è una bozza letta e corretta. Va bene.</span></div>
+        <div class="out gr"><span class="dot"></span><span><span class="lab">Esce così com'è.</span> Copiato e incollato senza verifica. Gli errori restano a carico tuo.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="strip">
+    <div class="sv"><b>Verde</b> nessun dato personale, nessuna decisione. Si può fare <span>a p. 3</span></div>
+    <div class="sg"><b>Gialla</b> yes but: bisogni descritti per profilo, strumento dell'istituto <span>a p. 4</span></div>
+    <div class="sr"><b>Rossa</b> dati identificativi, diagnosi, decisioni. Solo se autorizzato <span>a p. 5</span></div>
+  </div>
+
+  <div class="foot"><span>Vademecum IA · personale docente</span><span>p. 2</span></div>
+</section>
+
+<!-- 3 verde -->
+<section class="sheet">
+  <div class="head banner" style="--c:var(--verde); --cbg:var(--verde-bg); --cink:var(--verde-ink)">
+    <span class="eyebrow">02 · corsia verde</span>
+    <h1>Si può fare</h1>
+    <p class="meta">Nessun dato personale nel prompt, nessuna decisione sulle persone. Nessun atto da chiedere.</p>
+  </div>
+
+  <div class="cols">
+    <div class="block">
+      <h3>Scenari</h3>
+      <ul class="list">
+        <li>Spiegare un concetto in tre modi diversi, per una classe che non lo ha capito alla prima spiegazione.</li>
+        <li>Costruire tracce di verifica, esercizi graduati, domande a risposta aperta e relative griglie.</li>
+        <li>Riformulare un testo per livello linguistico, produrre riassunti, mappe, schemi.</li>
+        <li>Preparare una lezione: scaletta, tempi, materiali, collegamenti interdisciplinari.</li>
+        <li>Tradurre e adattare materiali, produrre versioni in lingua per la classe.</li>
+        <li>Scrivere bozze di comunicazioni, circolari, relazioni di progetto, moduli.</li>
+        <li>Elencare le obiezioni e le domande che gli studenti possono fare su un argomento.</li>
+        <li>Generare artefatti interattivi: simulazioni, visualizzazioni, brevi pagine dimostrative.</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h3>Come si scrive un prompt di corsia verde</h3>
+      <div class="prompt" style="--c:var(--verde); --cbg:var(--verde-bg); --cink:var(--verde-ink)">Sei un docente di fisica di scuola secondaria di II grado.
+Prepara tre spiegazioni alternative della legge di gravitazione
+universale per una classe seconda di un istituto tecnico:
+una con un'analogia quotidiana, una con un esperimento
+mentale, una con un esempio numerico semplice.
+Indica per ciascuna i prerequisiti e un errore tipico.</div>
+      <p class="small">Nessuna persona è nominata. Il contesto è descritto per classe, livello e obiettivo: sono le tre informazioni che il modello usa davvero.</p>
+      <h3 style="margin-top:2mm">Che cosa resta a carico tuo</h3>
+      <ul class="list">
+        <li>La verifica: date, formule, citazioni e riferimenti normativi vanno controllati uno per uno.</li>
+        <li>La scelta didattica: il modello propone, tu decidi che cosa entra in classe.</li>
+        <li>La trasparenza, quando il materiale arriva agli studenti o alle famiglie.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot"><span>Vademecum IA · personale docente</span><span>p. 3</span></div>
+</section>
+
+<!-- 4 gialla -->
+<section class="sheet">
+  <div class="head banner" style="--c:var(--giallo); --cbg:var(--giallo-bg); --cink:var(--giallo-ink)">
+    <span class="eyebrow">03 · corsia gialla</span>
+    <h1>Yes but…</h1>
+    <p class="meta">Sì, ma a due condizioni: il bisogno si descrive senza identificare lo studente e si usa lo strumento dell'istituto.</p>
+  </div>
+
+  <div class="cols">
+    <div class="block">
+      <span class="label">Così no</span>
+      <div class="prompt" style="--c:var(--rosso); --cbg:var(--rosso-bg); --cink:var(--rosso-ink)">Marco Rossi, 2aB, dislessia e ADHD certificati,
+segue il PDP allegato, i genitori sono separati e
+la madre segnala forte ansia da verifica.
+Preparami una verifica adatta a lui.</div>
+      <p class="small">Nome, classe, diagnosi e situazione familiare di un minore, più un documento della scuola caricato su un servizio esterno.</p>
+    </div>
+    <div class="block">
+      <span class="label">Così sì</span>
+      <div class="prompt" style="--c:var(--giallo); --cbg:var(--giallo-bg); --cink:var(--giallo-ink)">Studente di seconda, istituto tecnico, con DSA:
+difficoltà di decodifica del testo e tempi di
+attenzione brevi. Adatta questa verifica di storia
+(testo allegato, senza dati personali): consegne brevi,
+un solo compito per riga, tempi più lunghi, font ad
+alta leggibilità, domande a scelta multipla con
+distrattori non ambigui.</div>
+      <p class="small">Le Linee guida del Ministero chiedono prompt privi di dati identificativi o riconducibili a singoli account. <code>DM 166/2025, pag. 11</code></p>
+    </div>
+  </div>
+
+  <div class="panel warn">
+    <h3>Un caso deciso dal Garante: le iniziali non bastano</h3>
+    <p class="small">Provvedimento n. 307 del 29 aprile 2026: sanzione di 4.000 euro all'Istituto comprensivo statale di Montelibretti (Roma). Sul sito della scuola, nella sezione «Novità/Le circolari», era stata pubblicata una circolare per la selezione di docenti per l'istruzione domiciliare che riportava le iniziali di nome e cognome dell'alunno, il riferimento alla documentazione medica e la classe frequentata. Per il Garante quella combinazione rende identificabile lo studente e diffonde dati sulla salute. Fonte: garanteprivacy.it. Lo stesso ragionamento vale dentro un prompt: iniziali più classe più diagnosi equivalgono al nome.</p>
+  </div>
+
+  <div class="cols">
+    <div class="block">
+      <h3>Scenari</h3>
+      <ul class="list">
+        <li>Adattare testi e consegne per un profilo con DSA o BES, o per uno studente non italofono.</li>
+        <li>Preparare materiali differenziati per tre livelli della stessa classe.</li>
+        <li>Costruire esercizi di recupero su una difficoltà specifica.</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h3>Resta fuori, anche qui</h3>
+      <ul class="list">
+        <li>Caricare PDP, PEI, certificazioni o relazioni cliniche, anche solo per farli riassumere.</li>
+        <li>Indicare iniziali, soprannomi o dettagli che in una classe di 20 studenti rendono riconoscibile la persona.</li>
+        <li>Incollare elaborati con nome e cognome in testa, o usare l'account personale.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot"><span>Vademecum IA · personale docente</span><span>p. 4</span></div>
+</section>
+
+<!-- 5 rossa -->
+<section class="sheet">
+  <div class="head banner" style="--c:var(--rosso); --cbg:var(--rosso-bg); --cink:var(--rosso-ink)">
+    <span class="eyebrow">04 · corsia rossa</span>
+    <h1>Solo se autorizzato</h1>
+    <p class="meta">Non sono usi vietati in assoluto: sono usi che la scuola deve valutare e autorizzare prima che comincino. Senza quell'atto, non si parte.</p>
+  </div>
+
+  <div class="cols">
+    <div class="block">
+      <h3>Scenari</h3>
+      <ul class="list">
+        <li>Far scrivere o riscrivere un PEI o un PDP a un sistema di IA.</li>
+        <li>Caricare certificazioni, diagnosi, relazioni dei servizi, verbali del GLO o del consiglio di classe.</li>
+        <li>Far correggere e votare le prove, o far produrre giudizi finali.</li>
+        <li>Profilare gli studenti per il consiglio di orientamento o per la scelta dell'indirizzo.</li>
+        <li>Sorvegliare una prova con strumenti automatici, o usare sistemi che dichiarano di riconoscere emozioni e attenzione.</li>
+        <li>Iscrivere la classe a una piattaforma nuova, con i dati degli studenti, di propria iniziativa.</li>
+      </ul>
+      <p class="small">Le prime cinque voci non riguardano solo il GDPR: ammissione, valutazione degli apprendimenti, orientamento e proctoring sono usi ad alto rischio per l'AI Act, e il riconoscimento delle emozioni negli istituti di istruzione è una pratica vietata. <code>Allegato III, punto 3 · art. 5, par. 1, lett. f), Reg. UE 2024/1689</code></p>
+    </div>
+    <div class="block">
+      <h3>Che cosa si fa al suo posto</h3>
+      <ul class="list">
+        <li><strong>PEI e PDP:</strong> il modello può aiutarti sulla struttura, sugli obiettivi tipo e sugli esempi di strategie. Il documento è collegiale e si compila sui dati reali negli strumenti della scuola. <code>d.lgs. 66/2017</code></li>
+        <li><strong>Correzione:</strong> usalo per costruire la griglia, per generare feedback tipo, per rileggere la coerenza di una consegna. Il voto lo attribuisci tu e resta motivato.</li>
+        <li><strong>Orientamento:</strong> materiali informativi, simulazioni di colloquio, domande guida. Il consiglio resta del consiglio di classe.</li>
+        <li><strong>Piattaforme nuove:</strong> due righe al referente prima di usarle con la classe. Se il caso d'uso regge, la scuola la valuta e la inserisce nell'elenco di quelle autorizzate.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot"><span>Vademecum IA · personale docente</span><span>p. 5</span></div>
+</section>
+
+<!-- 6 regole -->
+<section class="sheet">
+  <div class="head">
+    <span class="eyebrow">05 · le regole</span>
+    <h1>Sei regole sui dati e sulla responsabilità</h1>
+    <p class="dek">Le sei regole riguardano i dati e la responsabilità, non il metodo didattico: la libertà d'insegnamento decide come si insegna, non quali dati escono dalla scuola.</p>
+  </div>
+
+  <div class="rows">
+    <div class="r"><span class="n">01</span><span><span class="q">Per il lavoro con dati della scuola, usa lo strumento dell'istituto.</span><span class="d">Sull'account personale mancano il contratto con nomina a responsabile e i log: la scuola non può verificare che cosa è stato inserito né intervenire.</span></span></div>
+    <div class="r"><span class="n">02</span><span><span class="q">Niente nomi, iniziali, foto, elaborati, diagnosi, PEI e PDP nei prompt.</span><span class="d">Vale anche per i file allegati. Il caso di Montelibretti, a p. 4, riguarda esattamente le iniziali. <code>Linee guida MIM, DM 166/2025</code></span></span></div>
+    <div class="r"><span class="n">03</span><span><span class="q">Descrivi il profilo, non la persona.</span><span class="d">Il bisogno didattico si descrive senza identificare nessuno: materia, livello, difficoltà specifica. Gli esempi sono a p. 4.</span></span></div>
+    <div class="r"><span class="n">04</span><span><span class="q">L'IA non valuta e non decide.</span><span class="d">La valutazione è espressione dell'autonomia professionale della funzione docente, individuale e collegiale: voto, giudizio e consiglio di orientamento restano tuoi e del consiglio di classe. Il modello può aiutarti sulla griglia. <code>Allegato III, punto 3, lett. b) e art. 86 AI Act · DPR 122/2009, art. 1, c. 2 · art. 22 GDPR</code></span></span></div>
+    <div class="r"><span class="n">05</span><span><span class="q">Verifica quello che esce, e dillo quando l'hai usata.</span><span class="d">Date, citazioni, norme e bibliografia vanno controllate una per una.</span></span></div>
+    <div class="r"><span class="n">06</span><span><span class="q">Piattaforma nuova per la classe: chiedi prima di iscrivere gli studenti.</span><span class="d">Iscrivere 25 o 30 minori a un servizio è un trattamento di dati che spetta alla scuola. Bastano due righe al referente.</span></span></div>
+  </div>
+
+  <div class="test">
+    <p><strong>Il test del collega: se quella frase non la diresti ad alta voce in sala docenti, davanti a un collega che non insegna in quella classe, non scriverla in un prompt.</strong></p>
+    <span>È la stessa cautela che applichi già quando parli di un alunno in corridoio.</span>
+  </div>
+
+  <div class="foot"><span>Vademecum IA · personale docente</span><span>p. 6</span></div>
+</section>
+
+<!-- 7 faq -->
+<section class="sheet">
+  <div class="head">
+    <span class="eyebrow">06 · domande frequenti</span>
+    <h1>FAQ</h1>
+    <p class="dek">Le otto domande che arrivano sempre.</p>
+  </div>
+
+  <div class="faq">
+    <div><h3>Posso usare l'IA con il mio account personale?</h3><p>Per materiali che non contengono dati della scuola, la scelta è tua. Appena entrano dati di studenti, no: la scuola risponde di un trattamento che non ha scelto e non può controllare. C'è anche un rischio di continuità: dal 30 marzo al 28 aprile 2023 ChatGPT è stato inaccessibile in Italia per la limitazione provvisoria disposta dal Garante, sospesa poi con il provvedimento n. 114 dell'11 aprile 2023 (fonte: garanteprivacy.it). Chi aveva i materiali lì è rimasto fermo 29 giorni.</p></div>
+    <div><h3>Posso far usare l'IA agli studenti in classe?</h3><p>Con gli strumenti dell'istituto e nei limiti stabiliti dalla scuola, sì. Con gli account personali degli studenti no: sotto i 14 anni serve il consenso di chi esercita la responsabilità genitoriale e quei servizi non hanno contratto con la scuola. <code>art. 4, c. 4, L. 132/2025</code></p></div>
+    <div><h3>Devo dichiarare che ho usato l'IA per una relazione o una circolare?</h3><p>Non esiste un obbligo generale di dichiararlo, ed esiste la tua responsabilità su ciò che firmi: l'atto va verificato prima. Verso le famiglie le Linee guida del Ministero chiedono una comunicazione preventiva e chiara sull'uso dell'IA nelle attività che riguardano gli studenti. <code>DM 166/2025</code></p></div>
+    <div><h3>Posso caricare il libro di testo o un articolo?</h3><p>Estratti funzionali alla spiegazione, sì. Il manuale intero o un'opera protetta caricata per comodità no: l'eccezione didattica copre l'uso in classe, non la riproduzione su un servizio esterno. <code>art. 70-bis L. 633/1941</code></p></div>
+    <div><h3>Posso usarla per correggere i compiti?</h3><p>Per costruire la griglia, generare esempi di feedback e rileggere la coerenza di una consegna, sì. Per attribuire il voto, no. I compiti si caricano senza nome e cognome.</p></div>
+    <div><h3>Un collega mette i nomi degli studenti nei prompt. Che faccio?</h3><p>Diglielo, e se continua segnalalo al dirigente. Di quel trattamento risponde l'istituto, quindi ricade anche su chi lo compone.</p></div>
+    <div><h3>L'IA mi ha citato una norma che non esiste. È normale?</h3><p>Sì, succede. Verifica alla fonte ogni riferimento normativo, sentenza, citazione e dato statistico prima che entri in un atto o in un materiale per la classe.</p></div>
+    <div><h3>Gli studenti usano l'IA per i compiti. Come li fermo?</h3><p>Conviene cambiare la consegna. Se il prodotto finale si può generare in 3 secondi, quello che valuti diventano il processo, la discussione orale e la revisione critica di un testo generato.</p></div>
+  </div>
+
+  <div class="foot"><span>Vademecum IA · personale docente</span><span>p. 7</span></div>
+</section>
+
+
+<!-- 8 fonti e glossario -->
+<section class="sheet">
+  <div class="head">
+    <span class="eyebrow">appendice A · orientarsi</span>
+    <h1>Le fonti che contano per la scuola, e il glossario</h1>
+    <p class="dek">Otto fonti in ordine di forza vincolante e quattordici termini che ricorrono nelle circolari.</p>
+  </div>
+
+  <div class="block">
+    <h3>Le fonti, dalla più vincolante alla più operativa</h3>
+    <div class="rows">
+      <div class="srcrow"><span class="f">AI Act<span>Reg. UE 2024/1689</span></span><span class="v">Regolamento europeo, si applica senza recepimento. Per il docente: alfabetizzazione a carico del datore di lavoro dal 2 febbraio 2025 (art. 4), riconoscimento delle emozioni vietato a scuola (art. 5), valutazione, ammissione, orientamento e proctoring come usi ad alto rischio (Allegato III, punto 3), con diritto dello studente o della famiglia a una spiegazione sulla decisione presa con quell'output (art. 86).</span></div>
+      <div class="srcrow"><span class="f">GDPR e Codice privacy<span>Reg. UE 2016/679 · d.lgs. 196/2003</span></span><span class="v">Il titolare è la scuola, il docente è persona designata che opera su istruzione (art. 29 GDPR, art. 2-quaterdecies). Da qui derivano le regole sui prompt, la valutazione d'impatto e le 72 ore in caso di violazione.</span></div>
+      <div class="srcrow"><span class="f">Legge italiana sull'IA<span>L. 132/2025, in vigore dal 10 ottobre 2025</span></span><span class="v">Principi generali e settori specifici: sanità, lavoro, professioni, PA, giustizia. Nessun articolo dedicato alla scuola. Per il docente rileva l'art. 4, comma 4: sotto i 14 anni l'accesso ai sistemi di IA richiede il consenso di chi esercita la responsabilità genitoriale.</span></div>
+      <div class="srcrow"><span class="f">Valutazione degli apprendimenti<span>DPR 122/2009 · d.lgs. 62/2017</span></span><span class="v">La valutazione è espressione dell'autonomia professionale della funzione docente, individuale e collegiale. È la norma che rende non delegabile il giudizio, prima ancora dell'AI Act.</span></div>
+      <div class="srcrow"><span class="f">Inclusione<span>d.lgs. 66/2017</span></span><span class="v">Il PEI è elaborato e approvato dal GLO. Un documento collegiale non si genera e non si riassume su un servizio esterno.</span></div>
+      <div class="srcrow"><span class="f">Linee guida del Ministero<span>DM 166/2025, 9 agosto 2025</span></span><span class="v">Indirizzi, non norme direttamente sanzionabili. Chiedono prompt privi di dati identificativi, disattivazione delle funzioni non necessarie come la cronologia, comunicazione preventiva e chiara alle famiglie.</span></div>
+      <div class="srcrow"><span class="f">Diritto d'autore didattico<span>art. 70-bis L. 633/1941</span></span><span class="v">Consente l'uso digitale di opere protette per finalità illustrative nell'insegnamento, non la riproduzione integrale su piattaforme esterne.</span></div>
+      <div class="srcrow"><span class="f">Atti della tua scuola<span>regolamento d'istituto · istruzioni del dirigente</span></span><span class="v">Sono l'unico livello che dice quali strumenti sono autorizzati, per quali usi e con quali configurazioni. In caso di contestazione, è quello che si guarda per primo.</span></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>Glossario: quattordici parole che ricorrono nelle circolari</h3>
+    <div class="cols">
+      <div class="gl">
+        <div><span class="t">Titolare</span><span class="d">La scuola. Decide finalità e mezzi del trattamento e ne risponde. <code>art. 4.7 GDPR</code></span></div>
+        <div><span class="t">Persona designata</span><span class="d">Tu. Tratti i dati sotto l'autorità della scuola e secondo le sue istruzioni. <code>art. 2-quaterdecies</code></span></div>
+        <div><span class="t">Responsabile</span><span class="d">Il fornitore che tratta i dati per conto della scuola, con contratto. <code>art. 28 GDPR</code></span></div>
+        <div><span class="t">DPO</span><span class="d">Il consulente che sorveglia e dà pareri. Non decide al posto del dirigente. <code>art. 39 GDPR</code></span></div>
+        <div><span class="t">Deployer</span><span class="d">Chi usa un sistema di IA sotto la propria autorità: per gli strumenti d'istituto è la scuola. <code>art. 3.4 AI Act</code></span></div>
+        <div><span class="t">Alto rischio</span><span class="d">Usi elencati nell'Allegato III. A scuola: ammissione, valutazione, orientamento, proctoring.</span></div>
+        <div><span class="t">Pratica vietata</span><span class="d">Uso proibito in assoluto, ad esempio inferire emozioni degli studenti. <code>art. 5 AI Act</code></span></div>
+        <div><span class="t">DPIA</span><span class="d">Valutazione d'impatto sulla protezione dei dati, prima di iniziare il trattamento. La fa la scuola. <code>art. 35 GDPR</code></span></div>
+      </div>
+      <div class="gl">
+        <div><span class="t">Violazione dei dati</span><span class="d">Perdita, accesso o comunicazione non autorizzata. Include il prompt con dati finiti su un servizio non autorizzato. <code>art. 4.12 GDPR</code></span></div>
+        <div><span class="t">Dato identificabile</span><span class="d">Anche indiretto: iniziali, classe, ruolo, combinazioni che restringono a una persona. <code>art. 4.1 GDPR</code></span></div>
+        <div><span class="t">Prompt</span><span class="d">Tutto quello che inserisci, testo e allegati. Un PDF caricato è un dato inserito.</span></div>
+        <div><span class="t">Addestramento</span><span class="d">Uso dei dati per migliorare il modello. Negli strumenti d'istituto è escluso per contratto.</span></div>
+        <div><span class="t">Allucinazione</span><span class="d">Output plausibile e falso: norme, sentenze e bibliografie inesistenti. Si verifica alla fonte.</span></div>
+        <div><span class="t">Sorveglianza umana</span><span class="d">Una persona formata, con l'autorità per fermare o correggere il sistema. <code>art. 26 AI Act</code></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Vademecum IA · personale docente</span><span>p. 8</span></div>
+</section>
+
+<!-- 9 appendice B -->
+<section class="sheet">
+  <div class="head">
+    <span class="eyebrow">appendice B · testi ufficiali</span>
+    <h1>GDPR, alla lettera</h1>
+    <p class="dek">Regolamento (UE) 2016/679, versione italiana. I tagli sono segnalati con […].</p>
+  </div>
+
+  <div class="rows">
+    <div class="cite">
+      <span class="art">Articolo 4, punto 1: definizione di dato personale</span>
+      <blockquote>«dato personale»: qualsiasi informazione riguardante una persona fisica identificata o identificabile («interessato»); si considera identificabile la persona fisica che può essere identificata, direttamente o indirettamente, con particolare riferimento a un identificativo come il nome, un numero di identificazione […];</blockquote>
+      <span class="mean"><b>Per te:</b> «identificabile anche indirettamente» è il motivo per cui le iniziali, il posto in classe o la combinazione classe più diagnosi sono dati personali quanto il nome.</span>
+    </div>
+    <div class="cite">
+      <span class="art">Articolo 5, paragrafo 1, lettera c): minimizzazione</span>
+      <blockquote>I dati personali sono: […] adeguati, pertinenti e limitati a quanto necessario rispetto alle finalità per le quali sono trattati («minimizzazione dei dati»);</blockquote>
+      <span class="mean"><b>Per te:</b> è la base giuridica della regola 03. Se il risultato si ottiene senza il nome, il nome non è necessario.</span>
+    </div>
+    <div class="cite">
+      <span class="art">Articolo 9, paragrafo 1: categorie particolari di dati</span>
+      <blockquote>È vietato trattare dati personali che rivelino l'origine razziale o etnica, le opinioni politiche, le convinzioni religiose o filosofiche, o l'appartenenza sindacale, nonché trattare dati genetici, dati biometrici intesi a identificare in modo univoco una persona fisica, dati relativi alla salute o alla vita sessuale o all'orientamento sessuale della persona.</blockquote>
+      <span class="mean"><b>Per te:</b> diagnosi, certificazioni, PEI e PDP contengono dati relativi alla salute di un minore. Il punto di partenza è un divieto.</span>
+    </div>
+    <div class="cite">
+      <span class="art">Articolo 22, paragrafo 1: decisioni automatizzate</span>
+      <blockquote>L'interessato ha il diritto di non essere sottoposto a una decisione basata unicamente sul trattamento automatizzato, compresa la profilazione, che produca effetti giuridici che lo riguardano o che incida in modo analogo significativamente sulla sua persona.</blockquote>
+      <span class="mean"><b>Per te:</b> voto, ammissione e consiglio di orientamento incidono in modo significativo. Non possono nascere «unicamente» da un output.</span>
+    </div>
+    <div class="cite">
+      <span class="art">Articolo 29: trattamento sotto l'autorità del titolare</span>
+      <blockquote>Il responsabile del trattamento, o chiunque agisca sotto la sua autorità o sotto quella del titolare del trattamento, che abbia accesso a dati personali non può trattare tali dati se non è istruito in tal senso dal titolare del trattamento, salvo che lo richieda il diritto dell'Unione o degli Stati membri.</blockquote>
+      <span class="mean"><b>Per te:</b> è l'articolo che descrive la tua posizione: tratti i dati degli studenti su istruzione della scuola.</span>
+    </div>
+    <div class="cite">
+      <span class="art">Articolo 33, paragrafo 1: notifica di una violazione</span>
+      <blockquote>In caso di violazione dei dati personali, il titolare del trattamento notifica la violazione all'autorità di controllo competente […] senza ingiustificato ritardo e, ove possibile, entro 72 ore dal momento in cui ne è venuto a conoscenza, a meno che sia improbabile che la violazione dei dati personali presenti un rischio per i diritti e le libertà delle persone fisiche. […]</blockquote>
+      <span class="mean"><b>Per te:</b> le 72 ore decorrono da quando la scuola ne viene a conoscenza. La segnalazione dello stesso giorno è ciò che rende rispettabile il termine.</span>
+    </div>
+    <div class="cite">
+      <span class="art">Articolo 35, paragrafo 1: valutazione d'impatto</span>
+      <blockquote>Quando un tipo di trattamento, allorché prevede in particolare l'uso di nuove tecnologie, […] può presentare un rischio elevato per i diritti e le libertà delle persone fisiche, il titolare del trattamento effettua, prima di procedere al trattamento, una valutazione dell'impatto dei trattamenti previsti sulla protezione dei dati personali. […]</blockquote>
+      <span class="mean"><b>Per te:</b> è il motivo per cui una piattaforma nuova non si attiva lo stesso pomeriggio. La valutazione viene prima e la fa la scuola.</span>
+    </div>
+  </div>
+
+  <div class="foot"><span>Vademecum IA · personale docente</span><span>p. 9</span></div>
+</section>
+
+<!-- 9 appendice B -->
+<section class="sheet">
+  <div class="head">
+    <span class="eyebrow">appendice C · testi ufficiali</span>
+    <h1>AI Act, alla lettera</h1>
+    <p class="dek">Regolamento (UE) 2024/1689, versione italiana. L'articolo 4 si applica dal 2 febbraio 2025; gli obblighi sui sistemi ad alto rischio dell'Allegato III seguono il calendario dell'articolo 113.</p>
+  </div>
+
+  <div class="rows">
+    <div class="cite">
+      <span class="art">Articolo 3, punto 4: definizione di deployer</span>
+      <blockquote>«deployer»: una persona fisica o giuridica, un'autorità pubblica, un'agenzia o un altro organismo che utilizza un sistema di IA sotto la propria autorità, tranne nel caso in cui il sistema di IA sia utilizzato nel corso di un'attività personale non professionale;</blockquote>
+      <span class="mean"><b>Per te:</b> preparare una lezione non rientra nell'attività personale non professionale. Il deployer è la scuola e tu agisci sotto la sua autorità.</span>
+    </div>
+    <div class="cite">
+      <span class="art">Articolo 4: alfabetizzazione in materia di IA</span>
+      <blockquote>I fornitori e i deployer dei sistemi di IA adottano misure per garantire nella misura del possibile un livello sufficiente di alfabetizzazione in materia di IA del loro personale nonché di qualsiasi altra persona che si occupa del funzionamento e dell'utilizzo dei sistemi di IA per loro conto, prendendo in considerazione le loro conoscenze tecniche, la loro esperienza, istruzione e formazione, nonché il contesto in cui i sistemi di IA devono essere utilizzati, e tenendo conto delle persone o dei gruppi di persone su cui i sistemi di IA devono essere utilizzati.</blockquote>
+      <span class="mean"><b>Per te:</b> la formazione che stai seguendo è un obbligo che la scuola ha verso di te, in vigore dal 2 febbraio 2025.</span>
+    </div>
+    <div class="cite">
+      <span class="art">Articolo 5, paragrafo 1, lettera f): pratica vietata</span>
+      <blockquote>Sono vietate le pratiche di IA seguenti: […] l'immissione sul mercato, la messa in servizio per tale finalità specifica o l'uso di sistemi di IA per inferire le emozioni di una persona fisica nell'ambito del luogo di lavoro e degli istituti di istruzione, tranne laddove l'uso del sistema di IA sia destinato a essere messo in funzione o immesso sul mercato per motivi medici o di sicurezza;</blockquote>
+      <span class="mean"><b>Per te:</b> gli strumenti che dichiarano di misurare attenzione, coinvolgimento o stato emotivo della classe sono vietati a scuola.</span>
+    </div>
+    <div class="cite">
+      <span class="art">Allegato III, punto 3: istruzione e formazione professionale (sistemi ad alto rischio)</span>
+      <blockquote>a) i sistemi di IA destinati a essere utilizzati per determinare l'accesso, l'ammissione o l'assegnazione di persone fisiche agli istituti di istruzione e formazione professionale a tutti i livelli;<br>
+      b) i sistemi di IA destinati a essere utilizzati per valutare i risultati dell'apprendimento, anche nei casi in cui tali risultati sono utilizzati per orientare il processo di apprendimento di persone fisiche in istituti di istruzione o formazione professionale a tutti i livelli;<br>
+      c) i sistemi di IA destinati a essere utilizzati per valutare il livello di istruzione adeguato che una persona riceverà o a cui potrà accedere, nel contesto o all'interno di istituti di istruzione o formazione professionale a tutti i livelli;<br>
+      d) i sistemi di IA destinati a essere utilizzati per monitorare e rilevare comportamenti vietati degli studenti durante le prove nel contesto o all'interno di istituti di istruzione e formazione professionale a tutti i livelli.</blockquote>
+      <span class="mean"><b>Per te:</b> sono le quattro voci che spostano un uso in corsia rossa. La lettera b) copre la correzione automatica delle prove.</span>
+    </div>
+    <div class="cite">
+      <span class="art">Articolo 26, paragrafo 2: sorveglianza umana</span>
+      <blockquote>I deployer affidano la sorveglianza umana a persone fisiche che dispongono della competenza, della formazione e dell'autorità necessarie nonché del sostegno necessario.</blockquote>
+      <span class="mean"><b>Per te:</b> la sorveglianza umana richiede formazione e autorità di intervento, non la sola firma su ciò che il sistema produce.</span>
+    </div>
+  </div>
+
+  <div class="note">
+    <p>Nota nazionale, art. 2-quaterdecies, comma 1, del Codice privacy (d.lgs. 196/2003): «Il titolare o il responsabile del trattamento possono prevedere, sotto la propria responsabilità e nell'ambito del proprio assetto organizzativo, che specifici compiti e funzioni connessi al trattamento di dati personali siano attribuiti a persone fisiche, espressamente designate, che operano sotto la loro autorità.» È la norma che descrive la posizione del docente: designato, istruito, e coperto finché opera dentro le istruzioni ricevute.</p>
+    <p style="margin-top:2mm">Citati senza riproduzione del testo: art. 27 (valutazione d'impatto sui diritti fondamentali) e art. 50 (obblighi di trasparenza) del Reg. UE 2024/1689; art. 4, comma 4, della legge 132/2025; artt. 28 e 30 GDPR. Le fonti scolastiche sono elencate a p. 8. I testi riportati hanno finalità formativa: per gli atti ufficiali fare riferimento a EUR-Lex (eur-lex.europa.eu) e alla normativa vigente alla data dell'atto.</p>
+  </div>
+
+  <div class="foot"><span>Vademecum IA · personale docente</span><span>p. 10</span></div>
+</section>
+
+</body>
+</html>
