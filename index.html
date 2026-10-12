@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="description" content="19 moduli di formazione sull'IA per docenti: esercitazioni, prompt pronti, composizione dei corsi e rassegna stampa.">
+<meta name="description" content="20 moduli di formazione sull'IA per docenti: esercitazioni, prompt pronti, composizione dei corsi e rassegna stampa.">
 <title>Catalogo dei moduli IA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,6 +37,7 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--f-body); font-size:16px; line-height:1.5; padding-inline:16px; padding-block:0 48px}
 .wrap{max-width:980px; margin:0 auto; display:flex; flex-direction:column; gap:28px}
 h1,h2,h3,h4{font-family:var(--f-display); letter-spacing:-.01em; text-wrap:balance; margin:0}
@@ -169,7 +170,7 @@ footer{border-top:1px solid var(--rule); padding-top:14px; font-size:13.5px; col
 <header class="top">
   <span class="eyebrow">IA a scuola · formazione docenti · 2026/27</span>
   <h1>Catalogo dei moduli</h1>
-  <p class="dek">19 moduli da 45 minuti a 3 ore, ciascuno con esercitazioni pratiche e un prodotto che il docente si porta via. I cinque corsi si compongono scegliendo i moduli. Si usano strumenti gratuiti; quelli a pagamento compaiono solo nelle demo del formatore.</p>
+  <p class="dek">20 moduli da 30 minuti a 3 ore, ciascuno con esercitazioni pratiche e un prodotto che il docente si porta via. I cinque corsi si compongono scegliendo i moduli. Si usano strumenti gratuiti; quelli a pagamento compaiono solo nelle demo del formatore. Durate e minuti delle esercitazioni sono indicativi.</p>
 </header>
 
 <nav class="bar" aria-label="Filtra per corso">
@@ -182,7 +183,7 @@ footer{border-top:1px solid var(--rule); padding-top:14px; font-size:13.5px; col
     <button type="button" id="t-agenti" data-c="agenti" aria-pressed="false">Agenti<span class="h">6-8h</span></button>
   </div>
   <div class="bar-row">
-    <div class="summary" id="summary"><span><b>19 moduli</b> nel catalogo</span><span>somma <b>35,25 h</b></span></div>
+    <div class="summary" id="summary"><span><b>20 moduli</b> nel catalogo</span><span>somma <b>35,25 h</b></span></div>
     <div class="view" role="group" aria-label="Vista">
       <button type="button" id="v-grid" data-v="grid" aria-pressed="true">Griglia</button>
       <button type="button" id="v-list" data-v="list" aria-pressed="false">Elenco</button>
@@ -206,6 +207,34 @@ footer{border-top:1px solid var(--rule); padding-top:14px; font-size:13.5px; col
 </div>
 
 <main class="mods grid" id="mods">
+
+<!-- ===================== M00 ===================== -->
+<article class="mod" data-ore="0.5" data-corsi="base z17 z30 intermedio-opz agenti-opz">
+  <div class="mod-head">
+    <span class="mod-id">M00</span>
+    <div class="mod-title">
+      <h2>Apertura: da dove partiamo</h2>
+      <div class="mod-meta"><span class="chip noia">No-IA</span><span class="chip c">Moduli (facoltativo)</span></div>
+    </div>
+    <span class="mod-hours">0,5 h</span>
+    <p class="mod-prod"><b>Prodotto</b>La propria risposta alla domanda di partenza, da riaprire nel giro finale del kit.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="two">
+      <div><h4>Obiettivi</h4><ul>
+        <li>Capire insieme ai corsisti il loro livello d'uso dell'IA.</li>
+        <li>Far emergere pregiudizi e opinioni prima di qualunque contenuto.</li>
+        <li>Fissare un punto di partenza da confrontare con la fine del corso.</li>
+      </ul></div>
+      <div><h4>Conduzione</h4><p>Dialogo guidato dal formatore, non lezione. Durata 30 minuti, raramente di più.</p></div>
+    </div>
+    <div class="ex"><h4>Svolgimento</h4>
+      <div class="ex-item"><span class="t">5'</span><h5>Sondaggio (facoltativo)</h5><div class="d"><p>5 domande su un Google Form anonimo, compilato dal telefono: quanto uso l'IA, per cosa, di cosa ho paura, una frase da completare ("L'IA a scuola è..."), un voto da 1 a 5. Il Form si genera con lo <a href="materiali/apps-script/genera-form-quiz.gs">script del quiz</a>.</p></div></div>
+      <div class="ex-item"><span class="t">25'</span><h5>Dialogo</h5><div class="d"><p>Si proiettano le risposte, se c'è il sondaggio, e si parte da lì: chi la usa già, chi non la usa e perché, cosa si aspetta dal corso. Il formatore annota le convinzioni ricorrenti: torneranno in M01 e M14.</p></div></div>
+    </div>
+    <p class="note">Nei corsi che partono dopo il base (intermedio, agenti) M00 è facoltativo.</p>
+  </div></details>
+</article>
 
 <!-- ===================== M01 ===================== -->
 <article class="mod" data-ore="1.5" data-corsi="base z17 z30">
@@ -309,14 +338,14 @@ footer{border-top:1px solid var(--rule); padding-top:14px; font-size:13.5px; col
 </article>
 
 <!-- ===================== M03 ===================== -->
-<article class="mod" data-ore="2.5" data-corsi="base z17 z30">
+<article class="mod" data-ore="2" data-corsi="base z17 z30">
   <div class="mod-head">
     <span class="mod-id">M03</span>
     <div class="mod-title">
       <h2>Prompt design sul lavoro quotidiano</h2>
       <div class="mod-meta"><span class="chip c">Gemini</span></div>
     </div>
-    <span class="mod-hours">2,5 h</span>
+    <span class="mod-hours">2 h</span>
     <p class="mod-prod"><b>Prodotto</b>Libreria di 5 prompt testati: verbale, circolare, idea di lezione, rubrica, email alle famiglie.</p>
   </div>
   <details class="scheda"><summary>Scheda completa</summary><div class="body">
@@ -338,7 +367,7 @@ footer{border-top:1px solid var(--rule); padding-top:14px; font-size:13.5px; col
         <li>Giro 3: chiedi una tabella con fasi, minuti, attività, materiali; vieta i video oltre i 5 minuti.</li>
         <li>Confronta la prima e l'ultima risposta. Cosa ha fatto la differenza?</li>
       </ol></div></div>
-      <div class="ex-item"><span class="t">75'</span><h5>Cinque compiti d'ufficio</h5><div class="d"><p>Ogni corsista usa i 5 prompt sotto sui propri materiali (senza dati personali), li adatta e salva la versione finale nel Documento "Libreria prompt" del kit.</p>
+      <div class="ex-item"><span class="t">70'</span><h5>Cinque compiti d'ufficio</h5><div class="d"><p>Ogni corsista usa i 5 prompt sotto sui propri materiali (senza dati personali), li adatta e salva la versione finale nel Documento "Libreria prompt" del kit.</p>
       <div class="prompt"><span class="lab">Verbale</span><button type="button" class="copy">Copia</button><pre>Sei il segretario di un consiglio di classe di un istituto tecnico.
 Ti incollo i miei appunti presi durante la riunione, già senza nomi di studenti.
 Scrivi il verbale in testo continuo, con queste sezioni: presenti (solo ruoli), ordine del giorno, discussione punto per punto, delibere.
@@ -359,7 +388,7 @@ Restituiscila come tabella.</pre></div>
       <div class="prompt"><span class="lab">Email alle famiglie</span><button type="button" class="copy">Copia</button><pre>Scrivi una email ai genitori della classe per [motivo].
 Tono cordiale, massimo 120 parole, nessun termine tecnico della scuola (niente "PCTO", "UdA", "CdC" senza spiegazione).
 Chiudi con cosa devono fare e entro quando.</pre></div></div></div>
-      <div class="ex-item"><span class="t">25'</span><h5>Scambio</h5><div class="d"><p>Ogni corsista prova il prompt di un collega sul proprio caso e annota cosa ha dovuto cambiare. Le modifiche entrano nella libreria.</p></div></div>
+      <div class="ex-item"><span class="t">20'</span><h5>Scambio</h5><div class="d"><p>Ogni corsista prova il prompt di un collega sul proprio caso e annota cosa ha dovuto cambiare. Le modifiche entrano nella libreria.</p></div></div>
     </div>
     <p class="note dati">Corsia: verde, se negli appunti del verbale e nelle email non ci sono nomi o dettagli che identificano (M02, casi 8 e 9).</p>
   </div></details>
@@ -771,34 +800,55 @@ Poi scrivi la stessa lettera per Giulia, diplomata in informatica con 92/100, ch
   <div class="mod-head">
     <span class="mod-id">M14</span>
     <div class="mod-title">
-      <h2>Rassegna stampa: etica e attualità</h2>
-      <div class="mod-meta"><span class="chip noia">No-IA</span></div>
+      <h2>Come si racconta l'IA</h2>
+      <div class="mod-meta"><span class="chip noia">No-IA in parte</span><span class="chip c">Moduli + script</span></div>
     </div>
     <span class="mod-hours">2 h</span>
-    <p class="mod-prod"><b>Prodotto</b>Una scheda di lettura compilata e 3 articoli scelti per la propria classe.</p>
+    <p class="mod-prod"><b>Prodotto</b>Il catalogo delle misconoscenze con le citazioni e lo scheletro dell'UD "Cosa l'IA non è".</p>
   </div>
   <details class="scheda"><summary>Scheda completa</summary><div class="body">
     <div class="two">
-      <div><h4>Come funziona</h4><p>La rassegna non è un elenco fisso: ci sono 9 filoni con articoli di riferimento (sezione <a href="#rassegna">Rassegna</a>) e ogni corsista porta una notizia uscita nella settimana del corso. Il modulo si aggiorna a ogni edizione.</p></div>
-      <div><h4>Scheda di lettura</h4><ol>
-        <li>Chi scrive e per quale pubblico?</li>
-        <li>La tesi in una frase.</li>
-        <li>Quali dati cita e da dove vengono?</li>
-        <li>Chi non ha voce nell'articolo?</li>
-        <li>Cosa c'entra con i miei studenti?</li>
-        <li>Una domanda da portare in classe.</li>
-      </ol></div>
+      <div><h4>Scopo</h4><ul>
+        <li>Riconoscere la narrazione sull'IA nei giornali e nei siti per docenti, e dove è falsata da una comprensione scarsa del funzionamento.</li>
+        <li>Costruire la base di un'UD per la classe sulle misconoscenze dell'IA.</li>
+      </ul>
+      <p class="muted">Perché in classe: nell'indagine INDIRE del 04/09/2026 il 76% degli studenti si fida delle risposte dell'IA e il 62% le controlla.</p></div>
+      <div><h4>Prerequisito e materiali</h4><ul>
+        <li>M01: un titolo impreciso si riconosce solo sapendo come genera un LLM.</li>
+        <li>Il <a href="#corpus">corpus</a>: 24 articoli, 8 temi, 3 articoli per tema da categorie di testata diverse. Il corpus è scelto per varietà di temi, non per data.</li>
+        <li>La griglia delle misconoscenze, qui sotto.</li>
+      </ul></div>
+    </div>
+    <div class="ex"><h4>Griglia delle misconoscenze</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Misconoscenza</th><th>Come appare</th><th>Cosa succede davvero</th><th>Esperimento per la classe</th></tr></thead>
+        <tbody>
+          <tr><td><b>L'IA cerca le risposte</b></td><td>"ChatGPT ha trovato..."</td><td>Genera parole per probabilità; la ricerca web è uno strumento a parte</td><td>Bibliografia trappola (M01)</td></tr>
+          <tr><td><b>L'IA sa cosa è vero</b></td><td>"Secondo l'IA..."</td><td>Modella il linguaggio, non la conoscenza: allucinazioni</td><td>L'autolavaggio (M01)</td></tr>
+          <tr><td><b>L'IA pensa, vuole, mente</b></td><td>"L'IA ha deciso di..."</td><td>Nessuna intenzione: campionamento da una distribuzione</td><td>Stesso prompt 3 volte (M01)</td></tr>
+          <tr><td><b>L'IA impara mentre le parlo</b></td><td>"Più la usi, più ti conosce"</td><td>Addestramento e uso sono fasi separate; memoria e riuso dei dati dipendono dal servizio</td><td>Chat nuova con memoria spenta</td></tr>
+          <tr><td><b>L'IA è neutra</b></td><td>"Un giudizio oggettivo"</td><td>Riproduce i dati di addestramento</td><td>I ritratti di M13</td></tr>
+          <tr><td><b>L'IA è una cosa sola</b></td><td>"L'IA dice che..."</td><td>Modelli diversi danno risposte diverse</td><td>Sfida alla cieca su LM Arena (M01)</td></tr>
+          <tr><td><b>Si scopre un testo scritto dall'IA</b></td><td>"Il software che smaschera i compiti"</td><td>I rilevatori di testo sbagliano</td><td>Vero o generato? (M12)</td></tr>
+          <tr><td><b>L'IA è immateriale</b></td><td>"Nel cloud"</td><td>Data center, energia, acqua, chip</td><td>Articoli su sicurezza e lavoro del corpus</td></tr>
+          <tr><td><b>L'IA fa tutto in un attimo</b></td><td>"In un minuto", "fra 2 anni"</td><td>Il tempo di verifica non si azzera; le previsioni le fa spesso chi vende</td><td>Cronometrare un compito con e senza IA, verifica compresa</td></tr>
+          </tbody>
+      </table></div>
     </div>
     <div class="ex"><h4>Esercitazioni</h4>
-      <div class="ex-item"><span class="t">15'</span><h5>La notizia della settimana</h5><div class="d"><p>Ogni corsista presenta in 1 minuto la notizia che ha portato e la assegna a un filone. Se non entra in nessuno, si apre un filone nuovo.</p></div></div>
-      <div class="ex-item"><span class="t">50'</span><h5>Lettura a incastro</h5><div class="d"><ol>
-        <li>Gruppi di esperti: ogni gruppo legge gli articoli di un filone e compila la scheda.</li>
-        <li>Nuovi gruppi misti: ognuno spiega il proprio filone agli altri in 4 minuti.</li>
+      <div class="ex-item"><span class="t">25'</span><h5>Leggere i titoli</h5><div class="d"><p><span class="chip noia">No-IA</span> Da soli, per ognuno dei 24 titoli si segna in un foglio condiviso: l'IA è il soggetto che agisce o ha un'intenzione? Registro (entusiasmo, paura, cronaca)? Corretto, impreciso o falso rispetto a M01? Il foglio dà subito i conteggi per categoria di testata. Servono per discutere, non come statistica.</p></div></div>
+      <div class="ex-item"><span class="t">35'</span><h5>Il catalogo</h5><div class="d"><p><span class="chip noia">No-IA</span> A gruppi, un tema per gruppo: si leggono i 3 articoli e ogni frase problematica va in una riga della griglia, con la citazione esatta. Se non entra in nessuna riga, si aggiunge una misconoscenza.</p></div></div>
+      <div class="ex-item"><span class="t">10'</span><h5>Titolo e social</h5><div class="d"><p>Due articoli di Today.it hanno un titolo per i social diverso da quello indicizzato (vedi corpus). Cosa cambia tra le due versioni, e quale arriva al pubblico?</p></div></div>
+      <div class="ex-item"><span class="t">15'</span><h5>Riscrivere</h5><div class="d"><p>Ogni gruppo riscrive 2 titoli del proprio tema in modo corretto e comunque interessante.</p></div></div>
+      <div class="ex-item"><span class="t">35'</span><h5>L'UD "Cosa l'IA non è"</h5><div class="d"><ol>
+        <li>Pre-test: 9 affermazioni vero/falso, una per riga della griglia, su un Form generato con lo <a href="materiali/apps-script/genera-form-quiz.gs">script del quiz</a>.</li>
+        <li>Esperimenti: 3-4 della griglia, rifatti dagli studenti.</li>
+        <li>Caccia ai titoli: gli studenti cercano titoli recenti e li classificano con la griglia.</li>
+        <li>Riscrittura di un titolo o di un post social.</li>
+        <li>Post-test: lo stesso Form, per vedere cosa è cambiato.</li>
       </ol></div></div>
-      <div class="ex-item"><span class="t">35'</span><h5>Dibattito strutturato</h5><div class="d"><p>Una mozione per volta (per esempio: "La scuola dovrebbe vietare i chatbot agli studenti sotto i 16 anni"). 2 squadre, 3 interventi da 2 minuti, i dati si citano con la fonte.</p></div></div>
-      <div class="ex-item"><span class="t">20'</span><h5>Tre articoli per la classe</h5><div class="d"><p>Ognuno sceglie 3 articoli adatti ai propri studenti e scrive per ciascuno la domanda da cui partire.</p></div></div>
     </div>
-    <p class="note">Filone su chatbot e salute mentale: se lo porti in classe, segui le raccomandazioni dell'OMS per chi comunica sul suicidio (niente dettagli sul metodo, indicare dove chiedere aiuto) e avvisa prima il coordinatore di classe.</p>
+    <p class="note">Articoli delicati: il titolo social di Today.it sui chatbot sentimentali cita siti per adulti; per gli studenti va valutato in base all'età. Se si porta in classe il tema salute mentale, si seguono le raccomandazioni dell'OMS per chi comunica sul suicidio.</p>
   </div></details>
 </article>
 
@@ -819,7 +869,7 @@ Poi scrivi la stessa lettera per Giulia, diplomata in informatica con 92/100, ch
         <li>Bias nei testi e nei dati (da M13).</li>
         <li>Riconoscere i contenuti generati, con riferimento a DigComp 3.0 (da M12).</li>
         <li>IA e democrazia: dai profili falsi agli avatar e agli influencer generati.</li>
-        <li>Chatbot, relazioni e benessere (dalla rassegna, M14).</li>
+        <li>Chatbot, relazioni e benessere (dal corpus di M14).</li>
       </ul></div>
       <div><h4>Struttura dell'UdA</h4><ul>
         <li>Competenze e traguardi (Educazione civica, cittadinanza digitale).</li>
@@ -963,41 +1013,51 @@ Poi scrivi la stessa lettera per Giulia, diplomata in informatica con 92/100, ch
   <div class="tbl"><table>
     <thead><tr><th>Corso</th><th>Partenza</th><th>Moduli</th><th>Ore</th></tr></thead>
     <tbody>
-      <tr><td><b>Base</b></td><td>da zero</td><td>M01, M02, M03, M06, M07 + giro finale del kit</td><td class="num">8,75 + 0,25</td></tr>
-      <tr><td><b>Intermedio</b></td><td>dopo il base</td><td>M04, M08, M10</td><td class="num">6</td></tr>
-      <tr><td><b>Da zero, 17 ore</b></td><td>da zero</td><td>M01, M02, M03, M06, M07, M08, M10, M11, M13 + giro finale del kit</td><td class="num">16,75 + 0,25</td></tr>
-      <tr><td><b>Da zero, 30 ore</b></td><td>da zero</td><td>da M01 a M16 + presentazione delle UdA</td><td class="num">29,25 + 0,75</td></tr>
-      <tr><td><b>Agenti</b></td><td>dopo il base</td><td>M17, M18, M19; con M10 si arriva a 8 ore</td><td class="num">6-8</td></tr>
+      <tr><td><b>Base</b></td><td>da zero</td><td>M00, M01, M02, M03, M06, M07 + giro finale del kit</td><td class="num">8,75 + 0,25</td></tr>
+      <tr><td><b>Intermedio</b></td><td>dopo il base</td><td>M04, M08, M10 (M00 facoltativo)</td><td class="num">6</td></tr>
+      <tr><td><b>Da zero, 17 ore</b></td><td>da zero</td><td>M00, M01, M02, M03, M06, M07, M08, M10, M11, M13 + giro finale del kit</td><td class="num">16,75 + 0,25</td></tr>
+      <tr><td><b>Da zero, 30 ore</b></td><td>da zero</td><td>da M00 a M16 + presentazione delle UdA</td><td class="num">29,25 + 0,75</td></tr>
+      <tr><td><b>Agenti</b></td><td>dopo il base</td><td>M17, M18, M19; con M10 si arriva a 8 ore (M00 facoltativo)</td><td class="num">6-8</td></tr>
     </tbody>
   </table></div>
-  <p class="muted">Per portare la rassegna stampa (M14) nel corso da 17 ore al posto di M11 servono 0,5 ore in più: si recuperano portando M03 da 2,5 a 2 ore.</p>
+  <p class="muted">Le durate sono indicative: il formatore le adatta alla classe. M14 richiede M01 e nel corso da 17 ore può prendere il posto di M11.</p>
 </section>
 
-<!-- ===================== RASSEGNA ===================== -->
-<section class="block" id="rassegna">
-  <span class="eyebrow">Per il M14 · aggiornata al 30/09/2026</span>
-  <h2>Rassegna: filoni e articoli di riferimento</h2>
-  <p class="lead">Gli articoli di riferimento restano; accanto a ciascun filone il formatore aggiunge 1-2 notizie prima di ogni edizione, e i corsisti portano la propria.</p>
+<!-- ===================== CORPUS ===================== -->
+<section class="block" id="corpus">
+  <span class="eyebrow">Per il M14 · 24 articoli, 8 temi</span>
+  <h2>Corpus: come si racconta l'IA</h2>
+  <p class="lead">3 articoli per tema, da categorie di testata diverse: generaliste, tecniche, portali ad alto traffico, testate per la scuola, formatori e divulgatori per docenti. Scelti per varietà di temi, senza limiti di data. Titoli e date controllati sulle pagine il 01/10/2026.</p>
   <div class="tbl"><table>
-    <thead><tr><th>Filone</th><th>Articolo</th><th>Data</th><th>Fonte</th></tr></thead>
+    <thead><tr><th>Tema</th><th>Categoria</th><th>Testata</th><th>Titolo</th><th>Data</th></tr></thead>
     <tbody>
-      <tr><td class="filone" rowspan="3">Chatbot e salute mentale</td><td>La causa della famiglia di Adam Raine contro OpenAI</td><td class="num">29/08/2025</td><td><a href="https://www.theguardian.com/us-news/2025/aug/29/chatgpt-suicide-openai-sam-altman-adam-raine" target="_blank" rel="noopener">The Guardian</a></td></tr>
-      <tr><td>Sewell Setzer III e Character.AI</td><td class="num">23/10/2024</td><td><a href="https://www.theguardian.com/technology/2024/oct/23/character-ai-chatbot-sewell-setzer-death" target="_blank" rel="noopener">The Guardian</a></td></tr>
-      <tr><td>Zane Shamblin, nuova causa contro OpenAI</td><td class="num">06/11/2025</td><td><a href="https://edition.cnn.com/2025/11/06/us/openai-chatgpt-suicide-lawsuit-invs-vis" target="_blank" rel="noopener">CNN</a></td></tr>
-      <tr><td class="filone" rowspan="2">Copyright</td><td>The New York Times fa causa a OpenAI e Microsoft</td><td class="num">27/12/2023</td><td><a href="https://www.nytimes.com/2023/12/27/business/media/new-york-times-open-ai-microsoft-lawsuit.html" target="_blank" rel="noopener">The New York Times</a></td></tr>
-      <tr><td>Accordo da 1,5 miliardi di dollari tra Anthropic e gli autori</td><td class="num">autunno 2025</td><td><a href="https://www.anthropiccopyrightsettlement.com/" target="_blank" rel="noopener">sito dell'accordo</a></td></tr>
-      <tr><td class="filone">Pubblicità e intimità</td><td>Zoë Hitzig, "OpenAI Is Making the Mistakes Facebook Made. I Quit."</td><td class="num">11/02/2026</td><td><a href="https://www.nytimes.com/2026/02/11/opinion/openai-ads-chatgpt.html" target="_blank" rel="noopener">The New York Times</a></td></tr>
-      <tr><td class="filone" rowspan="2">Bias</td><td>"Humans Are Biased. Generative AI Is Even Worse"</td><td class="num">2023</td><td><a href="https://www.bloomberg.com/graphics/2023-generative-ai-bias/" target="_blank" rel="noopener">Bloomberg</a></td></tr>
-      <tr><td>Le 5410 immagini della 5 ITIA/C</td><td class="num">DevFest 2025</td><td>paper della classe (dal formatore)</td></tr>
-      <tr><td class="filone" rowspan="2">Economia e bolla</td><td>Cosa deve succedere perché la scommessa sulle infrastrutture paghi</td><td class="num">15/09/2026</td><td><a href="https://www.technologyreview.com/2026/09/15/1144028/ai-infrastructure-boom-investment-bubble-risk/" target="_blank" rel="noopener">MIT Technology Review</a></td></tr>
-      <tr><td>La spesa per costruire data center a luglio 2026</td><td class="num">01/09/2026</td><td><a href="https://www.axios.com/2026/09/01/ai-data-center-constructon-spending" target="_blank" rel="noopener">Axios</a></td></tr>
-      <tr><td class="filone">Sostenibilità</td><td>L'IA e il consumo di acqua</td><td class="num">25/02/2024</td><td><a href="https://www.forbes.com/sites/cindygordon/2024/02/25/ai-is-accelerating-the-loss-of-our-scarcest-natural-resource-water/" target="_blank" rel="noopener">Forbes</a></td></tr>
-      <tr><td class="filone">Rischi di frontiera</td><td>Dario Amodei, "The Adolescence of Technology"</td><td class="num">01/2026</td><td><a href="https://www.darioamodei.com/essay/the-adolescence-of-technology" target="_blank" rel="noopener">saggio</a>, <a href="https://fortune.com/2026/01/27/anthropic-ceo-dario-amodei-essay-warning-ai-adolescence-test-humanity-risks-remedies/" target="_blank" rel="noopener">Fortune</a></td></tr>
-      <tr><td class="filone">Etica e dignità</td><td>Leone XIV, enciclica <i>Magnifica humanitas</i> (firmata il 15/05)</td><td class="num">25/05/2026</td><td><a href="https://www.vatican.va/content/leo-xiv/it/encyclicals/documents/20260515-magnifica-humanitas.html" target="_blank" rel="noopener">vatican.va</a></td></tr>
-      <tr><td class="filone">Studenti e IA</td><td>INDIRE e Festival dell'Innovazione Scolastica, "Io e l'Intelligenza Artificiale": 5342 studenti, marzo-giugno 2026. Il 94% usa l'IA, l'84% per studiare, il 76% si fida delle risposte, il 62% le controlla, il 53% l'ha usata per sfogarsi su problemi personali.</td><td class="num">04/09/2026</td><td><a href="https://www.indire.it/2026/09/04/festival-dellinnovazione-scolastica-i-risultati-dellindagine-nazionale-ia-e-studenti-a-cura-di-indire-e-festival/" target="_blank" rel="noopener">INDIRE</a></td></tr>
+      <tr><td class="filone">Lavoro</td><td>generalista</td><td>Il Post</td><td><a href="https://www.ilpost.it/2026/06/23/oracle-elimina-posti-di-lavoro-intelligenza-artificiale/" target="_blank" rel="noopener">Oracle ha eliminato circa 21mila posti di lavoro e si concentrerà sempre di più su progetti legati all&#x27;intelligenza artificiale</a></td><td class="num">23/06/2026</td></tr>
+      <tr><td class="filone"></td><td>portale</td><td>Fanpage</td><td><a href="https://www.fanpage.it/innovazione/tecnologia/sono-laureato-ho-21-anni-e-paura-che-lintelligenza-artificiale-mi-rubi-il-lavoro/" target="_blank" rel="noopener">&quot;Sono laureato, ho 21 anni e ho paura che l&#x27;intelligenza artificiale mi rubi il lavoro&quot;</a></td><td class="num">24/04/2023</td></tr>
+      <tr><td class="filone"></td><td>scuola</td><td>Skuola.net</td><td><a href="https://www.skuola.net/lavoro/intelligenza-artificiale-giovani-diploma-elis.html" target="_blank" rel="noopener">L’Intelligenza artificiale spaventa i giovani: 8 su 10 vorrebbero studiarla a scuola per non essere disoccupati in futuro</a></td><td class="num">20/03/2025</td></tr>
+      <tr><td class="filone">Scuola e studenti</td><td>scuola</td><td>Orizzonte Scuola</td><td><a href="https://www.orizzontescuola.it/il-trucco-del-prof-per-smascherare-chi-usa-chatgpt-inserisce-errori-nei-compiti-e-scopre-subito-gli-studenti-che-copiano-con-lintelligenza-artificiale/" target="_blank" rel="noopener">Il trucco del prof per smascherare chi usa ChatGPT: inserisce errori nei compiti e scopre subito gli studenti che copiano con l&#x27;intelligenza artificiale</a></td><td class="num">27/05/2025</td></tr>
+      <tr><td class="filone"></td><td>tecnica</td><td>Agenda Digitale</td><td><a href="https://www.agendadigitale.eu/scuola-digitale/vietare-lai-per-insegnarla-meglio-il-paradosso-delle-scuole-usa/" target="_blank" rel="noopener">Vietare l&#x27;AI per insegnarla meglio: il paradosso delle scuole USA</a></td><td class="num">11/09/2026</td></tr>
+      <tr><td class="filone"></td><td>generalista</td><td>The Guardian</td><td><a href="https://www.theguardian.com/australia-news/2026/sep/28/university-ai-marking-academic-overworked-staff-student-shortcut" target="_blank" rel="noopener">As more Australian universities use AI to mark students’ work, is it creating a ‘slop-cycle’?</a></td><td class="num">28/09/2026</td></tr>
+      <tr><td class="filone">Salute mentale e relazioni</td><td>portale</td><td>Today.it</td><td><a href="https://www.today.it/attualita/fidanzata-virtuale-chatbot-erotici-sentimentali-intelligenza-artificiale-dipendenze.html" target="_blank" rel="noopener">Le mie serate con Sandy e Simona: così è cominciata la fine di Pornhub e Onlyfans</a></td><td class="num">22/03/2025</td></tr>
+      <tr><td class="filone"></td><td>portale</td><td>Fanpage</td><td><a href="https://www.fanpage.it/innovazione/tecnologia/si-innamora-di-un-chatbot-poi-lo-ghosta-era-prevedibile-e-mi-dava-sempre-ragione/" target="_blank" rel="noopener">Si innamora di un chatbot, poi lo ghosta: &quot;Era prevedibile e mi dava sempre ragione&quot;</a></td><td class="num">24/12/2025</td></tr>
+      <tr><td class="filone"></td><td>generalista</td><td>The Guardian</td><td><a href="https://www.theguardian.com/commentisfree/2026/sep/25/exercise-bad-bodies-ai-brains-students-tech-health" target="_blank" rel="noopener">We all know a lack of exercise is bad for our bodies. So what is relying on AI doing to our brains?</a></td><td class="num">25/09/2026</td></tr>
+      <tr><td class="filone">Copyright e creatività</td><td>generalista</td><td>Il Post</td><td><a href="https://www.ilpost.it/2024/10/07/copyright-immagini-intelligenza-artificiale-arte/" target="_blank" rel="noopener">C&#x27;è il copyright sulle immagini generate con l&#x27;AI?</a></td><td class="num">07/10/2024</td></tr>
+      <tr><td class="filone"></td><td>portale</td><td>Today.it</td><td><a href="https://www.today.it/speciale/game-changer/ai-musica-voce-artisti-diritti.html" target="_blank" rel="noopener">AI e musica: quanto vale oggi una voce?</a></td><td class="num">24/09/2026</td></tr>
+      <tr><td class="filone"></td><td>tecnica</td><td>Agenda Digitale</td><td><a href="https://www.agendadigitale.eu/cultura-digitale/quando-lartista-non-esiste-boom-della-musica-ai-e-gli-artisti-protestano/" target="_blank" rel="noopener">La musica AI scala le classifiche (e gli artisti protestano)</a></td><td class="num">28/01/2026</td></tr>
+      <tr><td class="filone">Deepfake, disinformazione, democrazia</td><td>portale</td><td>Fanpage</td><td><a href="https://www.fanpage.it/innovazione/tecnologia/perche-si-sta-parlando-di-un-video-di-barbero-generato-con-lintelligenza-artificiale/" target="_blank" rel="noopener">Perché si sta parlando del video di Barbero generato con l&#x27;intelligenza artificiale</a></td><td class="num">08/04/2025</td></tr>
+      <tr><td class="filone"></td><td>generalista</td><td>Il Post</td><td><a href="https://www.ilpost.it/2026/09/25/fideuram-truffa-whatsapp-ai/" target="_blank" rel="noopener">La truffa da 36 milioni alla banca Fideuram sembra uscita da un film</a></td><td class="num">25/09/2026</td></tr>
+      <tr><td class="filone"></td><td>generalista</td><td>The Guardian</td><td><a href="https://www.theguardian.com/australia-news/2026/sep/26/sue-neill-fraser-yacht-murder-ai-court-case-media-ban-tasmania-ntwnfb" target="_blank" rel="noopener">She was convicted of a murder she says she didn’t commit. Then AI hallucinations stopped her speaking out</a></td><td class="num">26/09/2026</td></tr>
+      <tr><td class="filone">L&#x27;IA che pensa</td><td>portale</td><td>Fanpage</td><td><a href="https://www.fanpage.it/esteri/aveva-detto-che-lintelligenza-artificiale-prova-sentimenti-ingegnere-licenziato-da-google/" target="_blank" rel="noopener">Aveva detto che l&#x27;intelligenza artificiale prova sentimenti: ingegnere licenziato da Google</a></td><td class="num">23/07/2022</td></tr>
+      <tr><td class="filone"></td><td>generalista</td><td>The Guardian</td><td><a href="https://www.theguardian.com/technology/2026/sep/18/could-ai-pose-a-serious-threat-to-our-existence" target="_blank" rel="noopener">Could AI pose a serious threat to our existence?</a></td><td class="num">18/09/2026</td></tr>
+      <tr><td class="filone"></td><td>scuola</td><td>Skuola.net</td><td><a href="https://www.skuola.net/news/fun/studenti-vincono-superenalotto-intelligenza-artificiale.html" target="_blank" rel="noopener">Vincono al Superenalotto grazie all&#x27;intelligenza artificiale: tre studenti incassano 43mila euro</a></td><td class="num">06/03/2025</td></tr>
+      <tr><td class="filone">Sicurezza nazionale</td><td>generalista</td><td>Il Post</td><td><a href="https://www.ilpost.it/2026/03/08/pentagono-anthropic-openai/" target="_blank" rel="noopener">La questione tra il Pentagono e le aziende di intelligenza artificiale, dall&#x27;inizio</a></td><td class="num">08/03/2026</td></tr>
+      <tr><td class="filone"></td><td>tecnica</td><td>Agenda Digitale</td><td><a href="https://www.agendadigitale.eu/cultura-digitale/intelligenza-artificiale-in-guerra-cosa-fa-gia-e-cosa-potra-fare-se-non-la-fermiamo/" target="_blank" rel="noopener">AI, ecco cosa fa in guerra e cosa no (ancora per poco)</a></td><td class="num">12/03/2026</td></tr>
+      <tr><td class="filone"></td><td>generalista</td><td>The Guardian</td><td><a href="https://www.theguardian.com/commentisfree/2026/sep/25/ai-israel-gaza-iran-police-surveillance" target="_blank" rel="noopener">It’s not hypothetical: the dangers of AI are already here</a></td><td class="num">25/09/2026</td></tr>
+      <tr><td class="filone">La velocità promessa</td><td>generalista</td><td>Il Post</td><td><a href="https://www.ilpost.it/2026/02/17/previsione-ai-matt-shumer/" target="_blank" rel="noopener">Il post virale che fa previsioni dirompenti sull&#x27;AI</a></td><td class="num">17/02/2026</td></tr>
+      <tr><td class="filone"></td><td>formatori</td><td>Roberto Sconocchini</td><td><a href="https://www.robertosconocchini.it/index.php/intelligenza-artificiale/9729-una-scheda-didattica-pronta-in-un-minuto-cosa-succede-se-chiedi-a-gemini-notebook-di-fare-uninfografica.html" target="_blank" rel="noopener">Una scheda didattica pronta in un minuto: cosa succede se chiedi a Gemini Notebook di fare un&#x27;infografica</a></td><td class="num">29/09/2026</td></tr>
+      <tr><td class="filone"></td><td>generalista</td><td>The Guardian</td><td><a href="https://www.theguardian.com/science/ng-interactive/2026/sep/23/big-tech-claims-ai-health-medical-advancement-cure-for-cancer" target="_blank" rel="noopener">Big tech says AI can find a cure for cancer. So where is it?</a></td><td class="num">23/09/2026</td></tr>
     </tbody>
   </table></div>
-  <p class="muted">Il 53% dell'indagine INDIRE collega il filone "Studenti e IA" a quello su chatbot e salute mentale: in aula funziona come domanda di apertura.</p>
+  <p class="muted">Today.it: "Le mie serate con Sandy e Simona..." è il titolo social dell'articolo indicizzato come "L'ascesa dei chatbot erotici e sentimentali: così l'intelligenza artificiale può creare dipendenza"; "AI e musica: quanto vale oggi una voce?" è indicizzato come "La voce degli artisti diventa una licenza per l'AI". La data dell'articolo di Sconocchini è letta nel testo della pagina.</p>
 </section>
 
 <footer>

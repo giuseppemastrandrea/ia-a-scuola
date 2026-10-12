@@ -79,7 +79,7 @@ style: |
 
 > Ai fini presenti, il problema dell'intelligenza artificiale viene considerato come quello di far comportare una macchina in modi che verrebbero definiti intelligenti se fosse un essere umano a comportarsi così.
 
-<cite>Dartmouth Summer Research Project on Artificial Intelligence</cite>
+<cite>John McCarthy, nota alla lista dei partecipanti al <em><a href="http://www-formal.stanford.edu/jmc/history/dartmouth/dartmouth.html">Dartmouth Summer Research Project on Artificial Intelligence</a></em>, dopo l'estate 1956</cite>
 
 ---
 

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mappa che parla</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #111; --muted: #6b6b6b; --accent: #2f54ff; --line: #e5e5e5; --soft: #f5f7fb; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #fff; color: var(--ink); font-family: 'Inter', sans-serif; }
+  header { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; padding: 16px 24px; border-bottom: 1px solid var(--line); }
+  label { display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin-bottom: 6px; }
+  input, textarea { font: inherit; font-size: 16px; padding: 8px 10px; border: 1px solid #ccc; border-radius: 8px; }
+  textarea { width: 220px; height: 92px; resize: vertical; }
+  button { font: inherit; font-weight: 600; font-size: 15px; padding: 10px 16px; border-radius: 10px; border: 2px solid var(--ink); background: #fff; cursor: pointer; }
+  button.main { background: var(--accent); color: #fff; border-color: var(--accent); }
+  #stage-wrap { padding: 16px 24px; }
+  #stage { position: relative; width: 1200px; height: 760px; margin: 0 auto; background: #fff; transform-origin: top left; }
+  #lines { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .node { position: absolute; width: 170px; text-align: center; touch-action: none; user-select: none; }
+  .node.center { width: 240px; }
+  .card { background: #fff; border: 4px solid var(--ink); border-radius: 22px; padding: 10px; cursor: pointer; }
+  .center .card { border-color: var(--accent); border-width: 6px; }
+  .card img { width: 120px; height: 120px; object-fit: contain; display: block; margin: 0 auto; pointer-events: none; }
+  .center .card img { width: 180px; height: 180px; }
+  .word { font-weight: 800; font-size: 24px; margin-top: 6px; letter-spacing: .04em; }
+  .center .word { font-size: 32px; }
+  .missing .word { color: #d00; }
+  .alt { display: flex; justify-content: space-between; margin-top: 4px; }
+  .alt button { padding: 2px 10px; font-size: 14px; border-width: 1px; }
+  .hidden .card { background: var(--soft); }
+  .hidden .card img, .hidden .word { visibility: hidden; }
+  .hidden .card::after { content: '?'; position: absolute; left: 0; right: 0; top: 40px; font-size: 80px; font-weight: 800; color: var(--accent); }
+  .hidden .card { position: relative; }
+  .printing .alt { display: none; }
+  footer { font-size: 12px; color: var(--muted); padding: 8px 24px 24px; }
+</style>
+</head>
+<body>
+<header>
+  <div><label for="tema">Tema</label><input id="tema" value="autunno"></div>
+  <div><label for="parole">Parole, una per riga</label><textarea id="parole">foglia
+castagna
+pioggia
+fungo
+uva
+riccio</textarea></div>
+  <button class="main" id="crea">Crea la mappa</button>
+  <button id="gioco">Gioco: cosa manca?</button>
+  <button id="pdf">Scarica PDF</button>
+</header>
+<div id="stage-wrap"><div id="stage"><svg id="lines"></svg></div></div>
+<footer>Tocca un'immagine per sentire la parola. Trascina le immagini per spostarle. Con ◀ ▶ scegli un altro pittogramma.<br>
+Autore pittogrammi: Sergio Palao. Origine: ARASAAC (arasaac.org). Licenza: CC BY-NC-SA. Proprietà: Governo di Aragona.</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const stage = document.getElementById('stage');
+const lines = document.getElementById('lines');
+const W = 1200, H = 760;
+let nodes = [];
+
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'it-IT'; u.rate = 0.85;
+  speechSynthesis.speak(u);
+}
+
+async function search(word) {
+  try {
+    const r = await fetch('https://api.arasaac.org/v1/pictograms/it/search/' + encodeURIComponent(word));
+    if (!r.ok) return [];
+    const d = await r.json();
+    return Array.isArray(d) ? d.map(p => p._id) : [];
+  } catch (e) { return []; }
+}
+
+function imgUrl(id) { return 'https://static.arasaac.org/pictograms/' + id + '/' + id + '_500.png'; }
+
+function drawLines() {
+  const c = nodes[0];
+  lines.innerHTML = nodes.slice(1).map(n =>
+    `<line x1="${c.x}" y1="${c.y}" x2="${n.x}" y2="${n.y}" stroke="#111" stroke-width="4" stroke-linecap="round"/>`).join('');
+}
+
+function place(n) {
+  n.el.style.left = (n.x - n.el.offsetWidth / 2) + 'px';
+  n.el.style.top = (n.y - n.el.offsetHeight / 2) + 'px';
+}
+
+function render(n) {
+  const img = n.el.querySelector('img');
+  if (n.ids.length) { img.crossOrigin = 'anonymous'; img.src = imgUrl(n.ids[n.i]); img.alt = n.word; }
+  else { img.removeAttribute('src'); n.el.classList.add('missing'); }
+  n.el.querySelector('.alt').style.visibility = n.ids.length > 1 ? 'visible' : 'hidden';
+}
+
+function makeNode(word, ids, center) {
+  const el = document.createElement('div');
+  el.className = 'node' + (center ? ' center' : '');
+  el.innerHTML = `<div class="card"><img><div class="word">${word.toUpperCase()}</div></div>
+    <div class="alt"><button data-d="-1" aria-label="pittogramma precedente">◀</button><button data-d="1" aria-label="pittogramma successivo">▶</button></div>`;
+  stage.appendChild(el);
+  const n = { word, ids, i: 0, el, x: 0, y: 0 };
+  el.querySelectorAll('.alt button').forEach(b => b.onclick = e => {
+    e.stopPropagation();
+    n.i = (n.i + Number(b.dataset.d) + n.ids.length) % n.ids.length; render(n);
+  });
+  // tocco: parla; trascinamento: sposta
+  const card = el.querySelector('.card');
+  let start = null;
+  card.addEventListener('pointerdown', e => { start = { px: e.clientX, py: e.clientY, x: n.x, y: n.y, moved: false }; card.setPointerCapture(e.pointerId); });
+  card.addEventListener('pointermove', e => {
+    if (!start) return;
+    const s = stage.getBoundingClientRect().width / W;
+    const dx = (e.clientX - start.px) / s, dy = (e.clientY - start.py) / s;
+    if (Math.abs(dx) + Math.abs(dy) > 6) start.moved = true;
+    if (start.moved) { n.x = start.x + dx; n.y = start.y + dy; place(n); drawLines(); }
+  });
+  card.addEventListener('pointerup', () => {
+    if (start && !start.moved) {
+      if (el.classList.contains('hidden')) el.classList.remove('hidden');
+      speak(n.word);
+    }
+    start = null;
+  });
+  render(n);
+  return n;
+}
+
+async function build() {
+  stage.querySelectorAll('.node').forEach(e => e.remove());
+  const tema = document.getElementById('tema').value.trim() || 'tema';
+  const words = document.getElementById('parole').value.split('\n').map(w => w.trim()).filter(Boolean);
+  const all = await Promise.all([tema, ...words].map(search));
+  nodes = [makeNode(tema, all[0], true)];
+  nodes[0].x = W / 2; nodes[0].y = H / 2;
+  const rx = 440, ry = 270;
+  words.forEach((w, k) => {
+    const n = makeNode(w, all[k + 1], false);
+    const a = -Math.PI / 2 + k * 2 * Math.PI / words.length;
+    n.x = W / 2 + rx * Math.cos(a); n.y = H / 2 + ry * Math.sin(a);
+    nodes.push(n);
+  });
+  requestAnimationFrame(() => { nodes.forEach(place); drawLines(); });
+}
+
+function fit() {
+  const avail = document.getElementById('stage-wrap').clientWidth - 48;
+  const s = Math.min(1, avail / W);
+  stage.style.transform = `scale(${s})`;
+  document.getElementById('stage-wrap').style.height = (H * s + 32) + 'px';
+}
+
+document.getElementById('crea').onclick = build;
+document.getElementById('gioco').onclick = () => {
+  nodes.forEach(n => n.el.classList.remove('hidden'));
+  if (nodes.length < 2) return;
+  const n = nodes[1 + Math.floor(Math.random() * (nodes.length - 1))];
+  n.el.classList.add('hidden');
+};
+document.getElementById('pdf').onclick = async () => {
+  stage.classList.add('printing');
+  const old = stage.style.transform; stage.style.transform = 'none';
+  const canvas = await html2canvas(stage, { useCORS: true, backgroundColor: '#fff', scale: 2 });
+  stage.style.transform = old; stage.classList.remove('printing');
+  const pdf = new jspdf.jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+  const w = 277, h = w * canvas.height / canvas.width;
+  pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 10, 10, w, Math.min(h, 190));
+  pdf.setFontSize(7);
+  pdf.text('Pittogrammi: Sergio Palao. ARASAAC (arasaac.org). Licenza CC BY-NC-SA. Proprietà: Governo di Aragona.', 10, 205);
+  pdf.save('mappa.pdf');
+};
+window.addEventListener('resize', fit);
+fit(); build();
+</script>
+</body>
+</html>

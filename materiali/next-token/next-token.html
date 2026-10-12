@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Un token alla volta</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap">
+<style>
+  :root {
+    --fg: #1a1a1a; --muted: #777; --accent: #2563eb; --accent-soft: #e6eeff;
+    --line: #e5e5e5; --chip: #f2f2f2; --pick: #f59e0b; --bg: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #111; }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--fg); overflow: hidden; }
+  #wrap { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+  #stage { width: 1280px; height: 720px; background: var(--bg); position: relative; transform-origin: center; padding: 48px 72px; display: flex; flex-direction: column; }
+
+  .label { font-size: 15px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.18em; margin: 0 0 8px; }
+  h1 { font-weight: 800; font-size: 40px; letter-spacing: -0.02em; margin: 0 0 18px; }
+
+  .phases { display: flex; gap: 10px; margin: 0 0 22px; }
+  .phases span { font-size: 15px; padding: 6px 14px; border-radius: 8px; background: var(--chip); color: var(--muted); transition: background 0.3s, color 0.3s; }
+  .phases span.on { background: var(--accent); color: #fff; font-weight: 600; }
+
+  .sentence { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; min-height: 64px; margin-bottom: 24px; }
+  .tok { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 26px; padding: 8px 12px; border-radius: 8px; background: var(--chip); border: 1px solid #ddd; white-space: pre; }
+  .tok.gen { background: var(--accent-soft); border-color: #b9ccff; color: var(--accent); font-weight: 600; }
+  .tok.new { animation: pop 0.5s ease; }
+  @keyframes pop { from { transform: translateY(-14px) scale(1.15); opacity: 0; } to { transform: none; opacity: 1; } }
+  .cursor { width: 3px; height: 34px; background: var(--fg); animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .panel { display: flex; gap: 48px; flex: 1; min-height: 0; }
+  .bars { flex: 1; }
+  .bars h2, .side h2 { font-size: 16px; font-weight: 600; color: var(--muted); margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.12em; }
+  .row { display: grid; grid-template-columns: 190px 1fr 80px; align-items: center; gap: 14px; height: 46px; padding: 0 10px; border-radius: 8px; transition: background 0.12s; }
+  .row .t { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 22px; white-space: pre; }
+  .row .b { height: 22px; background: var(--line); border-radius: 4px; overflow: hidden; }
+  .row .b i { display: block; height: 100%; width: 0; background: var(--accent); transition: width 0.6s ease; }
+  .row .p { font-size: 20px; text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .row.hl { background: #fff4d6; }
+  .row.hl .b i { background: var(--pick); }
+  .row.win { background: #fde7b0; }
+  .row.win .b i { background: var(--pick); }
+  .row.win .t { font-weight: 700; }
+  .rest { font-size: 15px; color: var(--muted); padding: 6px 10px 0; }
+
+  .side { flex: 0 0 300px; display: flex; flex-direction: column; gap: 22px; }
+  .temp input { width: 100%; accent-color: var(--accent); }
+  .temp .v { font-size: 34px; font-weight: 800; }
+  .temp p { font-size: 15px; color: var(--muted); margin: 6px 0 0; line-height: 1.4; }
+  .btns { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btns button { font: inherit; font-size: 16px; font-weight: 600; padding: 10px 16px; border-radius: 10px; border: 2px solid var(--accent); background: var(--bg); color: var(--accent); cursor: pointer; }
+  .btns button.primary { background: var(--accent); color: #fff; }
+  .note { font-size: 15px; line-height: 1.45; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 14px; border-radius: 6px; }
+  .note[hidden] { display: none; }
+
+  .foot { position: absolute; left: 72px; right: 72px; bottom: 20px; display: flex; justify-content: space-between; font-size: 13px; color: #aaa; }
+  kbd { font-family: inherit; border: 1px solid #ccc; border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; font-size: 12px; color: #888; }
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+  <p class="label">LLM · Come generano i contenuti?</p>
+  <h1>Un token alla volta</h1>
+
+  <div class="phases" id="phases">
+    <span>1 · calcola le probabilità</span>
+    <span>2 · campiona</span>
+    <span>3 · aggiunge il token</span>
+  </div>
+
+  <div class="sentence" id="sentence"></div>
+
+  <div class="panel">
+    <div class="bars">
+      <h2>I candidati più probabili</h2>
+      <div id="rows"></div>
+      <div class="rest" id="rest"></div>
+    </div>
+    <div class="side">
+      <div class="temp">
+        <h2>Temperatura</h2>
+        <div class="v" id="tv">1,0</div>
+        <input type="range" id="temp" min="0.2" max="2" step="0.1" value="1" aria-label="Temperatura">
+        <p id="tdesc"></p>
+      </div>
+      <div class="btns">
+        <button class="primary" id="next" type="button">Avanti</button>
+        <button id="auto" type="button">Automatico</button>
+        <button id="regen" type="button">Rigenera</button>
+      </div>
+      <div class="note" id="note" hidden></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Probabilità inventate a scopo didattico. Un modello vero ne calcola una per ciascun token del vocabolario: circa 200.000 per GPT-4o.</span>
+    <span><kbd>→</kbd> avanti · <kbd>spazio</kbd> automatico · <kbd>R</kbd> rigenera</span>
+  </div>
+</div></div>
+
+<script>
+(function () {
+  // Nodo dell'albero: elenco di candidati [token, logit, nodo successivo oppure null]
+  const END = null;
+  // Ogni percorso finisce con un punto o un punto esclamativo
+  const FINE = { c: [['.', 3.0, END], ['!', 1.6, END]] };
+  // Continuazione dopo il colore: "... perché mi ricorda il <cosa>."
+  function dopoColore(cose) {
+    const ricorda = { c: [
+      [' il', 3.4, { c: cose.map(([t, l]) => [t, l, FINE]) }],
+      [' casa', 1.6, FINE], [' l\'estate', 1.4, FINE]
+    ]};
+    const perche = { c: [
+      [' mi', 3.4, { c: [
+        [' ricorda', 3.6, ricorda], [' rilassa', 2.4, FINE],
+        [' mette', 2.2, { c: [[' allegria', 3.0, FINE], [' calma', 2.6, FINE]] }], [' piace', 1.6, FINE]
+      ]}],
+      [' è', 2.4, { c: [[' rilassante', 2.6, FINE], [' elegante', 2.2, FINE], [' allegro', 1.8, FINE]] }]
+    ]};
+    return { c: [
+      [' perché', 3.0, perche],
+      [',', 2.6, { c: [[' perché', 3.2, perche], [' davvero', 1.6, FINE], [' da', 1.0, { c: [[' sempre', 4.0, FINE]] }]] }],
+      ['.', 2.4, END], ['!', 1.3, END]
+    ]};
+  }
+  const COLORI = {
+    ' blu': [[' mare', 3.4], [' cielo', 3.1], [' sole', 0.8], [' fuoco', 0.4]],
+    ' rosso': [[' fuoco', 3.2], [' tramonto', 3.0], [' sole', 1.6], [' mare', 0.4]],
+    ' verde': [[' bosco', 3.3], [' prato', 3.0], [' mare', 1.6], [' cielo', 0.5]],
+    ' nero': [[' cielo', 2.6], [' caffè', 2.4], [' mare', 1.0], [' sole', 0.3]],
+    ' giallo': [[' sole', 3.6], [' grano', 2.6], [' mare', 1.2], [' cielo', 1.0]],
+    ' viola': [[' tramonto', 2.8], [' cielo', 2.4], [' mare', 1.4], [' sole', 0.8]]
+  };
+  const colore = (t, l) => [t, l, dopoColore(COLORI[t])];
+  const SCENARI = [{
+    prompt: ['Il', ' mio', ' colore', ' prefer', 'ito', ' è'],
+    fine: 'Il modello non ha un colore preferito: a ogni passo ha scelto una continuazione plausibile. Premendo Rigenera, la stessa frase può finire in un altro modo.',
+    albero: { c: [
+      [' il', 3.2, { c: [colore(' blu', 3.0), colore(' rosso', 2.7), colore(' verde', 2.3), colore(' nero', 1.8), colore(' giallo', 1.5), colore(' viola', 1.2)] }],
+      colore(' blu', 2.8), colore(' rosso', 2.5), colore(' verde', 2.0), colore(' nero', 1.5),
+      [' cane', -1.5, END]
+    ]}
+  }];
+
+  const $ = id => document.getElementById(id);
+  let scen = 0, node, gen, phase, chosen, timer = null, auto = false, busy = false;
+
+  // ---- presentazione: adatta il palco alla finestra
+  function fit() {
+    const s = Math.min(innerWidth / 1280, innerHeight / 720);
+    $('stage').style.transform = 'scale(' + s + ')';
+  }
+  addEventListener('resize', fit); fit();
+
+  function temp() { return parseFloat($('temp').value); }
+
+  function probs(n) {
+    const T = temp();
+    const ex = n.c.map(c => Math.exp(c[1] / T));
+    const z = ex.reduce((a, b) => a + b, 0);
+    return ex.map(e => e / z);
+  }
+
+  function show(t) { return t.replace(/ /g, '·'); }
+
+  function renderSentence(newIdx) {
+    const s = $('sentence'); s.innerHTML = '';
+    SCENARI[scen].prompt.forEach(t => { const e = document.createElement('span'); e.className = 'tok'; e.textContent = show(t); s.appendChild(e); });
+    gen.forEach((t, i) => { const e = document.createElement('span'); e.className = 'tok gen' + (i === newIdx ? ' new' : ''); e.textContent = show(t); s.appendChild(e); });
+    const c = document.createElement('span'); c.className = 'cursor'; s.appendChild(c);
+  }
+
+  function renderRows(withBars) {
+    const r = $('rows'); r.innerHTML = '';
+    if (!node) { $('rest').textContent = ''; return; }
+    const p = probs(node);
+    node.c.forEach((c, i) => {
+      const row = document.createElement('div'); row.className = 'row';
+      row.innerHTML = '<span class="t"></span><span class="b"><i></i></span><span class="p"></span>';
+      row.querySelector('.t').textContent = show(c[0]);
+      row.querySelector('.p').textContent = withBars ? (p[i] * 100).toFixed(1).replace('.', ',') + '%' : '';
+      r.appendChild(row);
+    });
+    $('rest').textContent = withBars ? 'Tutti gli altri token del vocabolario: probabilità vicina a zero.' : '';
+    if (withBars) requestAnimationFrame(() => requestAnimationFrame(() => {
+      [...r.children].forEach((row, i) => row.querySelector('i').style.width = (p[i] * 100) + '%');
+    }));
+  }
+
+  function setPhase(k) {
+    [...$('phases').children].forEach((e, i) => e.classList.toggle('on', i === k));
+  }
+
+  function tdesc() {
+    const T = temp();
+    $('tv').textContent = T.toFixed(1).replace('.', ',');
+    $('tdesc').textContent = T < 0.6 ? 'Bassa: vince quasi sempre il token più probabile. Testi prevedibili, sempre uguali.'
+      : T > 1.4 ? 'Alta: anche i token improbabili hanno una possibilità. Testi più vari, a volte strani.'
+      : 'Media: di solito vince il più probabile, ma non sempre.';
+  }
+
+  function reset() {
+    stopAuto();
+    node = SCENARI[scen].albero; gen = []; phase = 'ready'; chosen = -1; busy = false;
+    $('note').hidden = true;
+    renderSentence(-1); renderRows(false); setPhase(-1);
+  }
+
+  function sample() {
+    const p = probs(node); let x = Math.random(), i = 0;
+    for (; i < p.length - 1; i++) { x -= p[i]; if (x <= 0) break; }
+    return i;
+  }
+
+  function roulette(done) {
+    const rows = [...$('rows').children]; const n = rows.length;
+    let steps = 14 + Math.floor(Math.random() * 6), k = Math.floor(Math.random() * n), delay = 50;
+    // l'ultimo passo deve cadere sul token estratto
+    const startOffset = ((chosen - (k + steps)) % n + n) % n; steps += startOffset;
+    busy = true;
+    (function tick() {
+      rows.forEach(r => r.classList.remove('hl'));
+      rows[k % n].classList.add('hl');
+      if (steps-- <= 0) { rows[k % n].classList.remove('hl'); rows[chosen].classList.add('win'); busy = false; done(); return; }
+      k++; delay *= 1.12; setTimeout(tick, delay);
+    })();
+  }
+
+  function step() {
+    if (busy) return;
+    if (phase === 'end') { if (auto) stopAuto(); return; }
+    if (phase === 'ready') { renderRows(true); setPhase(0); phase = 'dist'; }
+    else if (phase === 'dist') { chosen = sample(); setPhase(1); phase = 'sampling'; roulette(() => { phase = 'chosen'; if (auto) schedule(900); }); return; }
+    else if (phase === 'chosen') {
+      const c = node.c[chosen]; gen.push(c[0]); setPhase(2); renderSentence(gen.length - 1);
+      node = c[2];
+      if (!node) { phase = 'end'; renderRows(false); $('note').textContent = SCENARI[scen].fine; $('note').hidden = false; stopAuto(); return; }
+      phase = 'ready';
+    }
+    if (auto) schedule(phase === 'ready' ? 700 : 1300);
+  }
+
+  function schedule(ms) { clearTimeout(timer); timer = setTimeout(step, ms); }
+  function startAuto() { auto = true; $('auto').textContent = 'Pausa'; schedule(200); }
+  function stopAuto() { auto = false; clearTimeout(timer); $('auto').textContent = 'Automatico'; }
+
+  $('next').addEventListener('click', step);
+  $('auto').addEventListener('click', () => auto ? stopAuto() : startAuto());
+  $('regen').addEventListener('click', reset);
+  $('temp').addEventListener('input', () => { tdesc(); if (phase === 'dist') renderRows(true); });
+  addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' && e.key !== 'ArrowRight') return;
+    if (e.key === 'ArrowRight' || e.key === 'Enter' || e.key === 'PageDown') { e.preventDefault(); step(); }
+    else if (e.key === ' ') { e.preventDefault(); auto ? stopAuto() : startAuto(); }
+    else if (e.key === 'r' || e.key === 'R') reset();
+  });
+
+  tdesc(); reset();
+})();
+</script>
+</body>
+</html>

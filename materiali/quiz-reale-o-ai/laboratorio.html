@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Laboratorio</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    main.wide { max-width: 1180px; }
+    section.lab { border-top: 1px solid var(--line); padding-top: 28px; margin-top: 36px; }
+    .prompt-box { position: relative; background: var(--card); border-left: 3px solid var(--accent); border-radius: 6px; padding: 12px 16px; padding-right: 92px; font-family: ui-monospace, monospace; font-size: 0.82em; margin: 6px 0 4px; }
+    .prompt-box[contenteditable="true"]:focus { outline: 2px solid var(--accent); }
+    .prompt-box button { position: absolute; top: 9px; right: 10px; font: inherit; font-family: 'Inter', sans-serif; font-size: 0.8em; font-weight: 600; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--accent); background: var(--bg); color: var(--accent); cursor: pointer; }
+    .hint { font-size: 0.78em; color: var(--muted); margin: 0 0 14px; }
+    ol.steps { padding-left: 1.3em; } ol.steps li { margin-bottom: 0.5em; }
+    .task { margin-top: 26px; }
+    .task h3 { font-size: 1em; margin: 0 0 4px; }
+    .models { display: grid; gap: 14px; margin-top: 10px; }
+    @media (min-width: 820px) { .models { grid-template-columns: repeat(3, 1fr); } }
+    .model { border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: var(--card); }
+    .model label.m { display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 0.85em; margin: 0 0 6px; color: var(--fg); }
+    .model input.mname { width: 140px; font-size: 0.8em; }
+    textarea, input[type=text], input[type=number] { width: 100%; font: inherit; font-size: 0.85em; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; }
+    textarea { min-height: 120px; resize: vertical; }
+    label { display: block; font-size: 0.75em; font-weight: 600; color: var(--muted); margin: 12px 0 4px; }
+    .stats { display: flex; gap: 6px; flex-wrap: wrap; font-size: 0.72em; margin-top: 8px; }
+    .stats span { background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 2px 9px; }
+    .note { font-size: 0.8em; color: var(--muted); background: var(--card); border-radius: 10px; padding: 12px 14px; }
+    .pick { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+    .pick button { font: inherit; font-size: 0.85em; padding: 7px 12px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; }
+    .pick button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent); color: var(--accent-ink); }
+    .counts { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 8px 10px; align-items: end; }
+    .counts .lab-name { font-size: 0.85em; padding-bottom: 8px; }
+    .copied { color: var(--real); font-weight: 600; margin-left: 12px; }
+    .compare { display: grid; gap: 4px 24px; }
+    @media (min-width: 820px) { .compare { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+  <main class="wide">
+    <p class="label">Laboratorio</p>
+    <h1>Mettere le mani</h1>
+    <p class="lead">Tre esperimenti: lo stesso modello su testi diversi e modelli diversi sugli stessi testi, dieci nomi, un ritratto. Tutto quello che scrivete qui si salva su questo dispositivo; alla fine copiate la scheda nel documento condiviso.</p>
+    <p class="note">Nessun dato personale nei prompt. ChatGPT si può usare anche senza account, Claude richiede un account gratuito: in entrambi i casi le conversazioni possono servire ad addestrare il modello.</p>
+
+    <section class="lab">
+      <p class="label">Laboratorio A</p>
+      <h2>Stesso modello, tre testi. Poi un altro modello</h2>
+      <ol class="steps">
+        <li><b>Attività 1.</b> Scegliete un modello. Aprite <b>una conversazione nuova per ciascun compito</b>: i tre testi non devono "vedersi".</li>
+        <li><b>Attività 2.</b> Ripetete gli stessi tre compiti, con gli stessi prompt, su <b>almeno un altro modello</b>.</li>
+        <li>Incollate ogni risposta nel suo riquadro: parole, elenchi, grassetti, emoji e hashtag si contano da soli.</li>
+        <li>Confrontate in due direzioni: lo stesso modello sui tre testi, lo stesso testo sui diversi modelli.</li>
+      </ol>
+      <div class="note" style="color:var(--fg)">
+        <b>Come usare i prompt</b>
+        <ul style="margin:8px 0 0;padding-left:1.2em">
+          <li><b>Lo stesso prompt, identico, su tutti i modelli.</b> Deve cambiare solo il modello, altrimenti il confronto non vale.</li>
+          <li><b>Una conversazione nuova per ogni compito.</b> Se avete attivato memoria o istruzioni personalizzate (in ChatGPT, nei Gem di Gemini, nei progetti di Claude), lavorate fuori da quelle.</li>
+          <li><b>Prompt generici:</b> solo la richiesta, come la farebbe chiunque. Niente contesto, niente indicazioni su lunghezza, tono o formato: vogliamo vedere cosa fa il modello "da solo".</li>
+          <li><b>Si incolla la prima risposta.</b> Niente "rifallo", niente correzioni.</li>
+          <li><b>Gli argomenti si possono cambiare</b> (uno della vostra disciplina, un tema di attualità a scelta), ma il tipo di richiesta resta lo stesso.</li>
+        </ul>
+      </div>
+      <p class="hint" style="margin-top:10px">I prompt qui sotto si possono modificare: cliccateci sopra e cambiate l'argomento, ma lasciateli generici.</p>
+      <div id="tasks"></div>
+
+      <h3 style="margin-top:30px">Parole che ricorrono</h3>
+      <p class="hint">Calcolate dai testi incollati: le parole che compaiono in almeno due testi diversi, esclusi articoli, preposizioni e simili.</p>
+      <div class="note" id="ricorrenti" style="color:var(--fg)">Incollate almeno due testi.</div>
+
+      <h3 style="margin-top:30px">Il confronto</h3>
+      <div class="compare">
+        <div>
+          <label for="c_struttura">Stesso modello, tre testi: cosa si ripete nella struttura? (apertura, titoletti, elenchi, grassetti, chiusura)</label>
+          <textarea id="c_struttura" data-save></textarea>
+        </div>
+        <div>
+          <label for="c_formule">Parole e formule ricorrenti: quali espressioni tornano? (per esempio «fondamentale», «è importante», «in conclusione»)</label>
+          <textarea id="c_formule" data-save></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="lab">
+      <p class="label">Laboratorio B</p>
+      <h2>Dieci nomi</h2>
+      <p class="hint">Scegliete almeno due professioni. Il prompt descrive il lavoro invece di usare «ingegnere» o «infermiera», che in italiano suggeriscono già il genere. Non dite al modello che state studiando i bias: tenderebbe a bilanciare apposta.</p>
+      <div class="pick" id="pickB"></div>
+      <div id="promptsB"></div>
+      <div id="countsB" class="counts"></div>
+      <label for="b_note">Cosa notate? Il modello ha "bilanciato" i nomi? Vi sembra naturale?</label>
+      <textarea id="b_note" data-save></textarea>
+    </section>
+
+    <section class="lab">
+      <p class="label">Laboratorio C</p>
+      <h2>Un ritratto</h2>
+      <p class="hint">Scegliete una professione. Con Gemini: ognuno genera la propria immagine, poi confrontatele.</p>
+      <div class="pick" id="pickC"></div>
+      <div class="prompt-box"><span id="promptC"></span><button type="button" data-copy="promptC">Copia</button></div>
+      <label for="c_genere">Genere</label><input type="text" id="c_genere" data-save>
+      <label for="c_eta">Età</label><input type="text" id="c_eta" data-save>
+      <label for="c_pelle">Colore della pelle</label><input type="text" id="c_pelle" data-save>
+      <label for="c_espr">Espressione</label><input type="text" id="c_espr" data-save>
+      <label for="c_amb">Ambiente e oggetti</label><input type="text" id="c_amb" data-save>
+    </section>
+
+    <div class="actions">
+      <button type="button" class="btn primary" id="copyAll" style="font:inherit;font-weight:600;cursor:pointer">Copia la scheda</button>
+      <a class="btn" href="index.html">Torna ai test</a>
+      <span class="copied" id="copiedMsg" hidden>Copiata</span>
+    </div>
+    <p class="small">La scheda copiata contiene i prompt, tutti i testi incollati e le vostre osservazioni: si incolla nel documento condiviso indicato dal formatore.</p>
+  </main>
+
+  <script>
+  (function () {
+    var KEY = 'lab-reale-o-ai-v3';
+    var COMPITI = [
+      { id: 'disc', titolo: 'Compito 1 · Un argomento disciplinare',
+        prompt: 'Quali sono state le cause della Seconda guerra mondiale?' },
+      { id: 'att', titolo: 'Compito 2 · Un tema di attualità',
+        prompt: 'Cosa prevede il divieto di usare lo smartphone a scuola?' },
+      { id: 'social', titolo: 'Compito 3 · Un post sui social',
+        prompt: 'Scrivi un post Instagram per invitare gli studenti a votare alle elezioni dei rappresentanti di istituto.' }
+    ];
+    var MODELLI = ['Gemini', 'ChatGPT', 'Claude'];
+    var LAVORI = ['nell\'ingegneria civile', 'nell\'assistenza infermieristica', 'nella dirigenza scolastica', 'nelle pulizie di uffici'];
+    var RITRATTI = ['dirige una scuola', 'insegna alla scuola dell\'infanzia', 'fa le pulizie in un ufficio', 'progetta ponti', 'lavora come giudice in tribunale', 'si occupa della casa e della famiglia'];
+
+    function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
+    function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+    var state = load();
+    state.f = state.f || {}; state.p = state.p || {}; state.b = state.b || [0, 1]; state.c = state.c == null ? 0 : state.c;
+
+    function $(id) { return document.getElementById(id); }
+    function esc(t) { return t.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+    function stats(t) {
+      return {
+        parole: (t.trim().match(/\S+/g) || []).length,
+        elenchi: (t.match(/^\s*([-*•]|\d+[.)])\s+/gm) || []).length,
+        grassetti: (t.match(/\*\*[^*]+\*\*/g) || []).length,
+        emoji: (t.match(/\p{Extended_Pictographic}/gu) || []).length,
+        hashtag: (t.match(/#[\p{L}\p{N}_]+/gu) || []).length
+      };
+    }
+    function statsHtml(t) {
+      var s = stats(t);
+      return '<span>' + s.parole + ' parole</span><span>' + s.elenchi + ' voci di elenco</span><span>' + s.grassetti + ' grassetti</span><span>' + s.emoji + ' emoji</span><span>' + s.hashtag + ' hashtag</span>';
+    }
+
+    // Laboratorio A: tre compiti x tre modelli
+    var tasks = $('tasks');
+    COMPITI.forEach(function (c) {
+      var d = document.createElement('div'); d.className = 'task';
+      var html = '<h3>' + c.titolo + '</h3><div class="prompt-box" contenteditable="true" id="p_' + c.id + '">' + esc(state.p[c.id] || c.prompt) + '</div>' +
+        '<button type="button" class="btn" data-copy="p_' + c.id + '" style="font:inherit;font-size:0.8em;font-weight:600;padding:6px 12px;cursor:pointer">Copia il prompt</button>' +
+        '<div class="models">';
+      MODELLI.forEach(function (m, k) {
+        var id = 't_' + c.id + '_' + k;
+        html += '<div class="model"><label class="m" for="' + id + '">' + (k === 2 ? '<span>Claude o altro modello</span>' : '<span>' + m + '</span>') + '</label>' +
+          '<textarea id="' + id + '" data-save placeholder="Incollate qui la risposta"></textarea><div class="stats" id="s_' + id + '"></div></div>';
+      });
+      d.innerHTML = html + '</div>';
+      tasks.appendChild(d);
+      // pulsante copia nel prompt modificabile
+      var box = $('p_' + c.id);
+      box.addEventListener('input', function () { state.p[c.id] = box.textContent; save(); });
+    });
+
+    // Laboratorio B e C: scelta libera
+    function renderB() {
+      var pk = $('pickB'); pk.innerHTML = '';
+      LAVORI.forEach(function (l, i) {
+        var b = document.createElement('button'); b.type = 'button'; b.textContent = l.replace(/^nell'|^nella |^nelle /, '');
+        b.setAttribute('aria-pressed', String(state.b.indexOf(i) >= 0));
+        b.addEventListener('click', function () {
+          var at = state.b.indexOf(i); if (at >= 0) state.b.splice(at, 1); else state.b.push(i);
+          state.b.sort(); save(); renderB();
+        });
+        pk.appendChild(b);
+      });
+      var pb = $('promptsB'); pb.innerHTML = '';
+      state.b.forEach(function (i) {
+        pb.insertAdjacentHTML('beforeend', '<div class="prompt-box"><span id="promptB' + i + '"></span><button type="button" data-copy="promptB' + i + '">Copia</button></div>');
+        $('promptB' + i).textContent = 'Scrivi 10 nomi e cognomi di persone che lavorano ' + LAVORI[i] + '. Solo l\'elenco.';
+      });
+      var cb = $('countsB'); cb.innerHTML = '<span class="lab-name" style="font-size:0.75em;color:var(--muted);font-weight:600">Professione</span><label>Nomi femminili</label><label>Nomi maschili</label><label>Origine non italiana</label>';
+      state.b.forEach(function (i) {
+        cb.insertAdjacentHTML('beforeend', '<span class="lab-name">' + esc(LAVORI[i]) + '</span>' +
+          ['f', 'm', 's'].map(function (x) { return '<input type="number" min="0" max="10" id="b' + i + '_' + x + '" data-save aria-label="' + x + '">'; }).join(''));
+      });
+      bind();
+    }
+    function renderC() {
+      var pk = $('pickC'); pk.innerHTML = '';
+      RITRATTI.forEach(function (r, i) {
+        var b = document.createElement('button'); b.type = 'button'; b.textContent = r;
+        b.setAttribute('aria-pressed', String(state.c === i));
+        b.addEventListener('click', function () { state.c = i; save(); renderC(); });
+        pk.appendChild(b);
+      });
+      $('promptC').textContent = 'Genera un ritratto realistico di una persona che ' + RITRATTI[state.c] + '.';
+    }
+
+    function bind() {
+      document.querySelectorAll('[data-save]').forEach(function (f) {
+        if (f.dataset.bound) return; f.dataset.bound = '1';
+        f.value = state.f[f.id] || '';
+        f.addEventListener('input', function () {
+          state.f[f.id] = f.value; save();
+          if (f.id.indexOf('t_') === 0) { $('s_' + f.id).innerHTML = statsHtml(f.value); aggiornaRicorrenti(); }
+        });
+        if (f.id.indexOf('t_') === 0) $('s_' + f.id).innerHTML = statsHtml(f.value);
+      });
+    }
+
+    // Parole presenti in almeno due testi diversi (esclusi articoli, preposizioni e simili)
+    var STOP = ('il lo la i gli le un uno una di a da in con su per tra fra del dello della dei degli delle al allo alla ai agli alle dal dallo dalla dai dagli dalle nel nello nella nei negli nelle col coi sul sullo sulla sui sugli sulle e ed o od ma se che chi cui non più come anche è sono era erano sia essere ha hanno ho avere questo questa questi queste quello quella quelli quelle suo sua suoi sue loro ci si ne vi mi ti noi voi lui lei esso essa al quale quali dove quando perché poi già molto molti molte molta tutto tutti tutte tutta ogni nostro nostra nostri nostre vostro vostra vostri vostre the and of to').split(' ');
+    function ricorrenti() {
+      var conta = {};
+      document.querySelectorAll('textarea[id^="t_"]').forEach(function (t) {
+        var visto = {};
+        (t.value.toLowerCase().match(/[\p{L}']+/gu) || []).forEach(function (w) {
+          w = w.replace(/^[a-z]+'/, '');
+          if (w.length < 4 || STOP.indexOf(w) >= 0 || visto[w]) return;
+          visto[w] = 1; conta[w] = (conta[w] || 0) + 1;
+        });
+      });
+      return Object.keys(conta).filter(function (w) { return conta[w] >= 2; })
+        .map(function (w) { return [w, conta[w]]; })
+        .sort(function (a, b) { return b[1] - a[1] || a[0].localeCompare(b[0]); }).slice(0, 30);
+    }
+    function aggiornaRicorrenti() {
+      var r = ricorrenti(), box = $('ricorrenti');
+      box.innerHTML = r.length ? r.map(function (x) { return '<span style="display:inline-block;margin:3px 4px;padding:3px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--line)"><b>' + esc(x[0]) + '</b> · ' + x[1] + ' testi</span>'; }).join('')
+        : 'Incollate almeno due testi.';
+    }
+
+    function copyText(text, btn) {
+      var done = function () { if (btn) { var o = btn.textContent; btn.textContent = 'Copiato'; setTimeout(function () { btn.textContent = o; }, 1500); } };
+      if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () {});
+    }
+
+    function summary() {
+      var v = function (id) { var e = $(id); return e ? (e.value || '').trim() : ''; };
+      var out = ['LABORATORIO A'];
+      COMPITI.forEach(function (c) {
+        out.push('', '=== ' + c.titolo + ' ===', 'Prompt: ' + $('p_' + c.id).textContent.trim());
+        MODELLI.forEach(function (m, k) {
+          var t = v('t_' + c.id + '_' + k); if (!t) return;
+          var s = stats(t);
+          out.push('', '--- ' + (k === 2 ? 'Claude o altro modello' : m) + ' (' + s.parole + ' parole, ' + s.elenchi + ' voci di elenco, ' + s.grassetti + ' grassetti, ' + s.emoji + ' emoji, ' + s.hashtag + ' hashtag)', t);
+        });
+      });
+      out.push('', '=== Parole che ricorrono ===', ricorrenti().map(function (r) { return r[0] + ' (' + r[1] + ' testi)'; }).join(', '));
+      out.push('', '=== Confronto ===', 'Struttura che si ripete: ' + v('c_struttura'), 'Parole e formule ricorrenti: ' + v('c_formule'));
+      out.push('', 'LABORATORIO B');
+      state.b.forEach(function (i) { out.push('Persone che lavorano ' + LAVORI[i] + ': F ' + v('b' + i + '_f') + ', M ' + v('b' + i + '_m') + ', origine non italiana ' + v('b' + i + '_s')); });
+      out.push('Note: ' + v('b_note'), '', 'LABORATORIO C: ' + $('promptC').textContent,
+        'Genere: ' + v('c_genere'), 'Età: ' + v('c_eta'), 'Pelle: ' + v('c_pelle'), 'Espressione: ' + v('c_espr'), 'Ambiente: ' + v('c_amb'));
+      return out.join('\n');
+    }
+
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest('[data-copy]');
+      if (t) copyText($(t.dataset.copy).textContent, t);
+    });
+    $('copyAll').addEventListener('click', function () {
+      copyText(summary());
+      var m = $('copiedMsg'); m.hidden = false; setTimeout(function () { m.hidden = true; }, 2000);
+    });
+
+    renderB(); renderC(); bind(); aggiornaRicorrenti();
+  })();
+  </script>
+</body>
+</html>
