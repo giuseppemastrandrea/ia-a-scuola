@@ -68,7 +68,7 @@ Si attiva dalla barra del prompt: **Strumenti → Canvas**.
 
 ### Due cose diverse
 
-<div class="schema"><img src="img/schemi/canvas-modi.svg"></div>
+<div class="schema"><img src="../comune/schemi/canvas-modi.svg"></div>
 
 ---
 
