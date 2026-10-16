@@ -36,6 +36,8 @@ style: |
   .check { border: 1px solid #b7e4c7; background: #f0fbf4; border-radius: 10px; padding: 12px 20px; font-size: 0.7em; margin-top: 0.8em; }
   .check b { color: #1b7f3b; font-weight: 600; }
   .warn { border: 1px solid #f3d19c; background: #fff8ec; border-radius: 10px; padding: 12px 20px; font-size: 0.7em; margin-top: 0.8em; }
+  .cols > .sc { flex: 1.6; }
+  .sc img { max-height: 440px; max-width: 100%; border: 1px solid #e5e5e5; border-radius: 10px; display: block; margin: 0 auto; }
   a { color: inherit; text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
 ---
 
@@ -55,7 +57,7 @@ style: |
 <div class="cols">
 <div>
 
-All'indirizzo **username.github.io** oggi c'è solo "Ciao". Lo trasformiamo in una **pagina indice** che porta a tutte le pagine fatte con Canvas durante il corso.
+All'indirizzo **username.github.io/creazioni-canvas/** oggi c'è la vostra prima pagina. Lo trasformiamo in una **pagina indice** che porta a tutte le pagine fatte con Canvas durante il corso.
 
 <p class="meta">Tecniche: dare a Gemini i dati che non può conoscere, iterare, aggiornare un file su GitHub</p>
 
@@ -81,13 +83,13 @@ All'indirizzo **username.github.io** oggi c'è solo "Ciao". Lo trasformiamo in u
 
 ### Il punto di partenza
 
-Dal deck <a href="github-pages.html">GitHub Pages</a> e dalla tabella CAA dovreste avere:
+Dal deck <a href="github-pages.html">GitHub Pages</a> dovreste avere:
 
 1. un account GitHub;
-2. un repository che si chiama **username.github.io**;
-3. dentro, due file: **index.html** ("Ciao") e **tabella-caa.html**.
+2. un repository, per esempio **creazioni-canvas**;
+3. dentro, **index.html**: la vostra prima pagina fatta con Canvas.
 
-<div class="check"><b>Cosa vedete:</b> aprite github.com/username/username.github.io (con il vostro username): compaiono i due file.</div>
+<div class="check"><b>Cosa vedete:</b> all'indirizzo username.github.io/creazioni-canvas/ la vostra prima pagina.</div>
 
 <div class="warn">Manca qualcosa? Riprendete il deck GitHub Pages, prima di andare avanti.</div>
 
@@ -95,37 +97,60 @@ Dal deck <a href="github-pages.html">GitHub Pages</a> e dalla tabella CAA dovres
 
 <!-- _class: big -->
 
-# Parte 1 · Una seconda pagina
+# Parte 1 · Un nome per ogni pagina
 
 ---
 
-### Perché una seconda pagina
+### Perché cambiare nome
 
-Un indice con una sola voce non serve a molto. Prendete un'altra pagina fatta con Canvas durante il corso.
+<div class="cols">
+<div class="card"><h2>Oggi</h2><p>index.html è la vostra prima pagina: si apre all'indirizzo del repository.</p></div>
+<div class="card"><h2>Alla fine</h2><p>index.html sarà l'indice. La prima pagina deve avere un nome suo, per esempio memory_dell_autunno.html.</p></div>
+</div>
 
-<p class="note">Non ne avete un'altra? Saltate la Parte 1: l'indice avrà una scheda sola, e le altre si aggiungono in fondo all'esercitazione.</p>
-
----
-
-### Pagina 2 · Pubblicarla
-
-1. In Canvas cliccate **Scarica**.
-2. Rinominate il file con un nome valido, per esempio `ruota_dell_autunno.html`
-3. Su GitHub: **Add file → Upload files**, trascinate il file, **Commit changes**.
-
-<p class="note">Come nel deck <a href="github-pages.html">GitHub Pages</a>: nomi in minuscolo, senza spazi né accenti, con .html alla fine.</p>
-
-<div class="check"><b>Cosa vedete:</b> nel repository tre file: index.html, tabella-caa.html e quello nuovo.</div>
+<p class="note">Su GitHub non serve rinominare niente: si carica di nuovo la pagina, con il nome nuovo.</p>
 
 ---
 
-### Pagina 2 · Il collaudo
+### Pagina 1 · Scaricarla di nuovo
 
-1. Aspettate un paio di minuti.
-2. Aprite **username.github.io/** seguito dal nome del file.
-Per esempio: username.github.io/ruota_dell_autunno.html
+<div class="cols">
+<div>
 
-<div class="check"><b>Cosa vedete:</b> la pagina che funziona come in Canvas.</div>
+1. Aprite in Gemini la chat della prima pagina.
+2. Nel riquadro di Canvas: **Esporta → Scarica codice**.
+3. Nella cartella **Download** rinominate il file con un nome suo, per esempio `memory_dell_autunno.html`
+
+<p class="note">Nomi in minuscolo, senza spazi né accenti, con .html alla fine.</p>
+
+</div>
+<div class="sc"><img src="img/github/05-canvas-scarica-codice.png"></div>
+</div>
+
+---
+
+### Pagina 1 · Caricarla con il nome nuovo
+
+<div class="cols">
+<div>
+
+1. Nel repository: **Add file → Upload files**.
+2. Trascinate il file nel riquadro.
+3. Cliccate **Commit changes**.
+
+<div class="check"><b>Cosa vedete:</b> nel repository due file: index.html e memory_dell_autunno.html.</div>
+
+</div>
+<div class="sc"><img src="img/github/07-upload.png"></div>
+</div>
+
+---
+
+### Pagina 2 · Un'altra pagina
+
+Un indice con una sola voce non serve a molto. Se avete un'altra pagina fatta con Canvas, ripetete le due slide precedenti con la sua chat e un nome suo, per esempio `ruota_dell_autunno.html`.
+
+<div class="check"><b>Cosa vedete:</b> all'indirizzo username.github.io/creazioni-canvas/ruota_dell_autunno.html la pagina che funziona come in Canvas.</div>
 
 <div class="warn">Errore 404? Confrontate lettera per lettera il nome del file su GitHub con l'indirizzo.</div>
 
@@ -275,40 +300,46 @@ Aggiungilo senza cambiare gli altri.
 
 ### Indice 1 · Scaricare e rinominare
 
-1. Nel riquadro di Canvas cliccate **Scarica**.
+<div class="cols">
+<div>
+
+1. Nel riquadro di Canvas: **Esporta → Scarica codice**.
 2. Rinominate il file appena scaricato in `index.html`
 
-<p class="note">Il nome è obbligatorio: index.html è la pagina che si apre all'indirizzo username.github.io.</p>
+<p class="note">Il nome è obbligatorio: index.html è la pagina che si apre all'indirizzo username.github.io/creazioni-canvas/.</p>
 
 <div class="check"><b>Cosa vedete:</b> nella cartella Download il file index.html.</div>
 
+</div>
+<div class="sc"><img src="img/github/05-canvas-scarica-codice.png"></div>
+</div>
+
 ---
 
-### Indice 2 · Caricare al posto di "Ciao"
+### Indice 2 · Caricare l'indice
 
 <div class="cols">
 <div>
 
-1. Su GitHub, nel repository: **Add file → Upload files**.
+1. Nel repository: **Add file → Upload files**.
 2. Trascinate **index.html** nel riquadro.
-3. In fondo alla pagina cliccate **Commit changes**.
+3. Cliccate **Commit changes**.
 
-Nel repository c'è già un index.html: quello nuovo **lo sostituisce**.
+Il vecchio index.html **viene sostituito**: la prima pagina ormai ha il suo nome.
 
 </div>
+<div class="sc"><img src="img/github/07-upload.png"></div>
 </div>
-
-<div class="check"><b>Cosa vedete:</b> cliccando index.html nel repository, un file lungo al posto della riga "Ciao".</div>
 
 ---
 
 ### Indice 3 · Il collaudo
 
 1. Aspettate un paio di minuti.
-2. Aprite **username.github.io**.
+2. Aprite **username.github.io/creazioni-canvas/**.
 3. Cliccate ogni scheda, una per volta.
 
-<div class="check"><b>Cosa vedete:</b> al posto di "Ciao" l'indice. Ogni scheda apre la sua pagina in una scheda nuova del browser.</div>
+<div class="check"><b>Cosa vedete:</b> al posto della prima pagina l'indice. Ogni scheda apre la sua pagina in una scheda nuova del browser.</div>
 
 ---
 
@@ -316,7 +347,8 @@ Nel repository c'è già un index.html: quello nuovo **lo sostituisce**.
 
 | Cosa vedete | Cosa fare |
 |---|---|
-| C'è ancora "Ciao" | Ricaricate con **Ctrl+Shift+R** (**Cmd+Shift+R**). Se resta, il file caricato non si chiamava esattamente index.html |
+| C'è ancora la prima pagina | Ricaricate con **Ctrl+Shift+R** (**Cmd+Shift+R**). Se resta, il file caricato non si chiamava esattamente index.html |
+| La prima pagina è sparita | Non l'avete ricaricata con un nome suo: ripetete la Parte 1 |
 | Una scheda apre l'errore 404 | Il nome nella scheda è diverso dal nome del file su GitHub |
 | Manca una pagina | Non era nell'elenco incollato: aggiungetela come nella Parte 5 |
 
@@ -331,8 +363,8 @@ Nel repository c'è già un index.html: quello nuovo **lo sostituisce**.
 ### Due operazioni, sempre in quest'ordine
 
 <div class="cols">
-<div class="card"><h2>1 · Il file</h2><p>Scarica da Canvas, si rinomina, Add file → Upload files. Si controlla che si apra.</p></div>
-<div class="card"><h2>2 · L'indice</h2><p>Si aggiunge il collegamento all'indice, si scarica, si rinomina in index.html e si carica, come in Indice 1 e 2.</p></div>
+<div class="card"><h2>1 · Il file</h2><p>Esporta → Scarica codice, si rinomina con un nome suo, Add file → Upload files. Si controlla che si apra.</p></div>
+<div class="card"><h2>2 · L'indice</h2><p>Si aggiunge il collegamento all'indice, Esporta → Scarica codice, si rinomina in index.html e si carica, come in Indice 1 e 2.</p></div>
 </div>
 
 ---
@@ -346,7 +378,7 @@ Aggiungi il collegamento a questo file, senza cambiare il resto:
 foglie_d_autunno.html
 ```
 
-Poi **Scarica**, rinominate in index.html e caricatelo su GitHub.
+Poi **Esporta → Scarica codice**, rinominate in index.html e caricatelo su GitHub.
 
 ---
 

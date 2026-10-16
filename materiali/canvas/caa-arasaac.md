@@ -36,6 +36,8 @@ style: |
   .check { border: 1px solid #b7e4c7; background: #f0fbf4; border-radius: 10px; padding: 12px 20px; font-size: 0.7em; margin-top: 0.8em; }
   .check b { color: #1b7f3b; font-weight: 600; }
   .warn { border: 1px solid #f3d19c; background: #fff8ec; border-radius: 10px; padding: 12px 20px; font-size: 0.7em; margin-top: 0.8em; }
+  .cols > .sc { flex: 1.6; }
+  .sc img { max-height: 440px; max-width: 100%; border: 1px solid #e5e5e5; border-radius: 10px; display: block; margin: 0 auto; }
   a { color: inherit; text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
 ---
 
@@ -382,33 +384,57 @@ oggetti arancioni, parole sociali rosa.
 
 ### Prima di questa parte
 
-Account GitHub, repository **username.github.io** e pagina di prova "Ciao": si preparano con il deck <a href="github-pages.html">GitHub Pages</a>.
+Account GitHub e repository **creazioni-canvas**, con la vostra prima pagina come index.html: si preparano con il deck <a href="github-pages.html">GitHub Pages</a>.
 
-<div class="check"><b>Cosa vedete:</b> all'indirizzo username.github.io la scritta <b>Ciao</b>.</div>
+<div class="check"><b>Cosa vedete:</b> all'indirizzo username.github.io/creazioni-canvas/ la vostra prima pagina.</div>
+
+<p class="note">La tabella è la vostra prima pagina? Seguite il deck GitHub Pages con la tabella, e saltate le due slide che seguono.</p>
 
 ---
 
-### Tabella · Dalla chat al sito
+### Tabella 1 · Scaricare il codice
 
-1. In Canvas cliccate **Scarica**.
-2. Rinominate il file in `tabella-caa.html`
-3. Su GitHub: **Add file → Upload files**, trascinate il file, **Commit changes**.
+<div class="cols">
+<div>
 
-<p class="note">I passaggi, con gli errori più frequenti, sono nel deck <a href="github-pages.html">GitHub Pages</a>, "Pubblicare una pagina fatta con Canvas".</p>
+1. Nel riquadro di Canvas cliccate **Esporta**.
+2. Scegliete **Scarica codice**.
+3. Nella cartella **Download** rinominate il file in `tabella-caa.html`
+
+<div class="warn">Non index.html: quel nome è già della vostra prima pagina, e la sostituirebbe.</div>
+
+</div>
+<div class="sc"><img src="img/github/05-canvas-scarica-codice.png"></div>
+</div>
+
+---
+
+### Tabella 2 · Caricare il file
+
+<div class="cols">
+<div>
+
+1. Nel repository creazioni-canvas: **Add file → Upload files**.
+2. Trascinate **tabella-caa.html** nel riquadro.
+3. Cliccate **Commit changes**.
 
 <div class="check"><b>Cosa vedete:</b> nel repository due file: index.html e tabella-caa.html.</div>
 
+</div>
+<div class="sc"><img src="img/github/07-upload.png"></div>
+</div>
+
 ---
 
-### Tabella · Il collaudo finale
+### Tabella 3 · Il collaudo finale
 
 1. Aspettate un paio di minuti.
-2. Aprite **username.github.io/tabella-caa.html**.
+2. Aprite **username.github.io/creazioni-canvas/tabella-caa.html**.
 3. Incollate la lista di parole e scaricate il PDF.
 4. Provate anche la stampa del browser (**Ctrl+P** o **Cmd+P**): fuori da Canvas funziona.
 5. Mandate il link a una collega e fatelo provare a lei.
 
-<div class="check"><b>Cosa vedete:</b> la vostra tabella. All'indirizzo username.github.io c'è ancora "Ciao": lo trasformiamo in un indice nell'esercitazione "Il mio sito".</div>
+<div class="check"><b>Cosa vedete:</b> la vostra tabella. Nell'esercitazione <a href="il-mio-sito.html">Il mio sito</a> le pagine si raccolgono in un indice.</div>
 
 ---
 

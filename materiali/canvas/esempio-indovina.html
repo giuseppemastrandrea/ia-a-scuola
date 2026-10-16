@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Indovina cos'è</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #111; --muted: #6b6b6b; --accent: #2f54ff; --ok: #1a8f4a; --no: #d64545; --line: #e5e5e5; --soft: #f5f7fb; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #fff; color: var(--ink); font-family: 'Inter', sans-serif; }
+  details { border-bottom: 1px solid var(--line); padding: 10px 24px; }
+  summary { cursor: pointer; font-weight: 600; color: var(--muted); }
+  label { display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin: 10px 0 6px; }
+  textarea { font: inherit; font-size: 15px; width: 100%; height: 130px; padding: 8px 10px; border: 1px solid #ccc; border-radius: 8px; }
+  button { font: inherit; font-weight: 600; font-size: 18px; padding: 10px 18px; border-radius: 12px; border: 2px solid var(--ink); background: #fff; cursor: pointer; }
+  button.main { background: var(--accent); color: #fff; border-color: var(--accent); }
+  #stage-wrap { padding: 16px 24px; }
+  #stage { position: relative; width: 1200px; height: 820px; margin: 0 auto; transform-origin: top left; }
+  #top { display: flex; justify-content: space-between; align-items: center; }
+  #title { font-weight: 800; font-size: 34px; letter-spacing: .03em; }
+  #dots { display: flex; gap: 10px; }
+  #dots span { width: 22px; height: 22px; border-radius: 50%; border: 3px solid var(--accent); }
+  #dots span.done { background: var(--accent); }
+  #riddle { display: flex; gap: 24px; align-items: center; margin-top: 20px; padding: 24px 32px; border: 6px solid var(--accent); border-radius: 30px; background: var(--soft); min-height: 170px; }
+  #testo { flex: 1; font-size: 40px; line-height: 1.3; font-weight: 600; }
+  #cards { display: flex; justify-content: center; gap: 30px; margin-top: 34px; }
+  .card { width: 240px; height: 270px; background: #fff; border: 5px solid var(--ink); border-radius: 28px; padding: 14px; text-align: center; cursor: pointer; user-select: none; position: relative; transition: transform .25s, opacity .25s; }
+  .card img { width: 180px; height: 180px; object-fit: contain; display: block; margin: 0 auto; pointer-events: none; }
+  .card .word { font-weight: 800; font-size: 24px; margin-top: 8px; letter-spacing: .03em; }
+  .card.no { opacity: .3; transform: scale(.9) rotate(-4deg); cursor: default; }
+  .card.no::after { content: 'NO!'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 72px; font-weight: 800; color: var(--no); }
+  .card.yes { border-color: var(--ok); border-width: 8px; transform: scale(1.12); }
+  .card.yes::after { content: 'SÌ!'; position: absolute; top: -34px; right: -24px; background: var(--ok); color: #fff; font-size: 34px; font-weight: 800; padding: 6px 16px; border-radius: 40px; }
+  .shake { animation: shake .45s; }
+  @keyframes shake { 20% { transform: translateX(-14px); } 40% { transform: translateX(14px); } 60% { transform: translateX(-8px); } 80% { transform: translateX(8px); } }
+  #bottom { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; }
+  #zaino { display: flex; align-items: center; gap: 10px; min-height: 90px; padding: 8px 18px; border: 3px dashed #c3cbe0; border-radius: 22px; min-width: 420px; }
+  #zaino b { font-size: 46px; }
+  #zaino img { width: 64px; height: 64px; }
+  #fine { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; background: #fff; }
+  #fine.on { display: flex; }
+  #fine h2 { font-size: 96px; color: var(--ok); margin: 0 0 20px; }
+  #fine .row { display: flex; gap: 16px; margin-bottom: 30px; }
+  #fine .row img { width: 110px; height: 110px; }
+  footer { font-size: 12px; color: var(--muted); padding: 8px 24px 24px; }
+</style>
+</head>
+<body>
+<details>
+  <summary>Per la maestra: gli indovinelli</summary>
+  <label for="giri">Un indovinello per riga: indovinello | risposta giusta | tre distrattori, separati da virgole</label>
+  <textarea id="giri">Ho un vestito tutto di spine, dentro sono marrone e buona da mangiare. | castagna 🌰 | riccio 🦔, mela 🍎, palla ⚽
+Prima ero verde, ora sono gialla e rossa: quando arriva il freddo cado dall'albero. | foglia 🍁 | fiore 🌸, mela 🍎, farfalla 🦋
+Scendo dal cielo a goccioline, e tu apri l'ombrello. | pioggia 🌧️ | sole ☀️, luna 🌙, arcobaleno 🌈
+Ho il cappello ma non ho la testa, nasco nel bosco dopo la pioggia. | fungo 🍄 | albero 🌳, cappello 🎩, ombrello ☂️
+Siamo piccoli, tondi e viola, e stiamo tutti insieme in un grappolo. | uva 🍇 | ciliegie 🍒, palloncini 🎈, mela 🍎</textarea>
+  <p><button class="main" id="crea">Crea il gioco</button></p>
+</details>
+<div id="stage-wrap"><div id="stage">
+  <div id="top"><div id="title">INDOVINA COS'È</div><div id="dots"></div></div>
+  <div id="riddle"><div id="testo"></div><button id="ascolta">🔊</button></div>
+  <div id="cards"></div>
+  <div id="bottom">
+    <div id="zaino"><b>🎒</b></div>
+    <button class="main" id="avanti" style="visibility:hidden">Avanti ➜</button>
+  </div>
+  <div id="fine"><h2>BRAVI! 🎉</h2><div class="row" id="trovati"></div><button class="main" id="ancora">Ricomincia</button></div>
+</div></div>
+<footer>Leggete l'indovinello, poi toccate le immagini: quella giusta dice "Sì!".<br>Emoji: OpenMoji (openmoji.org), licenza CC BY-SA 4.0.</footer>
+
+<script>
+const W = 1200, H = 820;
+const stage = document.getElementById('stage');
+let giri = [], giro = 0, trovati = [];
+
+function speak(text, rate) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'it-IT'; u.rate = rate || 0.85;
+  speechSynthesis.speak(u);
+}
+function parse(s) {
+  const m = s.trim().match(/^(.*?)\s*(\p{Extended_Pictographic}[\u{FE0F}\u{200D}\p{Extended_Pictographic}\u{1F3FB}-\u{1F3FF}]*)?$/u);
+  return { word: (m && m[1] || s).trim(), emoji: m && m[2] };
+}
+function imgUrl(emoji) {
+  const code = [...emoji].map(c => c.codePointAt(0).toString(16).toUpperCase()).filter(c => c !== 'FE0F').join('-');
+  return 'https://cdn.jsdelivr.net/npm/openmoji@15.1.0/color/svg/' + code + '.svg';
+}
+function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function img(w) { return w.emoji ? `<img src="${imgUrl(w.emoji)}" alt="${w.word}">` : '<b style="font-size:120px">?</b>'; }
+
+function leggi() {
+  giri = document.getElementById('giri').value.split('\n').filter(l => l.includes('|')).map(l => {
+    const [testo, giusta, altre] = l.split('|');
+    return { testo: testo.trim(), giusta: parse(giusta), altre: (altre || '').split(',').filter(x => x.trim()).map(parse) };
+  });
+}
+
+function mostra() {
+  const g = giri[giro];
+  document.getElementById('testo').textContent = g.testo;
+  document.getElementById('avanti').style.visibility = 'hidden';
+  const cards = document.getElementById('cards');
+  cards.innerHTML = '';
+  shuffle([[g.giusta, true], ...g.altre.map(a => [a, false])]).forEach(([w, ok]) => {
+    const c = document.createElement('div');
+    c.className = 'card';
+    c.innerHTML = img(w) + `<div class="word">${w.word.toUpperCase()}</div>`;
+    c.onclick = () => {
+      if (c.classList.contains('no') || cards.querySelector('.yes')) return;
+      if (ok) {
+        c.classList.add('yes');
+        speak('Sììì! È ' + articolo(w.word) + '!', 0.9);
+        trovati.push(w);
+        document.getElementById('zaino').insertAdjacentHTML('beforeend', img(w));
+        document.querySelectorAll('#dots span')[giro].classList.add('done');
+        document.getElementById('avanti').style.visibility = 'visible';
+      } else {
+        c.classList.add('shake');
+        speak('Nooooo!', 0.6);
+        setTimeout(() => { c.classList.remove('shake'); c.classList.add('no'); }, 450);
+      }
+    };
+    cards.appendChild(c);
+  });
+  speak(g.testo);
+}
+// "la castagna", "il fungo", "l'uva": basta per le risposte giuste dell'esempio
+function articolo(p) {
+  if (/^[aeiou]/i.test(p)) return "l'" + p;
+  return (/a$/i.test(p) ? 'la ' : 'il ') + p;
+}
+
+function avanti() {
+  giro++;
+  if (giro < giri.length) { mostra(); return; }
+  document.getElementById('trovati').innerHTML = trovati.map(img).join('');
+  document.getElementById('fine').classList.add('on');
+  speak('Bravi! Avete indovinato tutto!');
+}
+function build() {
+  leggi(); giro = 0; trovati = [];
+  document.getElementById('zaino').innerHTML = '<b>🎒</b>';
+  document.getElementById('fine').classList.remove('on');
+  document.getElementById('dots').innerHTML = giri.map(() => '<span></span>').join('');
+  if (giri.length) mostra();
+}
+function fit() {
+  const avail = document.getElementById('stage-wrap').clientWidth - 48;
+  const s = Math.min(1, avail / W);
+  stage.style.transform = `scale(${s})`;
+  document.getElementById('stage-wrap').style.height = (H * s + 32) + 'px';
+}
+
+document.getElementById('crea').onclick = build;
+document.getElementById('ancora').onclick = build;
+document.getElementById('avanti').onclick = avanti;
+document.getElementById('ascolta').onclick = () => speak(giri[giro].testo);
+window.addEventListener('resize', fit);
+fit(); build();
+</script>
+</body>
+</html>

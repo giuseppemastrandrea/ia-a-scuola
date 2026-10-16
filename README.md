@@ -20,7 +20,7 @@ Ogni modulo ha una cartella in `materiali/`, con il nome del modulo e senza nume
 | M08 NotebookLM | `notebooklm/` | Esercitazione "Il notebook di classe" |
 | M09 Gem e skill | `gem-e-skill/` | Esercitazioni "Il mio Gem di sostegno" e "Dal Gem alla skill" |
 | M10 Verifiche fino al Google Form | `verifiche-form/` | `genera-form-quiz.gs`: genera un Google Form quiz da `CONFIG` e `DOMANDE` |
-| M11 Canvas | `canvas/` | Deck "Gemini Canvas", "Le API", "GitHub Pages"; esercitazioni CAA (completa e semplice), mappa di pittogrammi, mappa con le emoji (infanzia), il mio sito; due risultati d'esempio |
+| M11 Canvas | `canvas/` | Deck "Gemini Canvas", "Le API", "GitHub Pages"; esercitazioni CAA (completa e semplice), mappa di pittogrammi, "Ogni cosa al suo posto" e "Una storia da completare" (infanzia, semplice e completa), "Indovina e trova" (infanzia), il mio sito; risultati d'esempio |
 | M12 Canva | `canva/` | In preparazione |
 | M13 Scegliere gli strumenti | `scegliere-strumenti/` | Slide "Quattro strati, undici domande" |
 | M14 Progettare un'UdA | `progettare-uda/` | In preparazione, prossimo modulo |

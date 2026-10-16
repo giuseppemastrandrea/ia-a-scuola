@@ -163,7 +163,7 @@ files={'api.svg':svg(1200,540,b)}
 
 # 7 pubblicazione su GitHub Pages
 b=''
-steps=[('Canvas','il codice della pagina',SKY),('GitHub','un repository con le pagine',LILAC),('GitHub Pages','pubblica il file come sito',GREEN),('Indirizzo','da condividere e stampare',LIME)]
+steps=[('Canvas','Esporta → Scarica codice',SKY),('GitHub','un repository con index.html',LILAC),('GitHub Pages','pubblica il file come sito',GREEN),('Indirizzo','da condividere e stampare',LIME)]
 for i,(t,c,col) in enumerate(steps):
     x=30+i*292
     b+=box(x,60,250,250)+f'<circle cx="{x+125}" cy="140" r="48" fill="{col}" stroke="{INK}" stroke-width="3"/>'
@@ -174,7 +174,7 @@ b+=f'<text x="155" y="152" font-size="30" font-weight="800" text-anchor="middle"
 b+=f'<path d="M418 118 h28 l8 10 h34 v42 h-70 z" fill="#fff" stroke="{INK}" stroke-width="3" stroke-linejoin="round"/>'
 b+=f'<circle cx="739" cy="140" r="26" fill="#fff" stroke="{INK}" stroke-width="3"/><ellipse cx="739" cy="140" rx="11" ry="26" fill="none" stroke="{INK}" stroke-width="2.5"/><line x1="713" y1="140" x2="765" y2="140" stroke="{INK}" stroke-width="2.5"/>'
 b+=f'<rect x="990" y="127" width="70" height="26" rx="13" fill="#fff" stroke="{INK}" stroke-width="3"/><circle cx="1004" cy="140" r="5" fill="{INK}"/>'
-b+=chip(330,340,540,'username.github.io/tabella-caa.html',17)
+b+=chip(330,340,540,'username.github.io/creazioni-canvas/',17)
 b+=T(600,410,"L'indirizzo della pagina pubblicata",17,500,GREY)
 files['pubblicazione.svg']=svg(1200,430,b)
 for k,v in files.items(): open(os.path.join(OUT,k),'w').write(v)
@@ -204,7 +204,7 @@ print(list(files))
 # 9 il mio sito: indice e pagine
 b=''
 b+=browser(40,40,420,440,'')
-b+=chip(70,100,360,'username.github.io',16,SKY)
+b+=chip(60,100,380,'username.github.io/creazioni-canvas/',14,SKY)
 b+=T(250,180,'index.html',22,800)+T(250,206,'la pagina indice',16,500,GREY)
 cards=[('Memory dell\'autunno',LIME),('Ruota dell\'autunno',LILAC),('…',PAPER)]
 for i,(t,col) in enumerate(cards):

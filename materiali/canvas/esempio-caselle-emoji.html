@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ogni cosa al suo posto</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #111; --muted: #6b6b6b; --accent: #2f54ff; --ok: #1a8f4a; --line: #e5e5e5; --soft: #f5f7fb; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #fff; color: var(--ink); font-family: 'Inter', sans-serif; }
+  header { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; padding: 16px 24px; border-bottom: 1px solid var(--line); }
+  label { display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin-bottom: 6px; }
+  input, textarea { font: inherit; font-size: 16px; padding: 8px 10px; border: 1px solid #ccc; border-radius: 8px; }
+  textarea { width: 220px; height: 92px; resize: vertical; }
+  button { font: inherit; font-weight: 600; font-size: 15px; padding: 10px 16px; border-radius: 10px; border: 2px solid var(--ink); background: #fff; cursor: pointer; }
+  button.main { background: var(--accent); color: #fff; border-color: var(--accent); }
+  #stage-wrap { padding: 16px 24px; }
+  #stage { position: relative; width: 1200px; height: 800px; margin: 0 auto; transform-origin: top left; }
+  #title { text-align: center; font-weight: 800; font-size: 56px; letter-spacing: .04em; margin: 0 0 20px; }
+  #title img { height: 72px; vertical-align: middle; margin-right: 12px; }
+  #boxes { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px; padding: 22px; border: 6px solid var(--accent); border-radius: 30px; background: var(--soft); min-height: 230px; }
+  .box { width: 160px; height: 180px; border: 4px dashed #9aa6c8; border-radius: 22px; background: #fff; display: flex; align-items: center; justify-content: center; }
+  .box.over { border-color: var(--accent); border-style: solid; }
+  .box.full { border: 4px solid var(--ok); }
+  #tray { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px; margin-top: 44px; min-height: 190px; }
+  .slot { width: 160px; height: 180px; }
+  .item { width: 150px; height: 170px; background: #fff; border: 4px solid var(--ink); border-radius: 22px; padding: 8px; text-align: center; touch-action: none; user-select: none; cursor: grab; }
+  .item.dragging { position: fixed; z-index: 10; transform-origin: top left; cursor: grabbing; box-shadow: 0 12px 30px rgba(0,0,0,.25); font-family: 'Inter', sans-serif; }
+  .item img { width: 110px; height: 110px; object-fit: contain; display: block; margin: 0 auto; pointer-events: none; }
+  .item .word { font-weight: 800; font-size: 18px; margin-top: 4px; letter-spacing: .02em; }
+  .box .item { border: none; cursor: default; }
+  #party { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; flex-direction: column; background: rgba(255,255,255,.92); border-radius: 30px; }
+  #party.on { display: flex; }
+  #party b { font-size: 96px; font-weight: 800; color: var(--ok); }
+  #party .fx { font-size: 80px; animation: hop .6s infinite alternate; }
+  @keyframes hop { to { transform: translateY(-24px); } }
+  footer { font-size: 12px; color: var(--muted); padding: 8px 24px 24px; }
+</style>
+</head>
+<body>
+<header>
+  <div><label for="tema">Tema</label><input id="tema" value="autunno 🍂"></div>
+  <div><label for="parole">Parole del tema</label><textarea id="parole">foglia 🍁
+castagna 🌰
+uva 🍇
+riccio 🦔
+mela 🍎
+fungo 🍄</textarea></div>
+  <div><label for="intrusi">Intrusi</label><textarea id="intrusi">gelato 🍦
+anguria 🍉
+ombrellone 🏖️</textarea></div>
+  <button class="main" id="crea">Crea il gioco</button>
+  <button id="ricomincia">Ricomincia</button>
+</header>
+<div id="stage-wrap"><div id="stage">
+  <div id="title"></div>
+  <div id="boxes"></div>
+  <div id="tray"></div>
+  <div id="party"><div class="fx">🎉 ⭐ 🎉</div><b>BRAVI!</b></div>
+</div></div>
+<footer>Trascina ogni immagine in una casella vuota. Le immagini che non c'entrano tornano al loro posto.<br>Emoji: OpenMoji (openmoji.org), licenza CC BY-SA 4.0.</footer>
+
+<script>
+const W = 1200, H = 800;
+const stage = document.getElementById('stage');
+const boxesEl = document.getElementById('boxes');
+const tray = document.getElementById('tray');
+const party = document.getElementById('party');
+let total = 0, filled = 0;
+
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'it-IT'; u.rate = 0.85;
+  speechSynthesis.speak(u);
+}
+function parse(line) {
+  const m = line.trim().match(/^(.*?)\s*(\p{Extended_Pictographic}[\u{FE0F}\u{200D}\p{Extended_Pictographic}\u{1F3FB}-\u{1F3FF}]*)?$/u);
+  return { word: (m && m[1] || line).trim(), emoji: m && m[2] };
+}
+function imgUrl(emoji) {
+  const code = [...emoji].map(c => c.codePointAt(0).toString(16).toUpperCase()).filter(c => c !== 'FE0F').join('-');
+  return 'https://cdn.jsdelivr.net/npm/openmoji@15.1.0/color/svg/' + code + '.svg';
+}
+function lines(id) { return document.getElementById(id).value.split('\n').filter(l => l.trim()).map(parse); }
+function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+function makeItem(w, good) {
+  const el = document.createElement('div');
+  el.className = 'item';
+  el.innerHTML = `<img alt="${w.word}"><div class="word">${w.word.toUpperCase()}</div>`;
+  if (w.emoji) el.querySelector('img').src = imgUrl(w.emoji);
+  else el.querySelector('.word').style.color = '#d00';
+  let start = null;
+  el.addEventListener('pointerdown', e => {
+    if (el.parentElement.classList.contains('box')) { speak(w.word); return; }
+    // durante il trascinamento l'immagine esce dallo stage, che è ridimensionato con transform
+    const r = el.getBoundingClientRect();
+    start = { dx: e.clientX - r.left, dy: e.clientY - r.top, slot: el.parentElement };
+    el.style.transform = `scale(${r.width / el.offsetWidth})`;
+    el.classList.add('dragging');
+    document.body.appendChild(el);
+    el.setPointerCapture(e.pointerId);
+    move(e);
+  });
+  function drop(target) {
+    el.classList.remove('dragging');
+    el.style.left = el.style.top = el.style.transform = '';
+    target.appendChild(el);
+  }
+  function move(e) { el.style.left = (e.clientX - start.dx) + 'px'; el.style.top = (e.clientY - start.dy) + 'px'; }
+  function boxAt(e) {
+    return [...boxesEl.children].find(b => {
+      const r = b.getBoundingClientRect();
+      return !b.classList.contains('full') && e.clientX > r.left && e.clientX < r.right && e.clientY > r.top && e.clientY < r.bottom;
+    });
+  }
+  el.addEventListener('pointermove', e => {
+    if (!start) return;
+    move(e);
+    const b = boxAt(e);
+    [...boxesEl.children].forEach(x => x.classList.toggle('over', x === b));
+  });
+  el.addEventListener('pointerup', e => {
+    if (!start) return;
+    const b = boxAt(e);
+    [...boxesEl.children].forEach(x => x.classList.remove('over'));
+    if (b && good) {
+      drop(b); b.classList.add('full');
+      start.slot.remove();
+      speak(w.word);
+      if (++filled === total) setTimeout(() => { party.classList.add('on'); speak('Bravi! Ogni cosa al suo posto.'); }, 900);
+    } else {
+      drop(start.slot);
+      if (b) speak('Riprova');
+    }
+    start = null;
+  });
+  return el;
+}
+
+function build() {
+  const tema = parse(document.getElementById('tema').value || 'tema');
+  const good = lines('parole'), bad = lines('intrusi');
+  document.getElementById('title').innerHTML = (tema.emoji ? `<img src="${imgUrl(tema.emoji)}" alt="">` : '') + tema.word.toUpperCase();
+  boxesEl.innerHTML = ''; tray.innerHTML = ''; party.classList.remove('on');
+  total = good.length; filled = 0;
+  good.forEach(() => { const b = document.createElement('div'); b.className = 'box'; boxesEl.appendChild(b); });
+  shuffle([...good.map(w => [w, true]), ...bad.map(w => [w, false])]).forEach(([w, ok]) => {
+    const s = document.createElement('div'); s.className = 'slot';
+    s.appendChild(makeItem(w, ok)); tray.appendChild(s);
+  });
+}
+
+function fit() {
+  const avail = document.getElementById('stage-wrap').clientWidth - 48;
+  const s = Math.min(1, avail / W);
+  stage.style.transform = `scale(${s})`;
+  document.getElementById('stage-wrap').style.height = (H * s + 32) + 'px';
+}
+
+document.getElementById('crea').onclick = build;
+document.getElementById('ricomincia').onclick = build;
+window.addEventListener('resize', fit);
+fit(); build();
+</script>
+</body>
+</html>

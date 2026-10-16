@@ -181,7 +181,7 @@ Si salva nel kit: la prossima volta si riparte da lì.
 
 <div class="cols">
 <div class="card"><h2>Che tempo fa oggi?</h2><p>Infanzia. Una pagina, quattro pulsanti: il primo contatto con le app.</p></div>
-<div class="card"><h2>La mappa che parla</h2><p>Infanzia. Una mappa per la LIM costruita in 7 passi.</p></div>
+<div class="card"><h2>Ogni cosa al suo posto</h2><p>Infanzia. Un gioco di trascinamento con le emoji, in 6 passi. Nella versione completa lo guida una storia.</p></div>
 <div class="card"><h2>La tabella CAA</h2><p>Primaria. Pittogrammi ARASAAC dall'API e pubblicazione su GitHub Pages.</p></div>
 </div>
 

@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pino nel bosco</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #111; --muted: #6b6b6b; --accent: #2f54ff; --ok: #1a8f4a; --line: #e5e5e5; --soft: #f5f7fb; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #fff; color: var(--ink); font-family: 'Inter', sans-serif; }
+  button { font: inherit; font-weight: 600; font-size: 18px; padding: 10px 18px; border-radius: 12px; border: 2px solid var(--ink); background: #fff; cursor: pointer; }
+  button.main { background: var(--accent); color: #fff; border-color: var(--accent); }
+  #stage-wrap { padding: 16px 24px; }
+  #stage { position: relative; width: 1200px; height: 880px; margin: 0 auto; transform-origin: top left; }
+  #top { display: flex; justify-content: space-between; align-items: center; }
+  #title { font-weight: 800; font-size: 34px; letter-spacing: .03em; }
+  #dots { display: flex; gap: 10px; }
+  #dots span { width: 22px; height: 22px; border-radius: 50%; border: 3px solid var(--accent); }
+  #dots span.done { background: var(--accent); }
+  #scene { display: flex; gap: 40px; align-items: center; margin-top: 24px; padding: 28px 36px; border: 6px solid var(--accent); border-radius: 30px; background: var(--soft); min-height: 300px; }
+  #frase { flex: 1; font-size: 44px; line-height: 1.35; font-weight: 600; }
+  #frase b { color: var(--ok); font-weight: 800; letter-spacing: .04em; }
+  .box { flex: none; width: 210px; height: 230px; border: 5px dashed #9aa6c8; border-radius: 26px; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 110px; font-weight: 800; color: #c3cbe0; }
+  .box.over { border-color: var(--accent); border-style: solid; }
+  .box.full { border: 5px solid var(--ok); }
+  #tray { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px; margin-top: 36px; }
+  .slot { width: 160px; height: 180px; }
+  .item { width: 150px; height: 170px; background: #fff; border: 4px solid var(--ink); border-radius: 22px; padding: 8px; text-align: center; touch-action: none; user-select: none; cursor: grab; }
+  .item.dragging { position: fixed; z-index: 10; transform-origin: top left; cursor: grabbing; box-shadow: 0 12px 30px rgba(0,0,0,.25); font-family: 'Inter', sans-serif; }
+  .item.no { animation: shake .4s; }
+  @keyframes shake { 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+  .item img { width: 110px; height: 110px; object-fit: contain; display: block; margin: 0 auto; pointer-events: none; }
+  .item .word { font-weight: 800; font-size: 18px; margin-top: 4px; letter-spacing: .02em; }
+  .box .item { border: none; cursor: default; }
+  #controls { display: flex; justify-content: center; gap: 16px; margin-top: 28px; }
+  #fine { display: none; }
+  #fine.on { display: block; }
+  #fine h2 { text-align: center; font-size: 56px; color: var(--ok); margin: 10px 0 18px; }
+  #fine ol { list-style: none; padding: 0; margin: 0 auto; max-width: 1000px; columns: 2; column-gap: 40px; }
+  #fine li { display: flex; gap: 14px; align-items: center; font-size: 22px; line-height: 1.3; margin-bottom: 14px; break-inside: avoid; }
+  #fine li img { width: 70px; height: 70px; flex: none; }
+  footer { font-size: 12px; color: var(--muted); padding: 8px 24px 24px; }
+</style>
+</head>
+<body>
+<div id="stage-wrap"><div id="stage">
+  <div id="top"><div id="title">PINO NEL BOSCO</div><div id="dots"></div></div>
+  <div id="gioco">
+    <div id="scene"><div id="frase"></div><div class="box" id="box">?</div></div>
+    <div id="tray"></div>
+    <div id="controls"><button id="ascolta">🔊 Ascolta la frase</button><button id="ricomincia">Ricomincia</button></div>
+  </div>
+  <div id="fine">
+    <h2>FINE! 🎉</h2>
+    <ol id="riassunto"></ol>
+    <div id="controls2" style="text-align:center;margin-top:20px"><button class="main" id="ancora">Ricomincia</button></div>
+  </div>
+</div></div>
+<footer>Ogni frase finisce con una parola che manca: trascina nella casella l'immagine giusta.<br>
+In questo esempio le immagini sono emoji OpenMoji (openmoji.org, licenza CC BY-SA 4.0). Nell'esercitazione sono le immagini generate con Gemini e pubblicate su GitHub Pages.</footer>
+
+<script>
+// Nell'esercitazione: const IMG = parola => 'https://USERNAME.github.io/' + parola + '.png';
+const OPENMOJI = { foglia: '1F341', castagna: '1F330', fungo: '1F344', uva: '1F347', mela: '1F34E', luna: '1F319', gelato: '1F366', anguria: '1F349', ombrellone: '1F3D6' };
+const IMG = parola => 'https://cdn.jsdelivr.net/npm/openmoji@15.1.0/color/svg/' + OPENMOJI[parola] + '.svg';
+
+const STORIA = [
+  { frase: 'Il riccio Pino si sveglia nel bosco. Dall\'albero cade una...', parola: 'foglia' },
+  { frase: 'Pino ha fame. Sotto il castagno trova una...', parola: 'castagna' },
+  { frase: 'Comincia a piovere! Pino si ripara sotto un...', parola: 'fungo' },
+  { frase: 'Smette di piovere. Nella vigna c\'è un grappolo d\'...', parola: 'uva' },
+  { frase: 'Sul prato, vicino all\'albero, è caduta una bella...', parola: 'mela' },
+  { frase: 'Pino è stanco e va a dormire. In cielo spunta la...', parola: 'luna' },
+];
+const INTRUSI = ['gelato', 'anguria', 'ombrellone'];
+
+const W = 1200, H = 880;
+const stage = document.getElementById('stage');
+const box = document.getElementById('box');
+const tray = document.getElementById('tray');
+const fraseEl = document.getElementById('frase');
+let step = 0;
+
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'it-IT'; u.rate = 0.85;
+  speechSynthesis.speak(u);
+}
+// la frase senza i puntini, pronta per la parola: dopo l'apostrofo niente spazio
+function apri(frase) { const t = frase.replace(/\.\.\.$/, ''); return t.endsWith("'") ? t : t + ' '; }
+function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+function makeItem(parola) {
+  const el = document.createElement('div');
+  el.className = 'item';
+  el.innerHTML = `<img alt="${parola}" src="${IMG(parola)}"><div class="word">${parola.toUpperCase()}</div>`;
+  let start = null;
+  function move(e) { el.style.left = (e.clientX - start.dx) + 'px'; el.style.top = (e.clientY - start.dy) + 'px'; }
+  function overBox(e) {
+    const r = box.getBoundingClientRect();
+    return !box.classList.contains('full') && e.clientX > r.left && e.clientX < r.right && e.clientY > r.top && e.clientY < r.bottom;
+  }
+  function drop(target) {
+    el.classList.remove('dragging');
+    el.style.left = el.style.top = el.style.transform = '';
+    target.appendChild(el);
+  }
+  el.addEventListener('pointerdown', e => {
+    if (el.parentElement === box) { speak(parola); return; }
+    // durante il trascinamento l'immagine esce dallo stage, che è ridimensionato con transform
+    const r = el.getBoundingClientRect();
+    start = { dx: e.clientX - r.left, dy: e.clientY - r.top, slot: el.parentElement };
+    el.style.transform = `scale(${r.width / el.offsetWidth})`;
+    el.classList.add('dragging');
+    document.body.appendChild(el);
+    el.setPointerCapture(e.pointerId);
+    move(e);
+  });
+  el.addEventListener('pointermove', e => { if (start) { move(e); box.classList.toggle('over', overBox(e)); } });
+  el.addEventListener('pointerup', e => {
+    if (!start) return;
+    const inBox = overBox(e);
+    box.classList.remove('over');
+    if (inBox && parola === STORIA[step].parola) {
+      box.textContent = ''; drop(box); box.classList.add('full');
+      start.slot.remove();
+      fraseEl.innerHTML = apri(STORIA[step].frase) + `<b>${parola.toUpperCase()}</b>!`;
+      speak(parola);
+      document.querySelectorAll('#dots span')[step].classList.add('done');
+      setTimeout(next, 2200);
+    } else {
+      drop(start.slot);
+      if (inBox) {
+        el.classList.add('no'); setTimeout(() => el.classList.remove('no'), 400);
+        speak(STORIA.some(s => s.parola === parola) ? 'Non ancora. Riprova' : 'Riprova');
+      }
+    }
+    start = null;
+  });
+  return el;
+}
+
+function show() {
+  box.innerHTML = '?'; box.classList.remove('full');
+  fraseEl.textContent = STORIA[step].frase;
+}
+function next() {
+  step++;
+  if (step < STORIA.length) { show(); return; }
+  document.getElementById('gioco').style.display = 'none';
+  document.getElementById('riassunto').innerHTML = STORIA.map(s =>
+    `<li><img src="${IMG(s.parola)}" alt=""><span>${apri(s.frase)}<b>${s.parola}</b>.</span></li>`).join('');
+  document.getElementById('fine').classList.add('on');
+  speak('Fine! Bravi!');
+}
+function build() {
+  step = 0;
+  document.getElementById('gioco').style.display = '';
+  document.getElementById('fine').classList.remove('on');
+  document.getElementById('dots').innerHTML = STORIA.map(() => '<span></span>').join('');
+  tray.innerHTML = '';
+  shuffle([...STORIA.map(s => s.parola), ...INTRUSI]).forEach(p => {
+    const s = document.createElement('div'); s.className = 'slot';
+    s.appendChild(makeItem(p)); tray.appendChild(s);
+  });
+  show();
+}
+function fit() {
+  const avail = document.getElementById('stage-wrap').clientWidth - 48;
+  const s = Math.min(1, avail / W);
+  stage.style.transform = `scale(${s})`;
+  document.getElementById('stage-wrap').style.height = (H * s + 32) + 'px';
+}
+
+document.getElementById('ascolta').onclick = () => speak(STORIA[step].frase.replace(/\.\.\.$/, ''));
+document.getElementById('ricomincia').onclick = build;
+document.getElementById('ancora').onclick = build;
+window.addEventListener('resize', fit);
+fit(); build();
+</script>
+</body>
+</html>
