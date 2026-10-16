@@ -165,12 +165,6 @@ style: |
 <div class="ruolo">Docente di informatica</div>
 <div class="ruolo">Animatore digitale</div>
 
-<div class="cuore">
-
-* Marito di Carla ❤️❤️
-
-</div>
-
 <div class="connect">
   <img class="qr" src="img/qr_sito.svg" alt="QR code verso giuseppemastrandrea.github.io">
   <div><b>Happy to connect</b><span class="url">giuseppemastrandrea.github.io</span></div>
