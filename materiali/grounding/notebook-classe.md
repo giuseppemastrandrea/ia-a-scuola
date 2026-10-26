@@ -39,7 +39,7 @@ style: |
 <!-- _class: lead -->
 <!-- _paginate: false -->
 
-### NotebookLM · Esercitazione
+### Gemini Notebook · Esercitazione
 
 # Il notebook di classe
 
@@ -52,7 +52,7 @@ style: |
 <div class="cols">
 <div>
 
-Raccogliamo in **NotebookLM** le fonti della vostra classe e adattiamo una scheda di scienze ai 4 profili.
+Raccogliamo in **Gemini Notebook** le fonti della vostra classe e adattiamo una scheda di scienze ai 4 profili.
 
 Le risposte partono **solo dalle fonti caricate** e le citano: si chiama grounding.
 
@@ -84,7 +84,7 @@ Le risposte partono **solo dalle fonti caricate** e le citano: si chiama groundi
 <div class="cols">
 <div>
 
-1. Apri **notebooklm.google.com**.
+1. Apri **notebooklm.google.com** (Gemini Notebook si chiamava NotebookLM fino al 16 luglio 2026: l'indirizzo è rimasto).
 2. **Crea nuovo** e dai il nome **Classe 4ª (esercitazione)**.
 3. **Aggiungi fonti → Google Drive**.
 4. Seleziona i 3 documenti.
@@ -95,7 +95,7 @@ Le risposte partono **solo dalle fonti caricate** e le citano: si chiama groundi
 
 ---
 
-### Perché proprio NotebookLM
+### Perché proprio Gemini Notebook
 
 - Risponde **a partire dalle fonti** e mette un numero di citazione accanto a ogni affermazione: cliccandolo si vede il passaggio.
 - Dal 29 ottobre 2025 la chat usa la finestra di contesto completa di Gemini, **1 milione di token**: finché le fonti ci stanno, le legge per intero.
@@ -142,7 +142,7 @@ Cosa ho cambiato | Perché, collegato al profilo | Cosa NON ho cambiato.
 Adatta la scheda anche per il profilo E.
 ```
 
-Il profilo E non esiste. NotebookLM deve rispondere che **nelle fonti non c'è**.
+Il profilo E non esiste. Gemini Notebook deve rispondere che **nelle fonti non c'è**.
 
 <p class="note">Se inventa un profilo, segnatevelo: è il caso da raccontare in aula.</p>
 

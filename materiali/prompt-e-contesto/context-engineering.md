@@ -291,7 +291,7 @@ Domanda guida: quali istruzioni, dati, esempi e strumenti fornisco?
 
 ---
 
-# NotebookLM: le fonti nel secchio
+# Gemini Notebook: le fonti nel secchio
 
 <div class="side">
 

@@ -52,7 +52,7 @@ for i,(c,l) in enumerate(srcs):
     b+=arrow(405,y+60,505,310)
 b+=box(515,170,300,280,BLUE,24)
 b+=f'<path d="M600 245 q65 -22 65 0 v110 q-65 -22 -65 0 z M730 245 q-65 -22 -65 0 v110 q65 -22 65 0 z" fill="#fff" stroke="{INK}" stroke-width="3" stroke-linejoin="round"/>'
-b+=T(665,405,'Notebook di classe',24,800,'#fff')+T(665,432,'NotebookLM',17,500,'#fff')
+b+=T(665,405,'Notebook di classe',24,800,'#fff')+T(665,432,'Gemini Notebook',17,500,'#fff')
 b+=arrow(820,310,905,310)
 b+=box(915,170,265,280)
 for i,wd in enumerate([200,170,210,140]): b+=f'<rect x="945" y="{205+i*38}" width="{wd}" height="14" rx="7" fill="#ddd"/>'
@@ -65,7 +65,7 @@ files['notebook-classe.svg']=svg(1210,640,b)
 
 # 2 percorso: tre secchi
 b=''
-specs=[('1 · NotebookLM','le fonti',[(0.22,ORANGE,'scheda'),(0.22,LILAC,'profili'),(0.22,LIME,'programma')]),
+specs=[('1 · Gemini Notebook','le fonti',[(0.22,ORANGE,'scheda'),(0.22,LILAC,'profili'),(0.22,LIME,'programma')]),
        ('2 · Gem','istruzioni sempre dentro',[(0.25,LIME,'istruzioni'),(0.22,LILAC,'conoscenza'),(0.18,GREEN,'richiesta')]),
        ('3 · Skill','istruzioni solo quando servono',[(0.18,GREEN,'richiesta'),(0.22,BLUE,'istruzioni')])]
 for i,(t,c,lay) in enumerate(specs):

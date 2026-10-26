@@ -144,6 +144,65 @@ style: |
   .vcomp .w::after { content: ' →'; color: var(--muted); font-weight: 300; }
   .vcomp .tok { display: inline-flex; margin: 0; gap: 4px; }
   section.vocab .src { font-size: 0.45em; margin-top: 12px; }
+  section.fit { padding-top: 40px; }
+  .mlrow { display: flex; gap: 36px; align-items: center; }
+  .mlrow .mlc { height: 420px; }
+  .plot { width: 560px; }
+  .plot .eq { position: relative; height: 46px; font-family: ui-monospace, monospace; font-size: 0.85em; }
+  .plot .eq span { position: absolute; left: 0; top: 0; opacity: 0; transition: opacity 0.4s; white-space: nowrap; }
+  .plot .eq b { font-weight: 700; padding: 0 4px; border-radius: 6px; transition: background 0.5s; }
+  .plot svg text { font-family: Inter, sans-serif; font-size: 15px; fill: #777; }
+  .plot .pts circle { fill: #2563eb; }
+  .plot .ln { fill: none; stroke: #dc2626; stroke-width: 4; stroke-linecap: round; opacity: 0; d: path("M60,80.0 L540,280.0"); transition: d 1s ease, opacity 0.4s, stroke 0.5s; }
+  .plot .res { fill: none; stroke: #dc2626; stroke-width: 2; stroke-dasharray: 4 4; opacity: 0; d: path("M220.5,181.0 L220.5,146.9 M107.1,223.1 L107.1,99.6 M316.2,169.5 L316.2,186.7 M303.4,160.7 L303.4,181.4 M91.3,276.1 L91.3,93.0 M115.3,250.0 L115.3,103.1 M265.9,178.4 L265.9,165.8 M175.1,240.9 L175.1,128.0 M357.5,106.4 L357.5,204.0 M253.4,204.1 L253.4,160.6 M205.1,196.4 L205.1,140.4 M139.5,224.5 L139.5,113.1 M442.6,87.2 L442.6,239.4 M155.9,273.3 L155.9,120.0 M242.4,217.4 L242.4,156.0 M321.5,150.4 L321.5,189.0 M167.3,226.8 L167.3,124.7 M381.4,156.1 L381.4,213.9 M338.6,140.9 L338.6,196.1 M278.9,196.1 L278.9,171.2 M389.8,78.1 L389.8,217.4 M184.5,255.6 L184.5,131.9 M469.3,108.9 L469.3,250.5 M403.5,142.4 L403.5,223.1 M127.7,167.4 L127.7,108.2 M263.1,186.2 L263.1,164.6"); transition: d 1s ease, opacity 0.4s, stroke 0.5s; }
+  .plot .err { display: flex; align-items: center; gap: 12px; height: 30px; font-size: 0.55em; color: var(--muted); opacity: 0; transition: opacity 0.4s; }
+  .plot .err i { display: block; height: 14px; width: 240px; background: #dc2626; border-radius: 4px; transition: width 1s ease, background 0.5s; }
+  .plot .err .ev { position: relative; width: 90px; height: 1.2em; }
+  .plot .err em { position: absolute; left: 0; font-style: normal; font-weight: 600; color: var(--fg); opacity: 0; transition: opacity 0.4s; }
+  .fsteps { position: relative; height: 40px; font-size: 0.62em; margin-top: 8px; }
+  .fsteps ul { list-style: none; padding: 0; margin: 0; }
+  .fsteps li { position: absolute; left: 0; top: 0; margin: 0; }
+  .fsteps li:has(+ li[data-bespoke-marp-fragment=active]) { opacity: 0; }
+  section.fit:not(:has(.fsteps li:nth-child(1)[data-bespoke-marp-fragment=active])) .eq .e0, section.fit:has(.fsteps li:nth-child(1)[data-bespoke-marp-fragment=active]):not(:has(.fsteps li:nth-child(3)[data-bespoke-marp-fragment=active])) .eq .e1, section.fit:has(.fsteps li:nth-child(3)[data-bespoke-marp-fragment=active]):not(:has(.fsteps li:nth-child(4)[data-bespoke-marp-fragment=active])) .eq .e2, section.fit:has(.fsteps li:nth-child(4)[data-bespoke-marp-fragment=active]):not(:has(.fsteps li:nth-child(5)[data-bespoke-marp-fragment=active])) .eq .e3, section.fit:has(.fsteps li:nth-child(5)[data-bespoke-marp-fragment=active]) .eq .e4 { opacity: 1; }
+  section.fit:has(.fsteps li:nth-child(1)[data-bespoke-marp-fragment=active]) .ln { opacity: 1; }
+  section.fit:has(.fsteps li:nth-child(2)[data-bespoke-marp-fragment=active]) .res { opacity: 0.8; }
+  section.fit:has(.fsteps li:nth-child(2)[data-bespoke-marp-fragment=active]) .err { opacity: 1; }
+  section.fit:has(.fsteps li:nth-child(2)[data-bespoke-marp-fragment=active]):not(:has(.fsteps li:nth-child(3)[data-bespoke-marp-fragment=active])) .err .m1, section.fit:has(.fsteps li:nth-child(3)[data-bespoke-marp-fragment=active]):not(:has(.fsteps li:nth-child(4)[data-bespoke-marp-fragment=active])) .err .m2, section.fit:has(.fsteps li:nth-child(4)[data-bespoke-marp-fragment=active]):not(:has(.fsteps li:nth-child(5)[data-bespoke-marp-fragment=active])) .err .m3, section.fit:has(.fsteps li:nth-child(5)[data-bespoke-marp-fragment=active]) .err .m4 { opacity: 1; }
+  section.fit:has(.fsteps li:nth-child(3)[data-bespoke-marp-fragment=active]) .ln { d: path("M60,180.0 L540,180.0"); }
+  section.fit:has(.fsteps li:nth-child(3)[data-bespoke-marp-fragment=active]) .res { d: path("M220.5,181.0 L220.5,180.0 M107.1,223.1 L107.1,180.0 M316.2,169.5 L316.2,180.0 M303.4,160.7 L303.4,180.0 M91.3,276.1 L91.3,180.0 M115.3,250.0 L115.3,180.0 M265.9,178.4 L265.9,180.0 M175.1,240.9 L175.1,180.0 M357.5,106.4 L357.5,180.0 M253.4,204.1 L253.4,180.0 M205.1,196.4 L205.1,180.0 M139.5,224.5 L139.5,180.0 M442.6,87.2 L442.6,180.0 M155.9,273.3 L155.9,180.0 M242.4,217.4 L242.4,180.0 M321.5,150.4 L321.5,180.0 M167.3,226.8 L167.3,180.0 M381.4,156.1 L381.4,180.0 M338.6,140.9 L338.6,180.0 M278.9,196.1 L278.9,180.0 M389.8,78.1 L389.8,180.0 M184.5,255.6 L184.5,180.0 M469.3,108.9 L469.3,180.0 M403.5,142.4 L403.5,180.0 M127.7,167.4 L127.7,180.0 M263.1,186.2 L263.1,180.0"); }
+  section.fit:has(.fsteps li:nth-child(3)[data-bespoke-marp-fragment=active]) .err i { width: 126px; }
+  section.fit:has(.fsteps li:nth-child(4)[data-bespoke-marp-fragment=active]) .ln { d: path("M60,240.0 L540,120.0"); }
+  section.fit:has(.fsteps li:nth-child(4)[data-bespoke-marp-fragment=active]) .res { d: path("M220.5,181.0 L220.5,199.9 M107.1,223.1 L107.1,228.2 M316.2,169.5 L316.2,176.0 M303.4,160.7 L303.4,179.2 M91.3,276.1 L91.3,232.2 M115.3,250.0 L115.3,226.2 M265.9,178.4 L265.9,188.5 M175.1,240.9 L175.1,211.2 M357.5,106.4 L357.5,165.6 M253.4,204.1 L253.4,191.7 M205.1,196.4 L205.1,203.7 M139.5,224.5 L139.5,220.1 M442.6,87.2 L442.6,144.3 M155.9,273.3 L155.9,216.0 M242.4,217.4 L242.4,194.4 M321.5,150.4 L321.5,174.6 M167.3,226.8 L167.3,213.2 M381.4,156.1 L381.4,159.7 M338.6,140.9 L338.6,170.3 M278.9,196.1 L278.9,185.3 M389.8,78.1 L389.8,157.6 M184.5,255.6 L184.5,208.9 M469.3,108.9 L469.3,137.7 M403.5,142.4 L403.5,154.1 M127.7,167.4 L127.7,223.1 M263.1,186.2 L263.1,189.2"); }
+  section.fit:has(.fsteps li:nth-child(4)[data-bespoke-marp-fragment=active]) .err i { width: 76px; }
+  section.fit:has(.fsteps li:nth-child(5)[data-bespoke-marp-fragment=active]) .ln { d: path("M60,272.0 L540,60.0"); }
+  section.fit:has(.fsteps li:nth-child(5)[data-bespoke-marp-fragment=active]) .res { d: path("M220.5,181.0 L220.5,201.1 M107.1,223.1 L107.1,251.2 M316.2,169.5 L316.2,158.8 M303.4,160.7 L303.4,164.5 M91.3,276.1 L91.3,258.2 M115.3,250.0 L115.3,247.6 M265.9,178.4 L265.9,181.0 M175.1,240.9 L175.1,221.2 M357.5,106.4 L357.5,140.6 M253.4,204.1 L253.4,186.6 M205.1,196.4 L205.1,207.9 M139.5,224.5 L139.5,236.9 M442.6,87.2 L442.6,103.0 M155.9,273.3 L155.9,229.6 M242.4,217.4 L242.4,191.4 M321.5,150.4 L321.5,156.5 M167.3,226.8 L167.3,224.6 M381.4,156.1 L381.4,130.0 M338.6,140.9 L338.6,148.9 M278.9,196.1 L278.9,175.3 M389.8,78.1 L389.8,126.3 M184.5,255.6 L184.5,217.0 M469.3,108.9 L469.3,91.2 M403.5,142.4 L403.5,120.3 M127.7,167.4 L127.7,242.1 M263.1,186.2 L263.1,182.3"); }
+  section.fit:has(.fsteps li:nth-child(5)[data-bespoke-marp-fragment=active]) .err i { width: 59px; }
+  section.fit:has(.fsteps li:nth-child(5)[data-bespoke-marp-fragment=active]) .ln, section.fit:has(.fsteps li:nth-child(5)[data-bespoke-marp-fragment=active]) .res { stroke: #16a34a; }
+  section.fit:has(.fsteps li:nth-child(5)[data-bespoke-marp-fragment=active]) .err i { background: #16a34a; }
+  section.fit:has(.fsteps li:nth-child(6)[data-bespoke-marp-fragment=active]) .eq b { background: #fde7b0; }
+  section.npar { padding-top: 40px; }
+  .nrow { display: flex; gap: 40px; align-items: center; margin-top: 30px; }
+  .nrow .nl { flex: 1; }
+  table.ds { border-collapse: collapse; font-size: 0.95em; }
+  table.ds th, table.ds td { border: 0; border-bottom: 1px solid var(--line); padding: 12px 26px; text-align: center; background: none; font-family: ui-monospace, monospace; }
+  table.ds tr { background: none !important; }
+  table.ds th { font-family: Inter, sans-serif; font-weight: 600; font-size: 0.8em; border-bottom: 2px solid var(--fg); }
+  table.ds .ft { color: var(--accent); } table.ds .lb { color: #b45309; background: #fff4e0; }
+  table.ds tr.kind td { font-family: Inter, sans-serif; font-size: 0.6em; text-transform: uppercase; letter-spacing: 0.12em; border: 0; padding-bottom: 2px; }
+  table.ds .k2, table.ds .k3, table.ds .kn { display: none; animation: pop 0.6s ease; }
+  @keyframes pop { from { opacity: 0; } to { opacity: 1; } }
+  section.npar:has(.fsteps li:nth-child(1)[data-bespoke-marp-fragment=active]) table.ds .k2, section.npar:has(.fsteps li:nth-child(2)[data-bespoke-marp-fragment=active]) table.ds .k3, section.npar:has(.fsteps li:nth-child(3)[data-bespoke-marp-fragment=active]) table.ds .kn { display: table-cell; }
+  .neq { position: relative; height: 50px; margin-top: 34px; font-family: ui-monospace, monospace; font-size: 0.95em; }
+  .neq .s4 { font-family: Inter, sans-serif; font-weight: 400; }
+  .neq span, .ncount span { position: absolute; left: 0; top: 0; opacity: 0; transition: opacity 0.5s; white-space: nowrap; }
+  .neq b { font-weight: 700; color: var(--accent); }
+  .ncount { flex: 0 0 340px; text-align: center; }
+  .ncount .nn { position: relative; height: 1.2em; font-size: 4em; font-weight: 800; color: var(--accent); line-height: 1.2; }
+  .ncount .nn span { left: 0; right: 0; }
+  .ncount p { margin: 0; color: var(--muted); font-size: 0.8em; }
+  section.npar:not(:has(.fsteps li:nth-child(1)[data-bespoke-marp-fragment=active])) .s0, section.npar:has(.fsteps li:nth-child(1)[data-bespoke-marp-fragment=active]):not(:has(.fsteps li:nth-child(2)[data-bespoke-marp-fragment=active])) .s1, section.npar:has(.fsteps li:nth-child(2)[data-bespoke-marp-fragment=active]):not(:has(.fsteps li:nth-child(3)[data-bespoke-marp-fragment=active])) .s2, section.npar:has(.fsteps li:nth-child(3)[data-bespoke-marp-fragment=active]):not(:has(.fsteps li:nth-child(4)[data-bespoke-marp-fragment=active])) .s3, section.npar:has(.fsteps li:nth-child(4)[data-bespoke-marp-fragment=active]) .s4 { opacity: 1; }
+  section.npar:has(.fsteps li:nth-child(4)[data-bespoke-marp-fragment=active]) .ncount .nn { font-size: 2.6em; }
+  section.npar .fsteps { font-size: 0.8em; margin-top: 30px; }
   a { color: inherit; text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
 ---
 
@@ -304,11 +363,52 @@ La domanda «Un computer può pensare?» è semplicemente **mal posta**
 
 ---
 
-<!-- _class: big -->
+<!-- _class: fit -->
 
 ### Machine Learning
 
-![h:460](img/image14.png)
+<div class="mlrow">
+<img class="mlc" src="img/ml-cerchi.png">
+<div class="plot">
+<div class="eq"><span class="e0">voto = <b>a</b> · ore + <b>b</b></span><span class="e1">voto = <b>−0,5</b> · ore + <b>9</b></span><span class="e2">voto = <b>0</b> · ore + <b>6,5</b></span><span class="e3">voto = <b>0,3</b> · ore + <b>5</b></span><span class="e4">voto = <b>0,53</b> · ore + <b>4,2</b></span></div>
+<svg viewBox="0 0 560 420" width="560" height="420"><line x1="60" y1="20" x2="60" y2="360" stroke="#1a1a1a" stroke-width="2"/><line x1="60" y1="360" x2="550" y2="360" stroke="#1a1a1a" stroke-width="2"/><line x1="60" y1="360" x2="60" y2="366" stroke="#bbb"/><text x="60" y="384" text-anchor="middle">0</text><line x1="156" y1="360" x2="156" y2="366" stroke="#bbb"/><text x="156" y="384" text-anchor="middle">2</text><line x1="252" y1="360" x2="252" y2="366" stroke="#bbb"/><text x="252" y="384" text-anchor="middle">4</text><line x1="348" y1="360" x2="348" y2="366" stroke="#bbb"/><text x="348" y="384" text-anchor="middle">6</text><line x1="444" y1="360" x2="444" y2="366" stroke="#bbb"/><text x="444" y="384" text-anchor="middle">8</text><line x1="540" y1="360" x2="540" y2="366" stroke="#bbb"/><text x="540" y="384" text-anchor="middle">10</text><line x1="54" y1="360" x2="60" y2="360" stroke="#bbb"/><text x="46" y="365" text-anchor="end">2</text><line x1="54" y1="280" x2="60" y2="280" stroke="#bbb"/><text x="46" y="285" text-anchor="end">4</text><line x1="54" y1="200" x2="60" y2="200" stroke="#bbb"/><text x="46" y="205" text-anchor="end">6</text><line x1="54" y1="120" x2="60" y2="120" stroke="#bbb"/><text x="46" y="125" text-anchor="end">8</text><line x1="54" y1="40" x2="60" y2="40" stroke="#bbb"/><text x="46" y="45" text-anchor="end">10</text><text x="550" y="410" text-anchor="end">ore di studio a settimana</text><text x="70" y="26">voto</text><text x="550" y="26" text-anchor="end" font-size="12">dati inventati</text><path class="res" d="M220.5,181.0 L220.5,146.9 M107.1,223.1 L107.1,99.6 M316.2,169.5 L316.2,186.7 M303.4,160.7 L303.4,181.4 M91.3,276.1 L91.3,93.0 M115.3,250.0 L115.3,103.1 M265.9,178.4 L265.9,165.8 M175.1,240.9 L175.1,128.0 M357.5,106.4 L357.5,204.0 M253.4,204.1 L253.4,160.6 M205.1,196.4 L205.1,140.4 M139.5,224.5 L139.5,113.1 M442.6,87.2 L442.6,239.4 M155.9,273.3 L155.9,120.0 M242.4,217.4 L242.4,156.0 M321.5,150.4 L321.5,189.0 M167.3,226.8 L167.3,124.7 M381.4,156.1 L381.4,213.9 M338.6,140.9 L338.6,196.1 M278.9,196.1 L278.9,171.2 M389.8,78.1 L389.8,217.4 M184.5,255.6 L184.5,131.9 M469.3,108.9 L469.3,250.5 M403.5,142.4 L403.5,223.1 M127.7,167.4 L127.7,108.2 M263.1,186.2 L263.1,164.6"/><g class="pts"><circle cx="220.5" cy="181.0" r="6"/><circle cx="107.1" cy="223.1" r="6"/><circle cx="316.2" cy="169.5" r="6"/><circle cx="303.4" cy="160.7" r="6"/><circle cx="91.3" cy="276.1" r="6"/><circle cx="115.3" cy="250.0" r="6"/><circle cx="265.9" cy="178.4" r="6"/><circle cx="175.1" cy="240.9" r="6"/><circle cx="357.5" cy="106.4" r="6"/><circle cx="253.4" cy="204.1" r="6"/><circle cx="205.1" cy="196.4" r="6"/><circle cx="139.5" cy="224.5" r="6"/><circle cx="442.6" cy="87.2" r="6"/><circle cx="155.9" cy="273.3" r="6"/><circle cx="242.4" cy="217.4" r="6"/><circle cx="321.5" cy="150.4" r="6"/><circle cx="167.3" cy="226.8" r="6"/><circle cx="381.4" cy="156.1" r="6"/><circle cx="338.6" cy="140.9" r="6"/><circle cx="278.9" cy="196.1" r="6"/><circle cx="389.8" cy="78.1" r="6"/><circle cx="184.5" cy="255.6" r="6"/><circle cx="469.3" cy="108.9" r="6"/><circle cx="403.5" cy="142.4" r="6"/><circle cx="127.7" cy="167.4" r="6"/><circle cx="263.1" cy="186.2" r="6"/></g><path class="ln" d="M60,80.0 L540,280.0"/></svg>
+<div class="err"><span>errore medio</span><i></i><span class="ev"><em class="m1">2,1 voti</em><em class="m2">1,1 voti</em><em class="m3">0,7 voti</em><em class="m4">0,5 voti</em></span></div>
+<div class="fsteps">
+
+* **Si parte a caso.** Più studi, peggio vai: sbagliatissima
+* **Si misura l'errore:** quanto dista ogni punto dalla retta
+* **Si correggono a e b**, di poco, per ridurre l'errore
+* **E si ripete.** L'errore scende ancora
+* **La retta migliore** per questi dati
+* **a e b sono i parametri.** Trovarli è l'addestramento
+
+</div>
+</div>
+</div>
+
+---
+
+<!-- _class: npar -->
+
+### Machine Learning
+
+## Più caratteristiche, più parametri
+
+<div class="nrow">
+<div class="nl">
+<table class="ds"><tr class="kind"><td class="ft" colspan="1">feature</td><td class="k2"></td><td class="k3"></td><td class="kn"></td><td class="lb">label</td></tr><tr><th class="ft">ore di studio</th><th class="ft k2">ore di sonno</th><th class="ft k3">assenze</th><th class="ft kn">… xₙ</th><th class="lb">voto</th></tr><tr><td>2</td><td class="k2">6</td><td class="k3">10</td><td class="kn">…</td><td class="lb">5</td></tr><tr><td>5</td><td class="k2">7</td><td class="k3">4</td><td class="kn">…</td><td class="lb">6,5</td></tr><tr><td>8</td><td class="k2">8</td><td class="k3">1</td><td class="kn">…</td><td class="lb">8</td></tr></table>
+<div class="neq"><span class="s0">voto = <b>a</b>·ore + <b>b</b></span><span class="s1">voto = <b>a₁</b>·ore + <b>a₂</b>·sonno + <b>b</b></span><span class="s2">voto = <b>a₁</b>·ore + <b>a₂</b>·sonno + <b>a₃</b>·assenze + <b>b</b></span><span class="s3">voto = <b>a₁</b>·x₁ + <b>a₂</b>·x₂ + … + <b>aₙ</b>·xₙ + <b>b</b></span><span class="s4">stesso gioco: indovinare, misurare l'errore, correggere</span></div>
+</div>
+<div class="ncount"><div class="nn"><span class="s0">2</span><span class="s1">3</span><span class="s2">4</span><span class="s3">n + 1</span><span class="s4">70 miliardi</span></div><p>parametri</p></div>
+</div>
+<div class="fsteps">
+
+* **Una caratteristica in più:** le ore di sonno. Un parametro in più
+* **E un'altra:** le assenze
+* **n caratteristiche:** n + 1 parametri
+* **Un LLM, Llama 2 70B:** 70 miliardi di parametri. Il gioco è lo stesso
+
+</div>
 
 ---
 

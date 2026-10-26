@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le manopole</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap">
+<style>
+  :root {
+    --fg: #1a1a1a; --muted: #777; --accent: #2563eb; --accent-soft: #e6eeff;
+    --line: #e5e5e5; --chip: #f2f2f2; --pick: #f59e0b; --ok: #16a34a; --ok-soft: #dcfce7; --no: #ef4444; --bg: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #111; }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--fg); overflow: hidden; }
+  #wrap { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+  #stage { width: 1280px; height: 720px; background: var(--bg); position: relative; transform-origin: center; padding: 36px 72px 48px; display: flex; flex-direction: column; }
+
+  .label { font-size: 15px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.18em; margin: 0 0 6px; }
+  .head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; }
+  h1 { font-weight: 800; font-size: 36px; letter-spacing: -0.02em; margin: 0 0 18px; }
+  .phases { display: flex; gap: 8px; }
+  .phases span { font-size: 14px; padding: 5px 12px; border-radius: 8px; background: var(--chip); color: var(--muted); transition: background 0.3s, color 0.3s; }
+  .phases span.on { background: var(--accent); color: #fff; font-weight: 600; }
+
+  .body { display: flex; gap: 48px; flex: 1; min-height: 0; }
+  .main { flex: 1; display: flex; flex-direction: column; }
+
+  .sentence { display: flex; align-items: center; gap: 14px; font-size: 30px; font-weight: 400; min-height: 64px; margin-bottom: 18px; }
+  .sentence .lab { font-size: 14px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; width: 92px; line-height: 1.3; }
+  .slot { display: inline-block; min-width: 120px; text-align: center; padding: 4px 16px; border-radius: 10px; border: 2px dashed #bbb; color: #bbb; font-weight: 600; }
+  .slot.shown { border: 2px solid #86efac; background: var(--ok-soft); color: var(--ok); }
+  .slot.flash { animation: pop 0.4s ease; }
+  @keyframes pop { from { transform: scale(1.2); } to { transform: none; } }
+
+  .mixer { display: flex; gap: 22px; flex: 1; }
+  .ch { flex: 1; display: flex; flex-direction: column; align-items: center; border-radius: 14px; padding: 12px 8px 10px; transition: background 0.3s; }
+  .ch.top { background: #fff4d6; }
+  .ch.target { background: var(--ok-soft); }
+  .knob { width: 78px; height: 78px; display: block; }
+  .knob .track { fill: none; stroke: var(--line); stroke-width: 3; }
+  .knob .body { fill: #fafafa; stroke: #aaa; stroke-width: 1.5; transition: stroke 0.3s, fill 0.3s; }
+  .knob .ptr { transition: transform 0.7s cubic-bezier(.3,1.4,.5,1); }
+  .knob .ptr line { stroke: var(--fg); stroke-width: 3; stroke-linecap: round; }
+  .knob.up .body { stroke: var(--ok); fill: var(--ok-soft); stroke-width: 3; }
+  .knob.down .body { stroke: var(--no); fill: #fee2e2; stroke-width: 2; }
+  .wire { width: 2px; height: 14px; background: #ccc; }
+  .bar { width: 64px; flex: 1; min-height: 120px; background: var(--line); border-radius: 6px; position: relative; }
+  .bar i { position: absolute; left: 0; right: 0; bottom: 0; height: 0; background: var(--accent); border-radius: 6px; transition: height 0.7s ease; }
+  .ch.top .bar i { background: var(--pick); }
+  .ch.target .bar i { background: var(--ok); }
+  .bar s { position: absolute; left: -8px; right: -8px; height: 3px; background: var(--fg); display: none; }
+  .showdata .bar s { display: block; }
+  .pc { font-size: 22px; font-weight: 600; margin-top: 8px; font-variant-numeric: tabular-nums; min-height: 28px; }
+  .nobars .bar i { height: 0 !important; }
+  .nobars .pc { visibility: hidden; }
+  .w { font-size: 22px; font-weight: 600; margin-top: 2px; }
+  .data { font-size: 13px; color: var(--muted); margin-top: 6px; text-align: center; line-height: 1.3; }
+  .dots { display: flex; flex-wrap: wrap; justify-content: center; gap: 3px; width: 90px; margin-top: 4px; min-height: 18px; }
+  .dots b { width: 7px; height: 7px; border-radius: 50%; background: #bbb; }
+
+  .side { flex: 0 0 260px; display: flex; flex-direction: column; gap: 18px; }
+  .legend { font-size: 15px; line-height: 1.4; display: flex; flex-direction: column; gap: 12px; }
+  .legend div { display: flex; gap: 12px; align-items: center; }
+  .legend .knob, .legend .lb { flex: 0 0 34px; width: 34px; height: 34px; }
+  .legend .lb { display: flex; justify-content: center; align-items: flex-end; }
+  .legend .lb i { width: 16px; height: 22px; background: var(--accent); border-radius: 3px; }
+  .count .n { font-size: 44px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+  .count p { font-size: 14px; color: var(--muted); margin: 4px 0 0; }
+  .btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btns button { font: inherit; font-size: 15px; font-weight: 600; padding: 8px 13px; border-radius: 10px; border: 2px solid var(--accent); background: var(--bg); color: var(--accent); cursor: pointer; }
+  .btns button.primary { background: var(--accent); color: #fff; }
+  .btns button.on { background: var(--fg); border-color: var(--fg); color: #fff; }
+  .note { font-size: 16px; line-height: 1.45; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 10px 14px; border-radius: 6px; }
+  .note:empty { display: none; }
+
+  .fast .bar i, .fast .knob .ptr, .fast .ch { transition: none; }
+
+  .foot { position: absolute; left: 72px; right: 72px; bottom: 14px; font-size: 12.5px; color: #aaa; }
+  kbd { font-family: inherit; border: 1px solid #ccc; border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; font-size: 11px; color: #888; }
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+  <p class="label">LLM · Come impara</p>
+  <div class="head">
+    <h1>Le manopole</h1>
+    <div class="phases" id="phases">
+      <span>1 · legge</span><span>2 · indovina</span><span>3 · confronta</span><span>4 · corregge</span>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="main nobars" id="main">
+      <div class="sentence"><span class="lab" id="lab">Frase letta</span><span>Il mio colore preferito è</span><span class="slot" id="slot">?</span></div>
+      <div class="mixer" id="mixer"></div>
+    </div>
+    <div class="side">
+      <div class="legend">
+        <div><svg class="knob" viewBox="-17 -17 34 34"><circle class="body" r="12"/><g style="transform:rotate(40deg)"><line x1="0" y1="0" x2="0" y2="-10" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/></g></svg><span>una <b>manopola</b>: un numero del modello, cioè un <b>parametro</b></span></div>
+        <div><span class="lb"><i></i></span><span>la <b>probabilità</b> che ne viene fuori</span></div>
+      </div>
+      <div class="count"><div class="n" id="nread">0</div><p>frasi lette</p></div>
+      <div class="btns">
+        <button class="primary" id="next" type="button">Avanti</button>
+        <button id="fast" type="button">Veloce</button>
+        <button id="reset" type="button">Ricomincia</button>
+      </div>
+      <div class="note" id="note"></div>
+    </div>
+  </div>
+
+  <div class="foot">Modello giocattolo con 5 manopole. Un modello vero ne ha miliardi, legge migliaia di miliardi di parole e le regola tutte insieme, con lo stesso principio. &nbsp;<kbd>→</kbd> avanti · <kbd>V</kbd> veloce · <kbd>R</kbd> ricomincia</div>
+</div></div>
+
+<script>
+(function () {
+  // Nei dati di addestramento: quante frasi finiscono con ciascun colore
+  const COLORI = [['blu', 8], ['rosso', 6], ['verde', 3], ['giallo', 2], ['ocra', 1]];
+  const N = COLORI.length, TOT = COLORI.reduce((s, c) => s + c[1], 0);
+  const FRASI = []; COLORI.forEach(([, k], j) => { for (let i = 0; i < k; i++) FRASI.push(j); });
+
+  const $ = id => document.getElementById(id);
+  let W, order, si, phase, read, fast = false, timer = null, told;
+
+  function fit() {
+    const s = Math.min(innerWidth / 1280, innerHeight / 720);
+    $('stage').style.transform = 'scale(' + s + ')';
+  }
+  addEventListener('resize', fit); fit();
+
+  const softmax = r => { const m = Math.max(...r), ex = r.map(x => Math.exp(x - m)), z = ex.reduce((a, b) => a + b, 0); return ex.map(e => e / z); };
+  const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const pct = p => Math.round(p * 100) + '%';
+  const angle = w => Math.max(-3, Math.min(3, w)) / 3 * 135;
+  const chs = () => [...$('mixer').children];
+  const target = () => FRASI[order[si]];
+  const argmax = p => p.reduce((b, v, j) => v > p[b] ? j : b, 0);
+
+  function build() {
+    $('mixer').innerHTML = '';
+    COLORI.forEach(([c, k]) => {
+      const d = document.createElement('div'); d.className = 'ch';
+      d.innerHTML = '<svg class="knob" viewBox="-17 -17 34 34"><path class="track" d="M -10.6 10.6 A 15 15 0 1 1 10.6 10.6"/>' +
+        '<circle class="body" r="11.5"/><g class="ptr"><line x1="0" y1="0" x2="0" y2="-9.5"/></g></svg>' +
+        '<span class="wire"></span><div class="bar"><i></i><s></s></div><div class="pc"></div><div class="w"></div>' +
+        '<div class="dots">' + '<b></b>'.repeat(k) + '</div><div class="data">nei dati: ' + k + (k === 1 ? ' frase' : ' frasi') + ' su ' + TOT + '</div>';
+      d.querySelector('.w').textContent = c;
+      d.querySelector('s').style.bottom = 'calc(' + (k / TOT * 100) + '% - 1.5px)';
+      $('mixer').appendChild(d);
+    });
+  }
+  function render() {
+    const p = softmax(W);
+    chs().forEach((d, j) => {
+      d.querySelector('.ptr').style.transform = 'rotate(' + angle(W[j]) + 'deg)';
+      d.querySelector('i').style.height = (p[j] * 100) + '%';
+      d.querySelector('.pc').textContent = pct(p[j]);
+    });
+    $('nread').textContent = read;
+  }
+  function clearMarks() {
+    chs().forEach(d => { d.classList.remove('top', 'target'); d.querySelector('.knob').classList.remove('up', 'down'); });
+  }
+  function setPhase(k) { [...$('phases').children].forEach((e, i) => e.classList.toggle('on', i === k)); }
+  function setSlot(text, shown) { const s = $('slot'); s.className = 'slot' + (shown ? ' shown flash' : ''); s.textContent = text; }
+
+  // La correzione: la manopola del colore giusto sale, le altre scendono in proporzione a quanto ci avevano puntato
+  function learn(t) {
+    const p = softmax(W), a = Math.max(0.05, 0.6 / (1 + read / 40));
+    for (let j = 0; j < N; j++) W[j] -= a * (p[j] - (j === t ? 1 : 0));
+    read++;
+  }
+  function nextSentence() { si++; if (si >= order.length) { si = 0; shuffle(order); } }
+
+  function step() {
+    if (fast) return;
+    if (phase === 'start' || phase === 'done') {
+      if (phase === 'done') nextSentence();
+      clearMarks(); $('main').classList.add('nobars'); setSlot('?'); setPhase(0); render();
+      $('lab').textContent = 'Frase ' + (read + 1);
+      $('note').textContent = 'Il modello legge una frase dei suoi dati, ma l\'ultima parola è coperta. Deve indovinarla.';
+      phase = 'read';
+    } else if (phase === 'read') {
+      const top = argmax(softmax(W));
+      $('main').classList.remove('nobars'); chs()[top].classList.add('top'); setPhase(1);
+      $('note').textContent = 'Con le manopole come sono adesso, la scommessa più alta è su «' + COLORI[top][0] + '».';
+      phase = 'guess';
+    } else if (phase === 'guess') {
+      const p = softmax(W), t = target();
+      chs()[t].classList.remove('top'); chs()[t].classList.add('target');
+      setSlot(COLORI[t][0], true); setPhase(2);
+      $('note').textContent = 'La parola era «' + COLORI[t][0] + '». Il modello le dava il ' + pct(p[t]) + '.';
+      phase = 'check';
+    } else if (phase === 'check') {
+      const t = target(), before = W.slice(); learn(t);
+      chs().forEach((d, j) => { d.classList.remove('top'); const dw = W[j] - before[j]; if (Math.abs(dw) > 0.01) d.querySelector('.knob').classList.add(dw > 0 ? 'up' : 'down'); });
+      render(); setPhase(3);
+      $('note').textContent = 'Si corregge: la manopola di «' + COLORI[t][0] + '» gira in su, le altre in giù. La prossima volta scommetterà un po\' meglio.';
+      phase = 'done';
+    }
+  }
+
+  function fastLoop() {
+    learn(target()); nextSentence(); setSlot(COLORI[target()][0]); render();
+    if (read >= 400 && !told) {
+      told = true; $('main').classList.add('showdata');
+      $('note').textContent = 'Le barre si sono fermate sulle linee nere: il modello ha imparato quanto spesso compare ogni colore, ma le frasi non le ha conservate. «ocra» l\'ha letta una volta su venti: la ricorda appena.';
+    }
+    timer = setTimeout(fastLoop, read < 60 ? 120 : 40);
+  }
+  function startFast() {
+    fast = true; $('fast').classList.add('on'); $('stage').classList.add('fast');
+    clearMarks(); $('main').classList.remove('nobars'); setPhase(-1); $('lab').textContent = 'Legge…';
+    if (!told) $('note').textContent = 'Ora legge le stesse 20 frasi, ancora e ancora, e si corregge ogni volta.';
+    fastLoop();
+  }
+  function stopFast() {
+    fast = false; clearTimeout(timer); $('fast').classList.remove('on'); $('stage').classList.remove('fast');
+    phase = 'done'; $('lab').textContent = 'Frase letta';
+  }
+
+  function reset() {
+    if (fast) stopFast();
+    W = COLORI.map(() => (Math.random() - 0.5) * 1.6);
+    order = shuffle(FRASI.map((_, i) => i)); si = 0; read = 0; phase = 'start'; told = false;
+    clearMarks(); $('main').classList.add('nobars'); $('main').classList.remove('showdata');
+    setPhase(-1); setSlot('?'); render(); $('lab').textContent = 'Frase letta';
+    $('note').textContent = 'All\'inizio le manopole sono girate a caso: il modello non sa niente. Premi Avanti.';
+  }
+
+  build();
+  $('next').addEventListener('click', step);
+  $('fast').addEventListener('click', () => fast ? stopFast() : startFast());
+  $('reset').addEventListener('click', reset);
+  addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'Enter' || e.key === 'PageDown') { e.preventDefault(); step(); }
+    else if (e.key === 'v' || e.key === 'V') fast ? stopFast() : startFast();
+    else if (e.key === 'r' || e.key === 'R') reset();
+  });
+  reset();
+})();
+</script>
+</body>
+</html>

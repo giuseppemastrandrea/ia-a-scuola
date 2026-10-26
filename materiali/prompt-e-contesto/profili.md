@@ -54,7 +54,7 @@ style: |
 
 Con Gemini trasformiamo le vostre osservazioni su alcuni alunni in **profili descritti per come funzionano in classe**.
 
-Diventano la prima fonte del **notebook di classe** (modulo NotebookLM) e la base del Gem e della skill (modulo Gem e skill).
+Diventano la prima fonte del **notebook di classe** (modulo Grounding) e la base del Gem e della skill (modulo Gem e skill).
 
 <p class="meta">Tecniche: template, esempio guida, verifica dei bias</p>
 
