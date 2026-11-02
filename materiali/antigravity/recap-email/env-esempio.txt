@@ -1,0 +1,8 @@
+# Copiate questo file accanto a invia_email.py e rinominatelo .env
+# Account Gmail PERSONALE, con la verifica in due passaggi attiva.
+# La password per le app si crea qui: https://myaccount.google.com/apppasswords
+# (16 lettere, senza spazi). Non è la password del vostro account.
+
+GMAIL_INDIRIZZO=nome.cognome@gmail.com
+GMAIL_PASSWORD_APP=abcdabcdabcdabcd
+DESTINATARIO=nome.cognome@gmail.com

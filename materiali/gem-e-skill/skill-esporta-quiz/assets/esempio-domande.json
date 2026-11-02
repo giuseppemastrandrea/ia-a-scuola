@@ -1,0 +1,49 @@
+{
+  "config": {
+    "titolo": "Verifica: il ciclo dell'acqua (versione B)",
+    "descrizione": "Classe quarta. Leggi bene ogni domanda prima di rispondere."
+  },
+  "domande": [
+    {
+      "tipo": "multipleChoice",
+      "titolo": "Che cosa fa il sole nel ciclo dell'acqua?",
+      "obbligatoria": true,
+      "punti": 1,
+      "opzioni": ["Raffredda il mare", "Scalda l'acqua", "Forma il ghiaccio", "Ferma il vento"],
+      "rispostaCorretta": 1,
+      "feedback": {
+        "corretto": { "testo": "Giusto: il calore del sole trasforma l'acqua in vapore." },
+        "errato": { "testo": "Rileggi la parte sull'evaporazione: da dove arriva il calore?" }
+      }
+    },
+    {
+      "tipo": "multipleChoice",
+      "titolo": "Come si chiama il passaggio da vapore a goccioline?",
+      "obbligatoria": true,
+      "punti": 1,
+      "opzioni": ["Evaporazione", "Precipitazione", "Condensazione"],
+      "rispostaCorretta": 2,
+      "feedback": {
+        "corretto": { "testo": "Esatto, è la condensazione." },
+        "errato": { "testo": "Pensa a cosa succede al vapore quando sale e si raffredda." }
+      }
+    },
+    {
+      "tipo": "checkbox",
+      "titolo": "Quali sono forme di precipitazione? (più risposte)",
+      "obbligatoria": true,
+      "punti": 2,
+      "opzioni": ["Pioggia", "Neve", "Nebbia", "Grandine"],
+      "rispostaCorretta": [0, 1, 3],
+      "feedback": {
+        "corretto": { "testo": "Bene: pioggia, neve e grandine cadono dal cielo." },
+        "errato": { "testo": "La nebbia resta vicino al suolo: non cade." }
+      }
+    },
+    {
+      "tipo": "paragraph",
+      "titolo": "Spiega con parole tue perché l'acqua del mare non finisce mai.",
+      "obbligatoria": false
+    }
+  ]
+}

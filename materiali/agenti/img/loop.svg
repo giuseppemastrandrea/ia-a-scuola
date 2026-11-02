@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 400" font-family="Inter, sans-serif">
+  <defs>
+    <marker id="nera" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker>
+    <marker id="blu" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+    <marker id="grigia" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b6b6b"/></marker>
+  </defs>
+  <g fill="#fff" stroke="#1a1a1a" stroke-width="2.5">
+    <rect x="20" y="40" width="180" height="76" rx="10" fill="#f5f7fb"/>
+    <rect x="270" y="40" width="220" height="76" rx="10"/>
+    <rect x="640" y="40" width="220" height="76" rx="10"/>
+    <rect x="445" y="270" width="250" height="76" rx="10"/>
+  </g>
+  <g fill="#fff" stroke="#6b6b6b" stroke-width="2" stroke-dasharray="6 5">
+    <rect x="880" y="236" width="200" height="52" rx="10"/>
+    <rect x="880" y="312" width="200" height="52" rx="10"/>
+  </g>
+  <g text-anchor="middle" fill="#1a1a1a">
+    <text x="110" y="74" font-size="22" font-weight="700">Obiettivo</text>
+    <text x="110" y="100" font-size="17" fill="#6b6b6b">lo date voi</text>
+    <text x="380" y="74" font-size="22" font-weight="700">Sceglie</text>
+    <text x="380" y="100" font-size="17" fill="#6b6b6b">uno strumento</text>
+    <text x="750" y="74" font-size="22" font-weight="700">Il sistema</text>
+    <text x="750" y="100" font-size="17" fill="#6b6b6b">lo esegue</text>
+    <text x="570" y="304" font-size="22" font-weight="700">Il risultato</text>
+    <text x="570" y="330" font-size="17" fill="#6b6b6b">torna nel contesto</text>
+    <text x="980" y="268" font-size="18" fill="#6b6b6b">Ha finito</text>
+    <text x="980" y="344" font-size="18" fill="#6b6b6b">Si ferma a chiedere</text>
+  </g>
+  <g fill="none" stroke-width="3">
+    <path d="M200 78 L262 78" stroke="#1a1a1a" marker-end="url(#nera)"/>
+    <path d="M490 78 L632 78" stroke="#1a1a1a" marker-end="url(#nera)"/>
+    <path d="M750 116 Q750 230 700 290" stroke="#1a1a1a" marker-end="url(#nera)"/>
+    <path d="M445 308 Q380 260 380 124" stroke="#2563eb" stroke-width="5" marker-end="url(#blu)"/>
+    <path d="M695 296 L872 262" stroke="#6b6b6b" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#grigia)"/>
+    <path d="M695 322 L872 338" stroke="#6b6b6b" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#grigia)"/>
+  </g>
+  <text x="300" y="230" font-size="20" font-weight="700" fill="#2563eb" text-anchor="middle">non ha finito:</text>
+  <text x="300" y="254" font-size="20" font-weight="700" fill="#2563eb" text-anchor="middle">sceglie di nuovo</text>
+</svg>
