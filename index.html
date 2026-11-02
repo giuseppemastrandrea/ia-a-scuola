@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="description" content="12 moduli di formazione sull'IA per docenti, da comporre liberamente: esercitazioni, materiali, prompt pronti e rassegna stampa.">
+<meta name="description" content="14 moduli di formazione sull'IA per docenti, da comporre liberamente: esercitazioni, materiali, prompt pronti e rassegna stampa.">
 <title>Catalogo dei moduli IA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -168,12 +168,12 @@ footer{border-top:1px solid var(--rule); padding-top:14px; font-size:13.5px; col
 <header class="top">
   <span class="eyebrow">IA a scuola · formazione docenti · 2026/27</span>
   <h1>Catalogo dei moduli</h1>
-  <p class="dek">12 moduli da 45 minuti a 3 ore, ciascuno con materiali, esercitazioni pratiche e un prodotto che il docente si porta via. I percorsi si compongono di volta in volta scegliendo i moduli. Si usano strumenti gratuiti; quelli a pagamento compaiono solo nelle demo del formatore. Durate e minuti delle esercitazioni sono indicativi.</p>
+  <p class="dek">14 moduli da 45 minuti a 3 ore, ciascuno con materiali, esercitazioni pratiche e un prodotto che il docente si porta via. I percorsi si compongono di volta in volta scegliendo i moduli. Si usano strumenti gratuiti; quelli a pagamento compaiono solo nelle demo del formatore. Durate e minuti delle esercitazioni sono indicativi.</p>
 </header>
 
 <nav class="bar" aria-label="Vista">
   <div class="bar-row">
-    <div class="summary" id="summary"><span><b>12 moduli</b> nel catalogo</span><span><b>3</b> in preparazione</span></div>
+    <div class="summary" id="summary"><span><b>14 moduli</b> nel catalogo</span><span><b>3</b> in preparazione</span></div>
     <div class="view" role="group" aria-label="Vista">
       <button type="button" id="v-grid" data-v="grid" aria-pressed="true">Griglia</button>
       <button type="button" id="v-list" data-v="list" aria-pressed="false">Elenco</button>
@@ -810,6 +810,72 @@ Caratteri grandi, leggibili da 6 metri. Tutto in italiano.</pre></div></div></di
       </ol>
       <p class="note dati">Sui dati reali delle famiglie il flusso si attiva solo dopo averne parlato con il DS.</p></div></div>
       <div class="ex-item"><span class="t">20'</span><h5>Il report automatico</h5><div class="d"><p>Un flusso che ogni venerdì scrive su un foglio il riepilogo delle consegne della settimana. Salva nel kit la descrizione e uno screenshot.</p></div></div>
+    </div>
+  </div></details>
+</article>
+
+<!-- ===================== M13 ===================== -->
+<article class="mod" id="agenti">
+  <div class="mod-head">
+    <span class="mod-id">M13</span>
+    <div class="mod-title">
+      <h2>Agenti: dalla chat al loop</h2>
+      <div class="mod-meta"><span class="chip c">Gemini</span><span class="chip c">Gmail</span><span class="chip c">Calendar</span></div>
+    </div>
+    <span class="mod-hours">2 h</span>
+    <p class="mod-prod"><b>Prodotto</b>Il mandato: una delega scritta per un compito vero, con strumenti permessi, azioni vietate e punti in cui l'agente si ferma a chiedere.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="mat"><h4>Materiali</h4><ul>
+        <li><a href="materiali/agenti/agenti.html">Deck "Dalla chat al loop"</a>.</li>
+    </ul></div>
+    <div class="two">
+      <div><h4>Obiettivi</h4><ul>
+        <li>Distinguere la chat dall'agente: chi decide il passo successivo.</li>
+        <li>Far svolgere a Gemini un compito in più passi su Gmail e Calendar, e controllarne il risultato.</li>
+        <li>Riconoscere la prompt injection e decidere i permessi di un agente.</li>
+      </ul></div>
+      <div><h4>Prima del corso</h4><p class="note">In console: app di Workspace attive per l'app Gemini. Per ogni docente: funzionalità smart attive in Gmail. Con Education Fundamentals l'app Gemini vede Gmail e Calendar, non Drive.</p></div>
+    </div>
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t"></span><h5>La circolare degli scrutini</h5><div class="d"><p>Gemini cerca la circolare con il calendario degli scrutini e crea gli eventi per una classe. Si osserva cosa ha cercato, letto e creato, e cosa ha fatto senza chiedere.</p></div></div>
+      <div class="ex-item"><span class="t"></span><h5>Lo stesso compito, due volte</h5><div class="d"><p>Il riepilogo delle email fatto con il flusso di Workspace Studio e chiesto a Gemini: chi ha deciso quali email leggere?</p></div></div>
+      <div class="ex-item"><span class="t"></span><h5>La prova sulla vostra posta</h5><div class="d"><p>Un'email a sé stessi con un'istruzione nascosta, poi il riassunto di Gemini: l'istruzione passa?</p></div></div>
+      <div class="ex-item"><span class="t"></span><h5>Il mandato</h5><div class="d"><p>La delega scritta per un compito vero. Va nel kit.</p></div></div>
+    </div>
+  </div></details>
+</article>
+
+<!-- ===================== M14 ===================== -->
+<article class="mod" id="antigravity">
+  <div class="mod-head">
+    <span class="mod-id">M14</span>
+    <div class="mod-title">
+      <h2>Antigravity: un agente sul proprio computer</h2>
+      <div class="mod-meta"><span class="chip c">Antigravity</span><span class="chip c">Account personale</span><span class="chip demo">Demo: Claude Code</span></div>
+    </div>
+    <span class="mod-hours">3 h</span>
+    <p class="mod-prod"><b>Prodotto</b>Un'Automazione attiva che ogni mattina manda per email il recap di un sito pubblico.</p>
+  </div>
+  <details class="scheda"><summary>Scheda completa</summary><div class="body">
+    <div class="mat"><h4>Materiali</h4><ul>
+        <li><a href="materiali/antigravity/antigravity.html">Deck "Un agente sul proprio computer"</a>.</li>
+        <li><a href="materiali/gem-e-skill/skill-esporta-quiz.zip">Skill esporta-quiz</a> e <a href="materiali/antigravity/verifica-ciclo-acqua.md">verifica d'esempio</a>.</li>
+        <li>Invio del recap: <a href="materiali/antigravity/recap-email/invia_email.py">invia_email.py</a> e <a href="materiali/antigravity/recap-email/env-esempio.txt">env-esempio.txt</a>.</li>
+    </ul></div>
+    <div class="two">
+      <div><h4>Obiettivi</h4><ul>
+        <li>Vedere un agente pianificare, agire e controllare il proprio lavoro in una cartella.</li>
+        <li>Usare una skill con un programma: l'agente lo esegue, legge gli errori e corregge.</li>
+        <li>Creare un'Automazione e leggerne i permessi.</li>
+      </ul></div>
+      <div><h4>Prima del corso</h4><p class="note dati">Solo account Google personale, con materiali inventati, anonimi o pubblici. Servono: Antigravity installato, gh collegato a GitHub, un Gmail personale con verifica in due passaggi e password per le app.</p></div>
+    </div>
+    <div class="ex"><h4>Esercitazioni</h4>
+      <div class="ex-item"><span class="t"></span><h5>Il compito in cartella</h5><div class="d"><p>Un quiz per la LIM: piano, file, prova nel browser integrato.</p></div></div>
+      <div class="ex-item"><span class="t"></span><h5>Il quiz online</h5><div class="d"><p>L'agente pubblica il quiz sul proprio GitHub, dopo aver chiesto il permesso.</p></div></div>
+      <div class="ex-item"><span class="t"></span><h5>La verifica su Google Moduli</h5><div class="d"><p>La skill esporta-quiz in Antigravity, poi lo script incollato in Apps Script con l'account della scuola.</p></div></div>
+      <div class="ex-item"><span class="t"></span><h5>La vostra Automazione</h5><div class="d"><p>Ogni mattina il recap di un sito pubblico, inviato per email. Si misura quanto consuma della quota settimanale.</p></div></div>
     </div>
   </div></details>
 </article>
