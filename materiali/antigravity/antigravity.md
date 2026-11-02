@@ -49,6 +49,8 @@ style: |
   .logo img { height: 64px; margin: 6px auto 4px; display: block; }
   .logo p { font-weight: 600; color: var(--fg); font-size: 0.9em; margin: 0 0 0.4em; }
   .logo ul { text-align: left; font-size: 0.75em; display: inline-block; margin: 0; }
+  .cols > .sc { flex: 1.2; }
+  .sc img { max-height: 420px; max-width: 100%; border: 1px solid var(--line); border-radius: 10px; display: block; margin: 0 auto; }
 ---
 
 <!-- _class: lead -->
@@ -70,15 +72,23 @@ style: |
 
 ### Cos'è Antigravity
 
-- Un'app gratuita di Google: **antigravity.google/download**.
-- Dentro c'è un **agente**: legge e scrive file, usa il terminale, apre il browser.
+<div class="cols">
+<div>
+
+- App gratuita di Google: **antigravity.google/download**.
+- Dentro c'è un **agente**: file, terminale, browser.
 - Lavora in un **progetto**: le cartelle che scegliete voi.
-- Piano gratuito: quota che si ricarica **una volta a settimana**.
+- Quota gratuita **settimanale**.
+
+</div>
+<div class="sc"><img src="img/download.png"></div>
+</div>
 
 ---
 
 ### App o CLI
 
+<div class="cols">
 <div class="small">
 
 | | App | CLI (`agy`) |
@@ -89,6 +99,8 @@ style: |
 | Esecuzione senza interfaccia | no | **sì**: `agy -p "..."` |
 | Skill, regole, MCP, hook | sì | sì |
 
+</div>
+<div class="sc"><img src="img/cli.png"></div>
 </div>
 
 <p class="note">Oggi usiamo l'app. Fonte: antigravity.google/docs/features (02/11/2026).</p>
@@ -102,11 +114,11 @@ style: |
 
 1. Accesso con l'**account personale**.
 2. Una cartella vuota: `antigravity-corso`.
-3. **Nuovo progetto** → la cartella.
+3. **Create New Project**: l'icona della cartella con il +, accanto a Projects.
 4. Permessi predefiniti: solo le cartelle del progetto. **Turbo** no.
 
 </div>
-<div class="shot">Screenshot: creazione di un progetto con la cartella antigravity-corso</div>
+<div class="sc"><img src="img/nuovo-progetto.png"></div>
 </div>
 
 ---
