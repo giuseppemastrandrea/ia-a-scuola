@@ -12,20 +12,21 @@ Ogni modulo ha una cartella in `materiali/`, con il nome del modulo e senza nume
 |---|---|---|
 | M01 Vero, verosimile, falso | `vero-verosimile-falso/` | Deck "Warmup" (falso Eco), quiz "Reale o AI?" in `quiz/` |
 | M02 Come funziona un LLM | `come-funziona-llm/` | Deck "Introduzione all'IA e all'IA generativa", simulazione `next-token.html` |
-| M03 Il modello nudo | `modello-nudo/` | In preparazione; bozza dell'animazione `manopole.html`, messa da parte |
-| M04 Testi in serie e bias | `laboratorio-testi-bias/` | Pagina del laboratorio "Mettere le mani" |
-| M05 Regole, dati e strumenti | `regole-e-dati/`, `scegliere-strumenti/` | Mappa per il docente, vademecum, slide "Quattro strati, undici domande" |
-| M06 Prompt e contesto | `prompt-e-contesto/` | Deck sul context engineering, esercitazioni "Costruire i profili" e "La storia con GN e GL" |
-| M07 Grounding (Gemini Notebook) | `grounding/` | Esercitazione "Il notebook di classe" |
-| M08 Gem e skill | `gem-e-skill/` | Esercitazioni "Il mio Gem di sostegno" e "Dal Gem alla skill" |
-| M09 Verifiche fino al Google Form | `verifiche-form/` | `genera-form-quiz.gs`: genera un Google Form quiz da `CONFIG` e `DOMANDE` |
-| M10 Canvas | `canvas/` | Deck "Gemini Canvas", "Le API", "GitHub Pages"; esercitazioni CAA (completa e semplice), mappa di pittogrammi, "Ogni cosa al suo posto" e "Una storia da completare" (infanzia, semplice e completa), "Indovina e trova" (infanzia), il mio sito; risultati d'esempio |
-| M11 Progettare un'UdA | `progettare-uda/` | In preparazione, prossimo modulo |
-| M12 Workspace Studio | `workspace-studio/` | In preparazione |
+| M03 Rischi degli LLM | `rischi-llm/` | In preparazione; deck "Rischi degli LLM", con lo scarico cognitivo |
+| M04 Il modello nudo | `modello-nudo/` | In preparazione; bozza dell'animazione `manopole.html`, messa da parte |
+| M05 Testi in serie e bias | `laboratorio-testi-bias/` | Pagina del laboratorio "Mettere le mani" |
+| M06 Regole, dati e strumenti | `regole-e-dati/`, `scegliere-strumenti/` | Mappa per il docente, vademecum, slide "Quattro strati, undici domande" |
+| M07 Prompt e contesto | `prompt-e-contesto/` | Deck sul context engineering, esercitazioni "Costruire i profili" e "La storia con GN e GL" |
+| M08 Grounding (Gemini Notebook) | `grounding/` | Esercitazione "Il notebook di classe" |
+| M09 Gem e skill | `gem-e-skill/` | Esercitazioni "Il mio Gem di sostegno" e "Dal Gem alla skill" |
+| M10 Verifiche fino al Google Form | `verifiche-form/` | `genera-form-quiz.gs`: genera un Google Form quiz da `CONFIG` e `DOMANDE` |
+| M11 Canvas | `canvas/` | Deck "Gemini Canvas", "Le API", "GitHub Pages"; esercitazioni CAA (completa e semplice), mappa di pittogrammi, "Ogni cosa al suo posto" e "Una storia da completare" (infanzia, semplice e completa), "Indovina e trova" (infanzia), il mio sito; risultati d'esempio |
+| M12 Progettare un'UdA | `progettare-uda/` | In preparazione, prossimo modulo |
+| M13 Workspace Studio | `workspace-studio/` | In preparazione |
 
 `materiali/comune/schemi/` contiene gli schemi SVG usati da più moduli e `genera-schemi.py`, che li rigenera nella stessa cartella.
 
-Il corpus di 24 articoli (un tempo modulo a sé) è nella pagina del catalogo, sezione `#corpus`, e serve a M11 e M03; i testi sono in `../03-risorse/rassegna-m14/`, fuori dal sito.
+Il corpus di 24 articoli (un tempo modulo a sé) è nella pagina del catalogo, sezione `#corpus`, e serve a M12 e M04; i testi sono in `../03-risorse/rassegna-m14/`, fuori dal sito.
 
 ## Deck
 

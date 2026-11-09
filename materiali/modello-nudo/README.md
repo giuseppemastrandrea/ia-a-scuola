@@ -1,4 +1,4 @@
-# M03 · Il modello nudo
+# M04 · Il modello nudo
 
 Deck `modello-nudo.md` (export in `modello-nudo.html`): caccia all'allucinazione, compressione con perdita, due memorie, il sistema, modelli diversi. La scheda è nel catalogo (`index.html#modello-nudo`).
 
