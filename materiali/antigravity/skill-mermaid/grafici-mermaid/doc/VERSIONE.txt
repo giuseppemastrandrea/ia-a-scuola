@@ -1,0 +1,6 @@
+Documentazione ufficiale di Mermaid, versione 12.2.0 (13/10/2026).
+Fonte: https://github.com/mermaid-js/mermaid/tree/mermaid%4012.2.0/docs/syntax
+Licenza MIT: vedi LICENSE-mermaid.txt nella cartella della skill.
+
+Per caricare questa stessa versione in una pagina HTML:
+https://cdn.jsdelivr.net/npm/mermaid@12.2.0/dist/mermaid.esm.min.mjs
