@@ -56,7 +56,7 @@ style: |
 <!-- _class: lead -->
 <!-- _paginate: false -->
 
-### Antigravity · Modulo
+### Antigravity · Modulo 1
 
 # Un agente sul proprio computer
 
@@ -107,21 +107,6 @@ style: |
 
 ---
 
-### Sul proiettore: la spia
-
-- Mentre lavorate, sul mio computer gira Antigravity con lo stesso compito.
-- Accanto, **la spia**: ogni file che l'agente crea o modifica compare sullo schermo, con una riga che dice cos'è.
-- Voi non installate niente: guardate.
-
-<p class="note">La spia legge soltanto, e token e password non li mostra.</p>
-
-<!--
-Per il formatore, prima di creare il progetto:
-python3 04-sito/materiali/antigravity/spia/spia.py ~/antigravity-corso
--->
-
----
-
 ### Il primo progetto
 
 <div class="cols">
@@ -130,13 +115,42 @@ python3 04-sito/materiali/antigravity/spia/spia.py ~/antigravity-corso
 1. Accesso con l'**account personale**.
 2. Una cartella vuota: `antigravity-corso`.
 3. **Create New Project**: l'icona della cartella con il +, accanto a Projects.
-4. Permessi predefiniti: solo le cartelle del progetto. **Turbo** no.
+4. Permessi: solo le cartelle del progetto, **Turbo** solo qui (slide dopo).
 
 </div>
 <div class="sc"><img src="img/nuovo-progetto.png"></div>
 </div>
 
-<div class="check"><b>Sul proiettore, nella spia:</b> un file nuovo in <code>config/projects/</code>. Il progetto è un file JSON: nome, cartella, permessi.</div>
+<div class="check"><b>Under the hood:</b> il progetto è un file JSON in <code>~/.gemini/config/projects/</code>: nome, cartella, permessi.</div>
+
+---
+
+### I permessi dell'agente
+
+<div class="small">
+
+| Modalità | Cosa succede |
+|---|---|
+| **Chiede** (`request-review`) | i comandi aspettano il vostro sì |
+| **Nel recinto** (`proceed-in-sandbox`) | i comandi partono da soli, ma chiusi in una sandbox |
+| **Turbo** (`always-proceed`) | i comandi partono da soli, senza recinto |
+
+</div>
+
+Oggi: **Turbo, solo in questo progetto**. Settings → Projects → `antigravity-corso` → Auto-Execution Policy. L'impostazione generale resta com'è.
+
+<p class="note">Il primo giorno, su Windows, git chiedeva il permesso a ogni comando: abbiamo passato più tempo a cliccare "Accetta" che a guardare. Fonte delle modalità: la guida integrata di Antigravity (11/11/2026).</p>
+
+---
+
+### Perché di solito Turbo no
+
+<div class="cols">
+<div class="card"><h2>Oggi va bene perché</h2><p>la cartella è nuova e vuota<br>l'account è personale<br>i materiali sono inventati o pubblici<br>ogni comando resta scritto nella conversazione</p></div>
+<div class="card"><h2>Fuori dal corso, no</h2><p><b>cancella o sovrascrive</b> file senza chiedere<br>una pagina o un documento letto può contenere <b>istruzioni nascoste</b>, e nessuno le ferma<br><b>manda fuori</b> dati (un push, una chiamata) senza che lo vediate<br>i comandi scorrono veloci: <b>smettete di leggerli</b></p></div>
+</div>
+
+<div class="warn">Fuori dal corso: <b>Chiede</b>, più un elenco di comandi fidati che partono da soli (Settings → Command Allowlist). Il passo successivo, per git, è nella slide per i più esperti.</div>
 
 ---
 
@@ -146,14 +160,14 @@ python3 04-sito/materiali/antigravity/spia/spia.py ~/antigravity-corso
 
 | Comando | Cosa fa | Quando ci serve |
 |---|---|---|
-| `/plan` | studia il compito e scrive un piano da approvare, prima di toccare i file | Es. 1: il piano prima dell'app |
+| `/plan` | studia il compito e scrive un piano da approvare, prima di toccare i file | il piano prima dell'app |
 | `/grill-me` | vi fa domande una alla volta, con una risposta consigliata per ciascuna | prima di scrivere una skill |
 | `/btw` | una domanda a parte, senza fermare il lavoro in corso | "cosa stai facendo adesso, e perché?" |
-| `/browser` | un agente che naviga e controlla le pagine | Es. 1: provare l'app |
+| `/browser` | un agente che naviga e controlla le pagine | provare l'app |
 | `/generative_ui` | schemi, grafici e spiegazioni interattive nella chat (solo nell'app) | il confronto con Canvas |
-| `/learn` | trasforma le correzioni della sessione in regole o skill, da approvare | dopo le Es. 3 e 4 |
-| `/plugin` | installa e gestisce i plugin | Es. 6: Google Docs |
-| `/schedule` | un'istruzione a un orario, una volta o a ripetizione | Es. 6 |
+| `/learn` | trasforma le correzioni della sessione in regole o skill, da approvare | dopo aver usato una skill |
+| `/plugin` | installa e gestisce i plugin | Modulo 2: Google Docs |
+| `/schedule` | un'istruzione a un orario, una volta o a ripetizione | Modulo 2: Automazioni |
 
 </div>
 
@@ -175,7 +189,7 @@ python3 04-sito/materiali/antigravity/spia/spia.py ~/antigravity-corso
 3. Solo Mac: **Git Credential Manager**, il pacchetto `.pkg` da github.com/git-ecosystem/git-credential-manager/releases.
 4. Nel Terminale (su Windows: Git Bash), una volta sola: `git credential-manager github login`. Si apre il browser, accedete a GitHub e autorizzate.
 
-<p class="note">Senza il passo 4 il push dall'agente non parte: il login nel browser non si apre da solo. Commit e push li fa l'agente con la skill predefinita <b>permissioned-github</b>, chiedendo un vostro permesso. Pages lo attiviamo a mano.</p>
+<p class="note">Senza il passo 4 il push dall'agente non parte: il login nel browser non si apre da solo. Commit e push li fa l'agente con la skill predefinita <b>permissioned-github</b>, anche in Turbo vi dice cosa sta per fare. Pages lo attiviamo a mano.</p>
 
 ---
 
@@ -213,14 +227,14 @@ Poi crea o aggiorna app-canvas/index.html: l'elenco di tutte le app della
 cartella, con titolo, una riga di descrizione e il link.
 Infine commit e push di app-canvas sul ramo main di
 https://github.com/[utente]/[repository].
-Prima di ogni azione su GitHub dimmi quale permesso ti serve e perché.
+Prima di ogni azione su GitHub dimmi cosa stai per fare e perché.
 
 [il codice copiato dal Canvas]
 ```
 
 </div>
 
-<div class="check"><b>Cosa vedete:</b> l'app nella cartella, la prova nel browser, l'indice, la richiesta di permesso, il push. Poi attiviamo Pages a mano: Settings → Pages → ramo main. L'indirizzo del sito apre l'indice.</div>
+<div class="check"><b>Cosa vedete:</b> l'app nella cartella, la prova nel browser, l'indice, il push. Poi attiviamo Pages a mano: Settings → Pages → ramo main. L'indirizzo del sito apre l'indice.</div>
 
 <p class="note">Ogni nuova app fatta con Canvas: stesso prompt, e l'indice si aggiorna. Il repository è solo <code>app-canvas/</code>: skill e chiavi del progetto restano fuori.</p>
 
@@ -230,25 +244,25 @@ Prima di ogni azione su GitHub dimmi quale permesso ti serve e perché.
 
 - Gli errori trovati provando l'app, e come li ha **corretti**.
 - Cosa ha **cambiato** rispetto al codice del Canvas.
-- I punti in cui si è **fermato** a chiedere un permesso.
+- I **comandi** che ha lanciato da solo, in Turbo: sono tutti nella conversazione.
 
 ---
 
-### Esercitazione 1 · Cosa ha visto la spia
+### Esercitazione 1 · Under the hood
 
 <div class="small">
 
-| Quando | Cosa compare | Cos'è |
-|---|---|---|
-| Primo prompt | `antigravity/conversations/[id].db` | la conversazione, salvata sul vostro computer |
-| Ogni azione | `antigravity/brain/[id]/.system_generated/steps/[n]/output.txt` | **il risultato di un'azione**, che l'agente rilegge prima di decidere la mossa dopo: il loop |
-| Sempre | `brain/[id]/.system_generated/logs/transcript.jsonl` | la trascrizione completa |
-| Salva l'app | `[progetto]/app-canvas/quiz-ciclo-acqua.html`, `index.html` | i vostri file |
-| Il permesso per GitHub | `config/projects/[id].json` | il permesso, scritto nel progetto |
+| Cosa è successo | Dove resta scritto |
+|---|---|
+| Avete incollato il codice del Canvas | `~/.gemini/antigravity/conversations/[id].db`: la conversazione, sul vostro computer |
+| L'agente ha salvato e provato l'app, poi ha aggiornato l'indice | `app-canvas/` nel progetto: i vostri file |
+| Ogni comando lanciato (`git add`, `git commit`, `git push`) | `brain/[id]/.system_generated/steps/[n]/output.txt`: **il risultato**, che l'agente rilegge prima della mossa dopo. È il loop |
+| Su Windows, git chiedeva il permesso a ogni comando | nella trascrizione (`logs/transcript.jsonl`): il `PATH` modificato davanti a ogni `git` |
+| Abbiamo attivato Turbo | `~/.gemini/config/projects/[id].json`: l'impostazione del progetto |
 
 </div>
 
-<p class="note">Il riepilogo della spia: quante azioni sono servite per salvare, provare e pubblicare un file?<br>Sul vostro computer le stesse cartelle: Finder → Vai → Vai alla cartella → <code>~/.gemini</code>. Su Windows: <code>%USERPROFILE%\.gemini</code> in Esplora file.</p>
+<p class="note">Aprite le cartelle: Finder → Vai → Vai alla cartella → <code>~/.gemini</code>. Su Windows: <code>%USERPROFILE%\.gemini</code> in Esplora file. Quante azioni sono servite per salvare, provare e pubblicare un file?</p>
 
 ---
 
@@ -320,83 +334,13 @@ description: Crea mappe concettuali, mappe mentali e linee del tempo con
 
 ---
 
-### esporta-quiz in Antigravity
-
-- È la skill creata in Gemini, **la stessa cartella**.
-- Dentro c'è un programma, `controlla_quiz.py`, che controlla le domande.
-- Gemini non lo esegue. **Antigravity sì**: lo lancia, legge gli errori, corregge e lo rilancia.
-
----
-
-### Installare la skill nel progetto
-
-```text
-antigravity-corso/
-├── .agents/
-│   └── skills/
-│       └── esporta-quiz/        la cartella dello zip, così com'è
-└── verifica-ciclo-acqua.md
-```
-
-<p class="note">Materiali: <a href="../gem-e-skill/skill-esporta-quiz.zip">skill-esporta-quiz.zip</a>, <a href="verifica-ciclo-acqua.md">verifica-ciclo-acqua.md</a>. Sul Mac le cartelle con il punto sono nascoste: Cmd + Maiusc + punto.</p>
-
----
-
-### Controllare che la trovi
-
-1. **Settings → Projects →** il progetto.
-2. **Customizations → Skills**: deve esserci **esporta-quiz**.
-
-<div class="warn">Non c'è? La cartella è un livello troppo in basso: Antigravity guarda solo dentro <code>skills/</code>, non più giù.</div>
-
----
-
-### Esercitazione 2 · La verifica su Google Moduli
-
-```text
-Porta in Google Moduli la verifica in verifica-ciclo-acqua.md.
-Salva lo script finale in questa cartella.
-```
-
-<div class="check"><b>Cosa vedete:</b> l'agente scrive le domande, lancia il controllo, corregge se serve. Nella cartella compare <code>genera-form.js</code>.</div>
-
----
-
-### Dallo script al Modulo · 1
-
-<div class="cols">
-<div>
-
-1. Aprite `genera-form.js` e copiate tutto.
-2. **script.google.com** con l'account **della scuola**.
-3. **Nuovo progetto**.
-4. Cancellate il codice d'esempio, incollate, **Salva**.
-
-</div>
-<div class="sc"><img src="img/apps-script-codice.png"></div>
-</div>
-
-<p class="note">Lo script è sempre lo stesso: cambiano solo <code>CONFIG</code> e <code>DOMANDE</code>, scritte dall'agente.</p>
-
----
-
-### Dallo script al Modulo · 2
-
-5. Funzione **creaForm** → **Esegui**. Alla prima volta: **Autorizza**.
-6. **Registro di esecuzione**: i due link al Modulo.
-7. Nel Modulo: email **"Verificati"** e **rilascio del punteggio**. Poi compilatelo come uno studente.
-
-<div class="sc"><img src="img/apps-script-registro.png"></div>
-
----
-
 <!-- _class: big -->
 
-# Una skill<br>con la sua documentazione
+# Demo · Una skill<br>con la sua documentazione
 
 ---
 
-### Esercitazione 3 · La skill dei grafici
+### Demo · La skill dei grafici
 
 ```text
 antigravity-corso/
@@ -406,11 +350,11 @@ antigravity-corso/
             └── doc/   flowchart.md, mindmap.md, timeline.md, VERSIONE.txt
 ```
 
-<p class="note">Materiali: <a href="skill-mermaid/grafici-mermaid-doc.zip">grafici-mermaid-doc.zip</a>, la documentazione ufficiale di Mermaid 12.2.0. Manca il file <code>SKILL.md</code>: è il vostro lavoro.</p>
+<p class="note">Materiali: <a href="skill-mermaid/grafici-mermaid-doc.zip">grafici-mermaid-doc.zip</a>, la documentazione ufficiale di Mermaid 12.2.0. Manca il file <code>SKILL.md</code>: lo scrive l'agente sul proiettore, voi potete rifarlo a casa.</p>
 
 ---
 
-### Esercitazione 3 · Scrivere la skill
+### Demo · Scrivere la skill
 
 <div class="small">
 
@@ -430,7 +374,7 @@ Mostrami il SKILL.md prima di salvarlo.
 
 ---
 
-### Esercitazione 3 · Usarla
+### Demo · Usarla
 
 ```text
 Una mappa mentale sul ciclo dell'acqua per una classe seconda.
@@ -443,169 +387,6 @@ Ora una linea del tempo delle tappe dell'Unità d'Italia.
 <div class="check"><b>Cosa vedete:</b> per la mappa mentale apre solo <code>doc/mindmap.md</code>, per la linea del tempo solo <code>doc/timeline.md</code>. La documentazione si carica quando serve, non tutta insieme.</div>
 
 <p class="note">Il PDF: aprite la pagina in Chrome → Stampa → Salva come PDF.</p>
-
----
-
-<!-- _class: big -->
-
-# Una skill<br>che chiama un'API
-
----
-
-### Cosa c'è in più
-
-- L'**API** è la porta di un servizio pensata per i programmi, non per le persone: chiedete dati, ricevete dati (JSON), non una pagina da leggere.
-- Antigravity **lancia comandi** sul vostro computer: con `curl` bussa a quella porta, legge la risposta e ci lavora sopra.
-- Come per i grafici: vi do solo la **documentazione** dell'API, la skill la scrivete voi.
-
----
-
-### "Perché non basta la chat?"
-
-<div class="small">
-
-| | Chat (Gemini, Claude, ChatGPT) | Agente (Antigravity, Claude Code) |
-|---|---|---|
-| **Da dove vengono i dati** | da una ricerca sul web o da quello che incollate voi | dall'API del servizio, con i parametri della documentazione |
-| **La chiave** | va incollata nella conversazione | resta in un file sul vostro computer |
-| **Quanti dati** | quelli che entrano nella risposta | centinaia di risultati, filtrati da un comando |
-| **Dove finisce il lavoro** | nella conversazione | in un file vostro, nel vostro modello |
-| **La settimana dopo** | si riscrive il prompt e si spera | la skill rifà gli stessi passi; un'Automazione li fa da sola |
-
-</div>
-
-<p class="note">La chat a volte apre un indirizzo pubblico e riesce. La differenza non è "può o non può": è chi controlla i dati, la chiave e il risultato.</p>
-
----
-
-### Prima la prova in chat
-
-In Gemini, account della scuola, **prima** di fare la skill:
-
-```text
-Quali specie sono state osservate su iNaturalist nell'ultimo mese
-entro 5 km da [comune]? Le 10 più osservate, con il numero di osservazioni.
-```
-
-<div class="check"><b>Guardate:</b> da dove prende i numeri? C'è un link che li verifica? Rifatelo: escono gli stessi? Tenete la risposta: la confrontiamo con quella della skill.</div>
-
----
-
-### Installare le due skill
-
-```text
-antigravity-corso/
-└── .agents/
-    └── skills/
-        ├── specie-vicine/
-        │   └── doc/inaturalist-api.md
-        └── fonti-europeana/
-            └── doc/europeana-search-api.md
-```
-
-<p class="note">Materiali: <a href="skill-api/specie-vicine-doc.zip">specie-vicine-doc.zip</a>, <a href="skill-api/fonti-europeana-doc.zip">fonti-europeana-doc.zip</a>. Manca il file <code>SKILL.md</code>: è il vostro lavoro.</p>
-
----
-
-### Esercitazione 4 · Il modello in Canvas
-
-In Gemini, account della scuola, con **Canvas** attivo:
-
-<div class="small">
-
-```text
-Crea il modello di una scheda didattica da proiettare sulla LIM:
-"Le specie vicino a noi". In alto il titolo con {{LUOGO}} e {{DATA}}.
-Sotto, una sola scheda di esempio per una specie, con {{FOTO}},
-{{NOME_COMUNE}}, {{NOME_SCIENTIFICO}}, {{OSSERVAZIONI}} e {{CREDITI_FOTO}}.
-In fondo la fonte: iNaturalist. Un unico file HTML con lo stile dentro,
-senza librerie esterne. Lascia i segnaposto così come sono.
-```
-
-</div>
-
-<p class="note">Copiate il codice in <code>.agents/skills/specie-vicine/modello.html</code>. La grafica la scegliete voi, i dati li porta l'agente.</p>
-
----
-
-### Esercitazione 4 · La skill delle specie vicine
-
-<div class="small">
-
-```text
-Nella cartella .agents/skills/specie-vicine c'è la documentazione dell'API
-di iNaturalist. Leggila e scrivi il file SKILL.md di questa skill:
-- si usa quando chiedo quali piante o animali sono stati osservati vicino a un luogo;
-- chiama l'API con curl: solo osservazioni verificate, nomi comuni in italiano;
-- ricava le 10 specie più osservate, con foto, autore e licenza della foto;
-- usa sempre modello.html: ripete la scheda per ogni specie, sostituisce i
-  segnaposto e non cambia lo stile;
-- apre la pagina nel browser integrato e, se qualcosa non va, corregge e riprova.
-Mostrami il SKILL.md prima di salvarlo.
-```
-
-</div>
-
-<p class="note">Poi <b>Settings → Customizations → Skills</b>: ora <b>specie-vicine</b> c'è.</p>
-
----
-
-### Esercitazione 4 · Usarla
-
-```text
-Quali specie sono state osservate nell'ultimo mese entro 5 km
-da [comune]? Preparami la scheda per una classe prima.
-```
-
-<div class="check"><b>Cosa vedete:</b> l'agente apre <code>doc/</code> per scegliere i parametri, lancia <code>curl</code>, legge il JSON e costruisce la pagina. Se vi chiede un permesso, leggete quale indirizzo vuole contattare.</div>
-
-<p class="note">Confronto con la chat: chiedete all'agente l'indirizzo esatto che ha chiamato e apritelo nel browser. I numeri della scheda sono lì. Il PDF: Chrome → Stampa → Salva come PDF.</p>
-
----
-
-### La chiave di Europeana
-
-1. Registratevi con l'email **personale**: pro.europeana.eu/pages/get-api.
-2. Nella cartella del progetto, un file di testo `chiave.env` con una riga:
-
-```text
-EUROPEANA_KEY=la-vostra-chiave
-```
-
-<div class="warn">Per usarla l'agente la deve leggere e scrivere nel comando: la vede. A un agente si dà solo una chiave che non fa danni se finisce in giro.</div>
-
----
-
-### Esercitazione 5 · La skill delle fonti
-
-<div class="small">
-
-```text
-Nella cartella .agents/skills/fonti-europeana c'è la documentazione della
-Search API di Europeana. Leggila e scrivi il file SKILL.md di questa skill:
-- si usa quando chiedo fonti visive su un argomento di storia o di arte;
-- prende la chiave dal file chiave.env nella cartella del progetto;
-- cerca solo materiali con immagine e riutilizzabili;
-- per ogni fonte: titolo, autore, data, istituzione che la conserva, licenza, link;
-- crea una pagina HTML per la LIM con le immagini e le didascalie;
-- non scrive mai la chiave nella pagina né nei file che crea.
-Mostrami il SKILL.md prima di salvarlo.
-```
-
-</div>
-
----
-
-### Esercitazione 5 · Usarla
-
-```text
-Dieci fonti visive sull'emigrazione italiana tra Ottocento
-e Novecento, per una classe terza.
-```
-
-<div class="check"><b>Cosa vedete:</b> ogni immagine con la sua licenza e l'istituzione che la conserva. Cercate la chiave nella pagina (Cmd + F): non deve esserci.</div>
-
-<p class="note">Sul proiettore, nella spia: <code>chiave.env</code> compare come segreto. Ma la chiave è finita nella trascrizione della conversazione?</p>
 
 ---
 
@@ -632,124 +413,31 @@ e Novecento, per una classe terza.
 
 ---
 
-<!-- _class: big -->
+### Per i più esperti · Perché git chiedeva sempre
 
-# Le Automazioni
+- Su Windows Antigravity **non trovava git**.
+- Allora metteva davanti a ogni comando una modifica del `PATH`: la lista delle cartelle in cui Windows cerca i programmi.
+- Ogni comando era diverso dal precedente: **"consenti sempre" non valeva mai**.
 
----
-
-### Cos'è un'Automazione
-
-- **Orario + prompt + progetto**: all'ora stabilita parte una conversazione.
-- Modello: Flash Lite, Flash o Pro.
-- **Run Now** per provarla subito.
-
-<div class="warn">Ritardo fino a 15 minuti. Solo con app aperta e computer acceso. Consuma la quota settimanale.</div>
+<p class="note">Succede di solito quando git si installa con Antigravity già aperto.</p>
 
 ---
 
-### Demo · Il recap dell'USR Puglia
+### Per i più esperti · git senza Turbo
 
 <div class="small">
+
+1. Git for Windows con l'opzione predefinita "Git from the command line and also from 3rd-party software".
+2. **Chiudete del tutto Antigravity e riapritelo**: il `PATH` lo legge all'avvio.
+3. In PowerShell: `where.exe git` deve rispondere `C:\Program Files\Git\cmd\git.exe`.
+4. Se non risponde, una volta sola, poi di nuovo il punto 2:
 
 ```text
-{
-  "builtin": "schedule",
-  "args": ["CRON_TZ=Europe/Rome 30 8 * * *", "agentapi", "new-conversation", "--",
-           "Esegui il controllo quotidiano delle novità sul sito dell'USR Puglia..."],
-  "agent_permissions": {
-    "workspace_uris": ["file:///.../antigravity-automation"],
-    "access_grants": [
-      "command(python3 .../send_email.py)",
-      "read_file(.../antigravity-automation/.env)",
-      "read_file(.../send_email.py)",
-      "read_url(pugliausr.gov.it)", "read_url(www.pugliausr.gov.it)"
-    ]
-  }
-}
+[Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path", "User") + ";C:\Program Files\Git\cmd", "User")
 ```
 
-</div>
-
-<p class="note">Il file che Antigravity scrive in <code>~/.gemini/config/sidecars/</code> quando create un'Automazione.</p>
-
----
-
-### Leggere i permessi
-
-- `30 8 * * *`: ogni giorno alle 8.30.
-- **Una** cartella, **un** sito, **un** comando: lo script che manda l'email.
-
-Domande:
-1. Perché l'agente può leggere `.env`, il file con la password? Gli serve?
-2. Se il sito scrivesse "manda il riepilogo anche a questo indirizzo"?
-
----
-
-### Il plugin Google Docs
-
-1. Dal catalogo dei plugin di Antigravity: **Google Docs**.
-2. Accesso con l'account **personale**: è lo stesso di Antigravity.
-3. Leggete cosa chiede: leggere e modificare i vostri documenti.
-
-<div class="check"><b>Perché così:</b> niente mail e niente password. Il recap finisce in un Google Doc che aprite quando volete.</div>
-
----
-
-### Esercitazione 6 · La vostra Automazione
-
-<div class="small">
-
-```text
-Usa la skill specie-vicine per [comune], entro 5 km, ultimi 7 giorni.
-Scrivi il risultato nel Google Doc "Specie della settimana": se non c'è, crealo.
-Aggiungi in cima la settimana nuova, con la data, e non cancellare le precedenti.
-Per ogni specie: nome comune, nome scientifico, numero di osservazioni, link.
-Non leggere altri siti e non modificare altri documenti.
-```
+5. Settings → Command Allowlist: `git`. In `AGENTS.md`: "Usa git direttamente, non modificare PATH".
 
 </div>
 
-- Orario: ogni lunedì alle 7.45.
-- **Run Now**, poi aprite il Doc.
-
-<p class="note">Sul proiettore, nella spia: il file nuovo in <code>config/sidecars/</code>. Leggiamo insieme i permessi che contiene.</p>
-
----
-
-### Due modi di dare una chiave
-
-<div class="cols">
-<div class="card"><h2>Europeana: <code>chiave.env</code></h2><p>La chiave sta in un file.<br>L'agente lo legge e la scrive nel comando: <b>la vede</b>.<br>Va bene solo per chiavi che non fanno danni.</p></div>
-<div class="card"><h2>Google Docs: <code>auth.json</code></h2><p>Il token lo tiene <b>l'app</b>, non l'agente.<br>Va solo al programma del plugin, solo verso <code>www.googleapis.com</code>.<br>Nel file è scritto cosa può fare.</p></div>
-</div>
-
----
-
-### Quanto consuma
-
-1. **Settings**: annotate la quota usata.
-2. **Run Now**.
-3. **Settings**: confrontate, e moltiplicate per 7.
-
----
-
-### Dove gira
-
-<div class="small">
-
-| | App aperta | Computer acceso |
-|---|---|---|
-| Automazione dall'app | sì | sì |
-| `agy -p` dal pianificatore del sistema | no | sì |
-| Routine di Claude Code (a pagamento, demo) | no | no: cloud |
-
-</div>
-
----
-
-### Per i più esperti
-
-- **La sidecar**: l'Automazione è un file in `~/.gemini/config/sidecars/`.
-- **La CLI**: `agy -p "prompt"` pianificato con launchd o con l'Utilità di pianificazione.
-- **Il modello in locale**: LM Studio o Ollama, un modello da 4 a 8 miliardi di parametri, uno strumento via MCP.
+<p class="note">Da verificare nella prossima prova: che l'Allowlist accetti <code>git</code> per tutti i sottocomandi.</p>
