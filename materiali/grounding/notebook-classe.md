@@ -31,6 +31,7 @@ style: |
   .note { color: var(--muted); font-size: 0.7em; margin-top: 0.8em; }
   .credits { color: var(--muted); font-size: 0.65em; }
   img { max-width: 100%; }
+  .img { border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,.08); }
   .shot { border: 2px dashed #c4c4c4; border-radius: 12px; background: #fafafa; color: #9a9a9a; display: flex; align-items: center; justify-content: center; text-align: center; height: 330px; font-size: 0.6em; padding: 0 40px; }
   .schema { display: flex; justify-content: center; } .schema img { width: 100%; max-height: 480px; object-fit: contain; }
   a { color: inherit; text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
@@ -90,7 +91,7 @@ Le risposte partono **solo dalle fonti caricate** e le citano: si chiama groundi
 4. Seleziona i 3 documenti.
 
 </div>
-<div class="shot">Screenshot: aggiunta delle fonti da Google Drive</div>
+<div><img class="img" src="img/aggiungi-fonti.png"></div>
 </div>
 
 ---
@@ -131,7 +132,7 @@ Cosa ho cambiato | Perché, collegato al profilo | Cosa NON ho cambiato.
 - Leggete per prima la colonna **Cosa NON ho cambiato**: Gemini può abbassare l'obiettivo, soprattutto per gli alunni con difficoltà nella lingua, semplificando il contenuto invece della lingua.
 
 </div>
-<div class="shot">Screenshot: risposta con i numeri di citazione</div>
+<div><img class="img" src="img/risposta-citazioni.png"></div>
 </div>
 
 ---
@@ -145,23 +146,6 @@ Adatta la scheda anche per il profilo E.
 Il profilo E non esiste. Gemini Notebook deve rispondere che **nelle fonti non c'è**.
 
 <p class="note">Se inventa un profilo, segnatevelo: è il caso da raccontare in aula.</p>
-
----
-
-### Prova del secchio
-
-<div class="cols">
-<div>
-
-1. Togliete la spunta alla fonte **Profili**.
-2. Ripetete il prompt della fase 1.
-3. Confrontate le due risposte.
-
-Le fonti senza spunta **non entrano nel contesto**: la risposta torna generica.
-
-</div>
-<div class="shot">Screenshot: elenco delle fonti con le caselle di spunta</div>
-</div>
 
 ---
 
@@ -205,7 +189,7 @@ Discussione: quale usereste lunedì in classe, la scheda unica o le 4 versioni?
 3. Scegliete il ruolo: **visualizzatore** per consultare, **editor** per aggiungere fonti.
 
 </div>
-<div class="shot">Screenshot: finestra di condivisione del notebook</div>
+<div><img class="img" src="img/condividi.png"></div>
 </div>
 
 ---
